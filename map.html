@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <title>نقشه کافه‌ها و رستوران‌های تهران</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            vazir: ['Vazirmatn', 'sans-serif'],
+          },
+          colors: {
+            cafe: '#6F4E37',
+            restaurant: '#C52D2D',
+            cafeRestaurant: '#5A7247',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="font-vazir bg-gray-100">
+  <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 my-5">نقشه کافه‌ها و رستوران‌های تهران</h1>
+  
+  <div class="flex justify-center gap-3 my-4 flex-wrap px-2">
+    <button class="filter-btn px-5 py-2 rounded-full font-bold text-white bg-gray-600 flex items-center gap-2 active" data-type="all">
+      <i class="fas fa-layer-group"></i> همه
+    </button>
+    <button class="filter-btn px-5 py-2 rounded-full font-bold text-white bg-cafe flex items-center gap-2" data-type="cafe">
+      <i class="fas fa-coffee"></i> کافه‌ها
+    </button>
+    <button class="filter-btn px-5 py-2 rounded-full font-bold text-white bg-restaurant flex items-center gap-2" data-type="restaurant">
+      <i class="fas fa-utensils"></i> رستوران‌ها
+    </button>
+    <button class="filter-btn px-5 py-2 rounded-full font-bold text-white bg-cafeRestaurant flex items-center gap-2" data-type="cafe-restaurant">
+      <i class="fas fa-mug-hot"></i> کافه‌رستوران‌ها
+    </button>
+  </div>
+  
+  <div id="map" class="h-[85vh] w-[98%] mx-auto my-2 border-2 border-gray-300 rounded-xl shadow-md"></div>
+
+  <div id="cafeModal" class="hidden fixed z-[999] pt-12 left-0 top-0 w-full h-full bg-black bg-opacity-70 overflow-auto">
+    <div class="modal-content bg-white rounded-xl shadow-lg mx-auto my-0 p-6 w-[90%] max-w-4xl flex flex-col md:flex-row gap-8">
+      
+      <div class="slider flex flex-col md:flex-row items-center justify-center gap-4 w-full md:w-1/2">
+        <button id="prev" class="text-2xl cursor-pointer bg-transparent border-none text-cafe p-2 rounded-full hover:bg-cafe hover:bg-opacity-10">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <img id="cafeImage" src="" alt="Cafe Image" class="w-full max-w-md h-64 md:h-80 rounded-lg object-cover shadow-md" />
+        <button id="next" class="text-2xl cursor-pointer bg-transparent border-none text-cafe p-2 rounded-full hover:bg-cafe hover:bg-opacity-10">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+
+      <div class="rightModal flex flex-col w-full md:w-1/2">
+        <div class="close flex justify-end text-2xl cursor-pointer text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times"></i>
+        </div>
+        <h2 id="cafeName" class="text-2xl font-bold text-gray-800 mb-3"></h2>
+        <p id="cafeType" class="mb-4"></p>
+        <p id="cafeDescription" class="text-gray-600 leading-relaxed mb-6"></p>
+        <button id="button_menu" class="mt-4 border-none cursor-pointer px-4 py-2 rounded-lg w-40 h-10 text-white bg-cafe font-bold hover:bg-[#5a3c29] transition-all flex items-center justify-center gap-2">
+          <i class="fas fa-book-open"></i> مشاهده منو
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <script>
+    const map = L.map('map').setView([35.6892, 51.3890], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // آیکون‌های سفارشی و هماهنگ
+    const cafeIcon = L.divIcon({
+      html: '<div style="background-color: #6F4E37; border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; color: white; font-size: 18px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);"><i class="fas fa-coffee"></i></div>',
+      className: 'custom-icon',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40]
+    });
+
+    const restaurantIcon = L.divIcon({
+      html: '<div style="background-color: #C52D2D; border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; color: white; font-size: 18px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);"><i class="fas fa-utensils"></i></div>',
+      className: 'custom-icon',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40]
+    });
+
+    const cafeRestaurantIcon = L.divIcon({
+      html: '<div style="background-color: #5A7247; border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; color: white; font-size: 18px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);"><i class="fas fa-mug-hot"></i></div>',
+      className: 'custom-icon',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40]
+    });
+
+    // داده‌های نمونه
+    const places = [
+      {
+        name: "کافه هنری دانه",
+        description: "کافه‌ای با فضای هنری و آرام، مناسب برای دورهمی‌های دوستانه و کارهای خلاقانه. منوی متنوعی از نوشیدنی‌های گرم و سرد دارد.",
+        type: "cafe",
+        typeName: "کافه",
+        images: [
+          'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600',
+          'https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=600'
+        ],
+        lat: 35.7000,
+        lng: 51.4200
+      },
+      {
+        name: "رستوران بوتیک پاریس",
+        description: "رستورانی با غذاهای فرانسوی و فضایی رمانتیک. مناسب برای دورهمی‌های خاص و مناسبت‌های ویژه. غذاهای دریایی این رستوران بسیار معروف است.",
+        type: "restaurant",
+        typeName: "رستوران",
+        images: [
+          'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600',
+          'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600'
+        ],
+        lat: 35.7100,
+        lng: 51.4100
+      },
+      {
+        name: "کافه‌رستوران بام",
+        description: "ترکیبی از کافه دنج و رستوران شیک با منظره‌ای عالی از شهر. منوی متنوعی از صبحانه‌های ایرانی و بین‌المللی تا غذاهای اصلی دارد.",
+        type: "cafe-restaurant",
+        typeName: "کافه‌رستوران",
+        images: [
+          'https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=600',
+          'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600'
+        ],
+        lat: 35.7200,
+        lng: 51.4050
+      },
+      {
+        name: "کافه کتاب قهوه",
+        description: "کافه‌ای با کتاب‌های متنوع و فضای آرام برای مطالعه. انواع قهوه‌های تخصصی و دسرهای خانگی سرو می‌شود.",
+        type: "cafe",
+        typeName: "کافه",
+        images: [
+          'https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=600',
+          'https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=600'
+        ],
+        lat: 35.7150,
+        lng: 51.3950
+      },
+      {
+        name: "رستوران سنتی نگارستان",
+        description: "رستورانی با معماری سنتی و غذاهای اصیل ایرانی. محیطی دلنشین با موسیقی زنده سنتی در برخی شب‌ها.",
+        type: "restaurant",
+        typeName: "رستوران",
+        images: [
+          'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600',
+          'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600'
+        ],
+        lat: 35.7050,
+        lng: 51.4000
+      }
+    ];
+
+    let markers = [];
+    let currentImages = [];
+    let currentIndex = 0;
+
+    // تابع برای ایجاد مارکرها
+    function createMarkers() {
+      // حذف مارکرهای قبلی
+      markers.forEach(marker => map.removeLayer(marker));
+      markers = [];
+      
+      // دریافت نوع انتخابی
+      const selectedType = document.querySelector('.filter-btn.active').dataset.type;
+      
+      // ایجاد مارکرهای جدید بر اساس فیلتر
+      places.forEach(place => {
+        if (selectedType === 'all' || place.type === selectedType) {
+          let icon;
+          switch(place.type) {
+            case 'cafe':
+              icon = cafeIcon;
+              break;
+            case 'restaurant':
+              icon = restaurantIcon;
+              break;
+            case 'cafe-restaurant':
+              icon = cafeRestaurantIcon;
+              break;
+          }
+          
+          const marker = L.marker([place.lat, place.lng], { icon }).addTo(map);
+          
+          marker.on('click', () => {
+            document.getElementById("cafeName").textContent = place.name;
+            document.getElementById("cafeDescription").textContent = place.description;
+            
+            // تعیین رنگ بادج بر اساس نوع
+            let badgeColor, badgeIcon;
+            if (place.type === 'cafe') {
+              badgeColor = '#6F4E37';
+              badgeIcon = '<i class="fas fa-coffee"></i>';
+            } else if (place.type === 'restaurant') {
+              badgeColor = '#C52D2D';
+              badgeIcon = '<i class="fas fa-utensils"></i>';
+            } else {
+              badgeColor = '#5A7247';
+              badgeIcon = '<i class="fas fa-mug-hot"></i>';
+            }
+            
+            document.getElementById("cafeType").innerHTML = 
+              `<span class="inline-block px-3 py-1 rounded-full text-sm font-bold text-white mr-2" style="background-color: ${badgeColor}">
+                ${badgeIcon} ${place.typeName}
+              </span>`;
+
+            // بارگذاری تصاویر گالری
+            currentImages = place.images;
+            currentIndex = 0;
+            document.getElementById("cafeImage").src = currentImages[currentIndex];
+
+            document.getElementById("cafeModal").classList.remove('hidden');
+            document.getElementById("cafeModal").classList.add('block');
+          });
+          
+          markers.push(marker);
+        }
+      });
+    }
+
+    // ایجاد مارکرها در ابتدا
+    createMarkers();
+
+    // مدیریت کلیک روی دکمه‌های فیلتر
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        createMarkers();
+      });
+    });
+
+    document.querySelector(".close").onclick = function() {
+      document.getElementById("cafeModal").classList.remove('block');
+      document.getElementById("cafeModal").classList.add('hidden');
+    };
+
+    document.getElementById("prev").onclick = () => {
+      if (currentImages.length > 0) {
+        currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+        document.getElementById("cafeImage").src = currentImages[currentIndex];
+      }
+    };
+
+    document.getElementById("next").onclick = () => {
+      if (currentImages.length > 0) {
+        currentIndex = (currentIndex + 1) % currentImages.length;
+        document.getElementById("cafeImage").src = currentImages[currentIndex];
+      }
+    };
+
+    // مشاهده منو
+    document.getElementById("button_menu").onclick = function() {
+      const cafeName = document.getElementById("cafeName").textContent;
+      alert(`منوی ${cafeName} در حال حاضر در دسترس نیست.`);
+    };
+
+    // بستن مودال با کلیک خارج از آن
+    window.onclick = function(event) {
+      if (event.target == document.getElementById("cafeModal")) {
+        document.getElementById("cafeModal").classList.remove('block');
+        document.getElementById("cafeModal").classList.add('hidden');
+      }
+    };
+  </script>
+</body>
+
+</html>

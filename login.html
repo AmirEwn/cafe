@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ورود | ثبت‌نام - کافه‌رستوران‌یاب</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Vazirmatn', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              500: '#6d28d9',
+              400: '#8b5cf6',
+            },
+            secondary: '#f59e0b',
+            dark: '#1e293b',
+            light: '#f8fafc',
+            gray: {
+              500: '#64748b',
+              300: '#e2e8f0',
+            },
+            success: '#10b981',
+            danger: '#ef4444',
+          },
+          boxShadow: {
+            card: '0 4px 20px rgba(0, 0, 0, 0.08)',
+            'card-hover': '0 10px 25px rgba(0, 0, 0, 0.1)',
+          },
+        }
+      }
+    }
+  </script>
+  <style type="text/css">
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background-color: #f8f5f2;
+    }
+
+    .gradient-bg {
+      background: linear-gradient(to left, #f9fafb, #f3f4f6);
+    }
+
+    .gradient-primary {
+      background: linear-gradient(135deg, #8b5cf6, #8b5cf6);
+    }
+
+    .auth-tab.active {
+      color: #8b5cf6;
+      border-bottom: 3px solid #8b5cf6;
+    }
+
+    .shake {
+      animation: shake 0.5s;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      10%,
+      30%,
+      50%,
+      70%,
+      90% {
+        transform: translateX(-5px);
+      }
+
+      20%,
+      40%,
+      60%,
+      80% {
+        transform: translateX(5px);
+      }
+    }
+
+    .message {
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+
+    .message.hide {
+      opacity: 0;
+    }
+
+    .auth-feature-icon {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .custom-select {
+      position: relative;
+    }
+
+    .custom-select select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      padding-right: 2.5rem;
+    }
+
+    .custom-select::after {
+      content: "\f078";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      pointer-events: none;
+    }
+
+    .form-container {
+      max-height: 420px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #e2e8f0 transparent;
+    }
+
+    .form-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .form-container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .form-container::-webkit-scrollbar-thumb {
+      background-color: #e2e8f0;
+      border-radius: 3px;
+    }
+
+    .timer {
+      font-size: 0.9rem;
+      color: #64748b;
+    }
+
+    .timer.expired {
+      color: #ef4444;
+    }
+
+    .otp-container {
+      direction: ltr;
+      /* تغییر جهت به چپ به راست */
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .otp-input {
+      width: 3rem;
+      min-width: 3rem;
+      /* اضافه کردن این خط */
+      height: 3rem;
+      text-align: center;
+      font-size: 1.2rem;
+      margin: 0 0.25rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      transition: all 0.2s;
+      direction: ltr;
+    }
+
+    .otp-input:focus {
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+      outline: none;
+    }
+
+    .otp-input.filled {
+      border-color: #8b5cf6;
+      background-color: #f5f3ff;
+    }
+
+    .password-strength {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .password-requirement {
+      display: flex;
+      align-items: center;
+      color: #64748b;
+    }
+
+    .password-requirement i {
+      margin-left: 0.5rem;
+    }
+
+    .password-requirement.valid {
+      color: #10b981;
+    }
+
+    .password-requirement.invalid {
+      color: #ef4444;
+    }
+
+    .password-meter {
+      height: 4px;
+      background-color: #e2e8f0;
+      border-radius: 2px;
+      margin-top: 0.5rem;
+      overflow: hidden;
+    }
+
+    .password-meter-bar {
+      height: 100%;
+      width: 0%;
+      background-color: #ef4444;
+      transition: width 0.3s ease, background-color 0.3s ease;
+    }
+
+    .password-meter-bar.weak {
+      width: 25%;
+      background-color: #ef4444;
+    }
+
+    .password-meter-bar.medium {
+      width: 50%;
+      background-color: #f59e0b;
+    }
+
+    .password-meter-bar.strong {
+      width: 75%;
+      background-color: #84cc16;
+    }
+
+    .password-meter-bar.very-strong {
+      width: 100%;
+      background-color: #10b981;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-4xl bg-white rounded-2xl shadow-card overflow-hidden flex flex-col md:flex-row">
+    <!-- بخش تصویر و اطلاعات -->
+    <div class="gradient-primary p-8 text-white md:w-1/2 flex flex-col justify-center">
+      <h2 class="text-2xl font-bold mb-6">به کافه‌رستوران‌یاب خوش آمدید</h2>
+      <p class="mb-8 leading-relaxed">با عضویت در سامانه کافه‌رستوران‌یاب به جامعه هزاران کاربری بپیوندید که هر روز
+        بهترین تجربه‌های غذایی را با هم به اشتراک می‌گذارند.</p>
+
+      <div class="space-y-6">
+        <div class="flex items-center">
+          <div class="auth-feature-icon w-12 h-12 rounded-full flex items-center justify-center mr-4">
+            <i class="fas fa-star text-xl text-white"></i>
+          </div>
+          <span>امتیازدهی و بررسی واقعی کافه‌ها و رستوران‌ها</span>
+        </div>
+        <div class="flex items-center">
+          <div class="auth-feature-icon w-12 h-12 rounded-full flex items-center justify-center mr-4">
+            <i class="fas fa-calendar-check text-xl text-white"></i>
+          </div>
+          <span>رزرو آنلاین میز در بهترین مکان‌ها</span>
+        </div>
+        <div class="flex items-center">
+          <div class="auth-feature-icon w-12 h-12 rounded-full flex items-center justify-center mr-4">
+            <i class="fas fa-gift text-xl text-white"></i>
+          </div>
+          <span>تخفیف‌های ویژه برای اعضا</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- بخش فرم‌ها -->
+    <div class="p-8 md:w-1/2 flex flex-col">
+      <div class="text-center mb-6">
+        <h1 class="text-2xl font-bold text-primary-500">کافه‌رستوران‌یاب</h1>
+        <p class="text-gray-500 mt-2">بهترین تجربه غذایی در شهر شما</p>
+      </div>
+
+      <!-- تب‌های ورود و ثبت‌نام -->
+      <div class="flex border-b border-gray-200 mb-6">
+        <button class="auth-tab flex-1 py-3 font-medium text-gray-500 active" data-tab="login">ورود</button>
+        <button class="auth-tab flex-1 py-3 font-medium text-gray-500" data-tab="register">ثبت‌نام</button>
+      </div>
+
+      <!-- پیام‌ها -->
+      <div id="message-container" class="mb-4"></div>
+
+      <!-- فرم ورود -->
+      <form id="login-form" class="auth-form active">
+        <div class="mb-4">
+          <label for="login-phone" class="block text-dark font-medium mb-2">شماره موبایل </label>
+          <div class="relative">
+            <input type="text" id="login-phone" placeholder="09123456789"
+              class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition"
+              required>
+            <i class="fas fa-user absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="login-email" class="block text-dark font-medium mb-2">آدرس ایمیل </label>
+          <div class="relative">
+            <input type="email" id="login-email" placeholder="example@example.com"
+              class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition">
+            <i class="fas fa-envelope absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label for="login-password" class="block text-dark font-medium mb-2">رمز عبور</label>
+          <div class="relative">
+            <input type="password" id="login-password" placeholder="رمز عبور خود را وارد کنید"
+              class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition"
+              required>
+            <i class="fas fa-lock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <i class="fas fa-eye toggle-password absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer"
+              data-target="login-password"></i>
+          </div>
+        </div>
+
+        <button type="submit"
+          class="w-full px-6 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-400 transition flex items-center justify-center gap-2">
+          <i class="fas fa-sign-in-alt"></i> ورود به حساب
+        </button>
+
+        <div class="mt-4 text-center text-sm text-gray-500">
+          با ورود یا ثبت‌نام، <a href="#" class="text-primary-500 hover:text-primary-400">قوانین و مقررات</a> را
+          می‌پذیرید
+        </div>
+      </form>
+
+      <!-- فرم ثبت‌نام -->
+      <form id="register-form" class="auth-form hidden">
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label for="register-firstname" class="block text-dark font-medium mb-2">نام</label>
+            <div class="relative">
+              <input type="text" id="register-firstname" placeholder="نام"
+                class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition"
+                required>
+              <i class="fas fa-user absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+          </div>
+          <div>
+            <label for="register-lastname" class="block text-dark font-medium mb-2">نام خانوادگی</label>
+            <div class="relative">
+              <input type="text" id="register-lastname" placeholder="نام خانوادگی"
+                class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition"
+                required>
+              <i class="fas fa-user absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="register-phone" class="block text-dark font-medium mb-2">شماره موبایل</label>
+          <div class="relative">
+            <input type="tel" id="register-phone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" pattern="09[0-9]{9}" maxlength="11"
+              class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition"
+              required>
+            <i class="fas fa-mobile-alt absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="register-email" class="block text-dark font-medium mb-2">آدرس ایمیل </label>
+          <div class="relative">
+            <input type="email" id="register-email" placeholder="example@example.com"
+              class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition">
+            <i class="fas fa-envelope absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          </div>
+        </div>
+
+
+        <div class="mb-4">
+          <label for="register-password" class="block text-dark font-medium mb-2">رمز عبور</label>
+          <div class="relative">
+            <input type="password" id="register-password" placeholder="حداقل ۸ کاراکتر با یک حرف بزرگ و یک علامت"
+              class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition"
+              required minlength="8">
+            <i class="fas fa-lock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <i class="fas fa-eye toggle-password absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer"
+              data-target="register-password"></i>
+          </div>
+
+          <div class="password-meter">
+            <div class="password-meter-bar" id="password-strength-meter"></div>
+          </div>
+          <div class="password-strength" id="password-requirements">
+            <div class="password-requirement" id="req-length">
+              <i class="fas fa-circle"></i>
+              <span>حداقل ۸ کاراکتر</span>
+            </div>
+            <div class="password-requirement" id="req-uppercase">
+              <i class="fas fa-circle"></i>
+              <span>حداقل یک حرف بزرگ</span>
+            </div>
+            <div class="password-requirement" id="req-special">
+              <i class="fas fa-circle"></i>
+              <span>حداقل یک علامت خاص (مانند !@#$%^&*)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <input type="password" id="register-confirm-password" placeholder="تکرار رمز عبور"
+            class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition  "
+            required>
+          <i class="fas fa-lock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 "></i>
+          <i class="fas fa-eye toggle-password absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer"
+            data-target="register-confirm-password"></i>
+        </div>
+        <div id="confirm-password-feedback" class="text-xs mt-1 text-red-500 hidden pl-2 pr-2 ">
+          <i class="fas fa-exclamation-circle ml-1  "></i>
+          رمز عبور با تکرار آن مطابقت ندارد
+        </div>
+
+
+        <div class="mb-4">
+          <label for="register-type" class="block text-dark font-medium mb-2 mt-2">نوع حساب</label>
+          <div class="custom-select">
+            <select id="register-type"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition"
+              required>
+              <option value="" disabled selected>انتخاب کنید</option>
+              <option value="cafe">کافه</option>
+              <option value="restaurant">رستوران</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit"
+          class="w-full px-6 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-400 transition flex items-center justify-center gap-2 mt-2">
+          <i class="fas fa-user-plus"></i> ثبت‌نام
+        </button>
+
+        <div class="mt-4 text-center text-sm text-gray-500">
+          حساب کاربری دارید؟ <a href="#" class="text-primary-500 hover:text-primary-400 switch-to-login">وارد شوید</a>
+        </div>
+      </form>
+
+      <!-- فرم OTP (مخفی در ابتدا) -->
+      <div id="otp-form" class="hidden">
+        <div class="text-center mb-6">
+          <h2 class="text-xl font-bold text-dark">تایید هویت دو مرحله‌ای</h2>
+          <p class="text-gray-500 mt-2">کد تایید به <span id="otp-phone" class="font-medium"></span> ارسال شد</p>
+        </div>
+
+        <div class="mb-6">
+          <div class="otp-container">
+            <input type="text" maxlength="1" class="otp-input" data-index="0" autofocus>
+            <input type="text" maxlength="1" class="otp-input" data-index="1">
+            <input type="text" maxlength="1" class="otp-input" data-index="2">
+            <input type="text" maxlength="1" class="otp-input" data-index="3">
+            <input type="text" maxlength="1" class="otp-input" data-index="4">
+            <input type="text" maxlength="1" class="otp-input" data-index="5">
+          </div>
+
+          <div class="text-center">
+            <p class="timer">زمان باقی‌مانده: <span id="countdown">02:00</span></p>
+            <button id="resend-otp" class="text-primary-500 text-sm mt-2 hidden">ارسال مجدد کد</button>
+          </div>
+        </div>
+
+        <button id="verify-otp"
+          class="w-full px-6 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-400 transition flex items-center justify-center gap-2 disabled:opacity-50"
+          disabled>
+          <i class="fas fa-check-circle"></i> تایید کد
+        </button>
+
+        <div class="mt-4 text-center text-sm text-gray-500">
+          <a href="#" class="text-primary-500 hover:text-primary-400 back-to-form">بازگشت به فرم قبلی</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // عناصر DOM
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const otpForm = document.getElementById('otp-form');
+    const tabs = document.querySelectorAll('.auth-tab');
+    const forms = document.querySelectorAll('.auth-form');
+    const switchToLogin = document.querySelector('.switch-to-login');
+    const messageContainer = document.getElementById('message-container');
+    const otpInputs = document.querySelectorAll('.otp-input');
+    const verifyOtpBtn = document.getElementById('verify-otp');
+    const resendOtpBtn = document.getElementById('resend-otp');
+    const backToFormBtn = document.querySelector('.back-to-form');
+    const countdownElement = document.getElementById('countdown');
+    const otpPhoneElement = document.getElementById('otp-phone');
+
+    // متغیرهای OTP
+    let currentForm = null;
+    let otpTimer;
+    let timeLeft = 120; // 2 دقیقه به ثانیه
+    let loginIdentifier = "";  // برای ذخیره موبایل یا ایمیل در حالت لاگین
+    // مدیریت تب‌ها
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // غیرفعال کردن تب‌های دیگر
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        // نمایش فرم مربوطه
+        const tabId = tab.getAttribute('data-tab');
+        forms.forEach(form => {
+          form.classList.add('hidden');
+          form.classList.remove('active');
+        });
+        document.getElementById(`${tabId}-form`).classList.remove('hidden');
+        document.getElementById(`${tabId}-form`).classList.add('active');
+
+        // مخفی کردن فرم OTP در صورت وجود
+        otpForm.classList.add('hidden');
+      });
+    });
+
+    // مدیریت ارسال فرم ورود
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('login-email').value.trim();
+      const phone = document.getElementById('login-phone').value.trim();
+
+      const password = document.getElementById('login-password').value;
+
+      if (!email) {
+        showMessage('لطفاً آدرس ایمیل خود را وارد کنید', 'error');
+        return;
+      }
+      if (!phone) {
+        showMessage('لطفاً شماره موبایل خود را وارد کنید', 'error');
+        return;
+      }
+
+      if (!password) {
+        showMessage('لطفاً رمز عبور خود را وارد کنید', 'error');
+        return;
+      }
+
+      const isPhone = /^09[0-9]{9}$/.test(phone);
+      const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+      if (!isPhone && !isEmail) {
+        showMessage('فرمت وارد شده معتبر نیست. لطفاً شماره موبایل یا ایمیل معتبر وارد کنید', 'error');
+        return;
+      }
+
+      // ساخت payload با توجه به نوع ورودی
+      const payload = {
+        phone, password
+      };
+
+      console.log(payload);
+      try {
+        const response = await fetch("http://135.125.238.202:7050/user/login/password/business/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (response.status === 200) {
+          showMessage("ورود موفقیت‌آمیز بود", "success");
+
+          currentForm = 'login';
+          loginIdentifier = email ? email : phone;
+          showOtpForm(loginIdentifier);
+
+
+          // ارسال OTP
+          await fetch("http://135.125.238.202:7050/user/send/otp/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              phone, email
+            }) // همون payload شامل phone یا email
+          })
+            .then(res => res.json())
+            .then(data => {
+              console.log("OTP ارسال شد", data);
+            })
+            .catch(err => {
+              console.error("خطا در ارسال OTP:", err);
+              showMessage("خطا در ارسال کد تایید", "error");
+            });
+
+        } else if (response.status === 400 || response.status === 401) {
+          showMessage("نام کاربری یا رمز عبور اشتباه است", "error");
+        } else {
+          showMessage("خطا در سرور", "error");
+        }
+
+      } catch (error) {
+        console.error("Login fetch error:", error);
+        showMessage("خطا در ارتباط با سرور", "error");
+      }
+
+    });
+
+    // مدیریت ارسال فرم ثبت‌نام
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const password = document.getElementById('register-password').value;
+      const hasLength = password.length >= 8;
+      const hasUppercase = /[A-Z]/.test(password);
+      const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
+      if (!hasLength || !hasUppercase || !hasSpecial) {
+        showMessage('رمز عبور باید حداقل ۸ کاراکتر، شامل یک حرف بزرگ و یک علامت خاص باشد', 'error');
+        return;
+      }
+
+      // در بخش اعتبارسنجی فرم ثبت‌نام این شرط را اضافه کنید
+      const confirmPassword = document.getElementById('register-confirm-password').value;
+      if (password !== confirmPassword) {
+        showMessage('رمز عبور و تکرار آن مطابقت ندارند', 'error');
+        confirmPasswordFeedback.classList.remove('hidden');
+        document.getElementById('register-confirm-password').classList.add('border-red-500');
+        return;
+      }
+
+
+      const firstname = document.getElementById('register-firstname').value;
+      const lastname = document.getElementById('register-lastname').value;
+      const phone = document.getElementById('register-phone').value;
+      const email = document.getElementById('register-email').value;
+      const accountType = document.getElementById('register-type').value;
+
+      // اعتبارسنجی فیلدهای اجباری
+      if (!firstname) {
+        showMessage('لطفاً نام خود را وارد کنید', 'error');
+        return;
+      }
+
+      if (!lastname) {
+        showMessage('لطفاً نام خانوادگی خود را وارد کنید', 'error');
+        return;
+      }
+
+      if (!phone || !phone.match(/^09[0-9]{9}$/)) {
+        showMessage('لطفاً شماره موبایل معتبر وارد کنید', 'error');
+        return;
+      }
+
+      if (email && !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        showMessage('لطفاً ایمیل معتبر وارد کنید', 'error');
+        return;
+      }
+
+      if (!password || password.length < 6) {
+        showMessage('رمز عبور باید حداقل ۶ کاراکتر باشد', 'error');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showMessage('رمز عبور و تکرار آن مطابقت ندارند', 'error');
+        return;
+      }
+
+      if (!accountType) {
+        showMessage('لطفاً نوع حساب خود را انتخاب کنید', 'error');
+        return;
+      }
+
+
+
+      const payload = {
+        phone,
+        first_name: firstname,
+        last_name: lastname,
+        email,
+        business_types: [accountType],
+        password,
+        confirm_password: confirmPassword
+      };
+      console.log(payload);
+      try {
+        const response = await fetch("http://135.125.238.202:7050/user/register/business/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (response.status === 201) {
+          showMessage("ثبت‌نام با موفقیت انجام شد ", "success");
+
+
+          registerForm.reset();
+
+          // ذخیره فرم فعلی برای استفاده در مرحله OTP
+          currentForm = 'register';
+
+          loginIdentifier = email ? email : phone;
+          // نمایش فرم OTP
+          showOtpForm(email);
+          
+          await fetch("http://135.125.238.202:7050/user/send/otp/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ phone, email })
+          })
+            .then(res => res.json())
+            .then(data => {
+              console.log("OTP ارسال شد", data);
+
+            })
+            .catch(err => {
+              console.error("OTP ارسال نشد", err);
+              showMessage("خطا در ارسال کد تأیید", "error");
+            });
+        } else if (response.status === 400) {
+          let errorMessages = [];
+          for (const key in data) {
+            const message = Array.isArray(data[key]) ? data[key].join("، ") : data[key];
+            errorMessages.push(`${message}`);
+          }
+          showMessage(errorMessages.join(" | "), "error");
+        } else {
+          showMessage("خطایی در سرور رخ داده است ", "error");
+        }
+
+      } catch (error) {
+        console.error("Fetch error:", error);
+        showMessage("خطا در ارتباط با سرور یا اینترنت ", "error");
+      }
+
+
+    });
+
+    // تغییر به فرم ورود از ثبت‌نام
+    switchToLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.querySelector('.auth-tab[data-tab="login"]').click();
+    });
+
+    // بازگشت به فرم قبلی از OTP
+    backToFormBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      otpForm.classList.add('hidden');
+      document.getElementById(`${currentForm}-form`).classList.remove('hidden');
+      resetOtpForm();
+    });
+
+    // ارسال مجدد کد OTP
+    resendOtpBtn.addEventListener('click', () => {
+      // در حالت واقعی، اینجا کد OTP مجدداً ارسال می‌شود
+      console.log('کد OTP مجدداً ارسال شد');
+      startTimer();
+      showMessage('کد تایید جدید ارسال شد', 'success');
+      resendOtpBtn.classList.add('hidden');
+    });
+
+    // تابع نمایش فرم OTP
+    function showOtpForm(identifier) {
+      // مخفی کردن فرم فعلی
+      document.getElementById(`${currentForm}-form`).classList.add('hidden');
+
+      // نمایش شماره تلفن در فرم OTP
+      otpPhoneElement.textContent = identifier;
+
+      // نمایش فرم OTP
+      otpForm.classList.remove('hidden');
+
+      // شروع تایمر
+      startTimer();
+
+      // فوکوس روی اولین فیلد OTP
+      otpInputs[0].focus();
+    }
+
+    // تابع شروع تایمر
+    function startTimer() {
+      clearInterval(otpTimer);
+      timeLeft = 120;
+      updateTimerDisplay();
+      resendOtpBtn.classList.add('hidden');
+
+      otpTimer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+
+        if (timeLeft <= 0) {
+          clearInterval(otpTimer);
+          countdownElement.textContent = '00:00';
+          countdownElement.parentElement.classList.add('expired');
+          resendOtpBtn.classList.remove('hidden');
+        }
+      }, 1000);
+    }
+
+    // تابع به‌روزرسانی نمایش تایمر
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      countdownElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    // مدیریت ورودی‌های OTP - اصلاح شده
+    otpInputs.forEach((input, index) => {
+      input.addEventListener('input', (e) => {
+        const value = e.target.value;
+
+        // فقط اعداد مجاز هستند
+        if (!/^\d*$/.test(value)) {
+          e.target.value = '';
+          return;
+        }
+
+        // پر کردن فیلد و رفتن به فیلد بعدی (چپ به راست)
+        if (value.length === 1) {
+          if (index < otpInputs.length - 1) {
+            otpInputs[index + 1].focus();
+          } else {
+            // اگر آخرین فیلد بود، فوکوس را به دکمه تأیید منتقل کن
+            verifyOtpBtn.focus();
+          }
+        }
+
+        // اعتبارسنجی OTP
+        validateOtpInputs();
+      });
+
+      input.addEventListener('keydown', (e) => {
+        // مدیریت کلید Backspace
+        if (e.key === 'Backspace' && !e.target.value && index > 0) {
+          otpInputs[index - 1].focus();
+        }
+
+        // مدیریت کلیدهای جهت‌دار
+        if (e.key === 'ArrowLeft' && index > 0) {
+          otpInputs[index - 1].focus();
+          e.preventDefault();
+        }
+
+        if (e.key === 'ArrowRight' && index < otpInputs.length - 1) {
+          otpInputs[index + 1].focus();
+          e.preventDefault();
+        }
+      });
+
+      input.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const pasteData = e.clipboardData.getData('text');
+
+        if (/^\d{6}$/.test(pasteData)) {
+          for (let i = 0; i < pasteData.length; i++) {
+            if (i < otpInputs.length) {
+              otpInputs[i].value = pasteData[i];
+            }
+          }
+          verifyOtpBtn.focus();
+          validateOtpInputs();
+        }
+      });
+    });
+
+    // اعتبارسنجی ورودی‌های OTP - اصلاح شده
+    function validateOtpInputs() {
+      let allFilled = true;
+
+      otpInputs.forEach(input => {
+        if (input.value) {
+          input.classList.add('filled');
+        } else {
+          input.classList.remove('filled');
+          allFilled = false;
+        }
+      });
+
+      verifyOtpBtn.disabled = !allFilled;
+
+      // اگر همه فیلدها پر شدند، دکمه تأیید را فعال کن
+      if (allFilled) {
+        verifyOtpBtn.focus();
+      }
+    }
+
+    // تایید کد OTP
+    verifyOtpBtn.addEventListener('click', async () => {
+
+      let otpCode = '';
+      otpInputs.forEach(input => otpCode += input.value);
+
+      const isPhone = /^09[0-9]{9}$/.test(loginIdentifier);
+      const payload = {
+        otp: otpCode
+      };
+
+      if (isPhone) {
+        payload.phone = loginIdentifier;
+      } else {
+        payload.email = loginIdentifier;
+      }
+      console.log(payload);
+      try {
+        const response = await fetch("http://135.125.238.202:7050/user/verify/otp/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (response.status === 200) {
+          showMessage("کد تایید با موفقیت تأیید شد ", "success");
+          sessionStorage.setItem('accessToken', data.access);
+          sessionStorage.setItem('refreshToken', data.refresh);
+
+          // انتقال به صفحه اصلی یا داشبورد:
+          setTimeout(() => {
+            window.location.href = "homepage.html";
+          }, 2000);
+        } else {
+          showMessage("کد وارد شده اشتباه یا منقضی شده است ", "error");
+        }
+      } catch (err) {
+        console.error("OTP Verification error:", err);
+        showMessage("خطا در ارتباط با سرور در مرحله تایید کد", "error");
+      }
+    });
+
+    // تابع نمایش پیام
+    function showMessage(text, type) {
+      // حذف پیام قبلی اگر وجود دارد
+      const oldMessage = messageContainer.querySelector('.message');
+      if (oldMessage) oldMessage.remove();
+
+      const message = document.createElement('div');
+      message.className = `message p-3 mb-4 rounded-lg flex items-center justify-center text-sm ${type === 'success' ? 'bg-green-100 text-green-700' :
+        type === 'error' ? 'bg-red-100 text-red-700' :
+          'bg-blue-100 text-blue-700'
+        }`;
+
+      const icon = document.createElement('i');
+      icon.className = `fas ${type === 'success' ? 'fa-check-circle' :
+        type === 'error' ? 'fa-exclamation-circle' :
+          'fa-info-circle'
+        } ml-2`;
+
+      message.appendChild(document.createTextNode(text));
+      message.appendChild(icon);
+      messageContainer.appendChild(message);
+
+      // مخفی کردن پیام بعد از 3 ثانیه
+      setTimeout(() => {
+        message.classList.add('hide');
+        setTimeout(() => message.remove(), 500);
+      }, 3000);
+    }
+
+    // تابع ریست فرم OTP
+    function resetOtpForm() {
+      otpInputs.forEach(input => {
+        input.value = '';
+        input.classList.remove('filled');
+      });
+      verifyOtpBtn.disabled = true;
+      clearInterval(otpTimer);
+      countdownElement.textContent = '02:00';
+      countdownElement.parentElement.classList.remove('expired');
+      resendOtpBtn.classList.add('hidden');
+    }
+
+    // اعتبارسنجی رمز عبور
+    const passwordInput = document.getElementById('register-password');
+    const passwordMeter = document.getElementById('password-strength-meter');
+    const reqLength = document.getElementById('req-length');
+    const reqUppercase = document.getElementById('req-uppercase');
+    const reqSpecial = document.getElementById('req-special');
+
+    passwordInput.addEventListener('input', function () {
+      const password = this.value;
+      validatePassword(password);
+    });
+
+    function validatePassword(password) {
+      // شرایط رمز عبور
+      const hasLength = password.length >= 8;
+      const hasUppercase = /[A-Z]/.test(password);
+      const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
+      // به‌روزرسانی نمایش شرایط
+      updateRequirement(reqLength, hasLength);
+      updateRequirement(reqUppercase, hasUppercase);
+      updateRequirement(reqSpecial, hasSpecial);
+
+      // محاسبه قدرت رمز عبور
+      let strength = 0;
+      if (hasLength) strength++;
+      if (hasUppercase) strength++;
+      if (hasSpecial) strength++;
+
+      // به‌روزرسانی نوار قدرت رمز عبور
+      updatePasswordMeter(strength);
+    }
+
+    function updateRequirement(element, isValid) {
+      if (isValid) {
+        element.classList.add('valid');
+        element.classList.remove('invalid');
+        element.querySelector('i').className = 'fas fa-check-circle';
+      } else {
+        element.classList.add('invalid');
+        element.classList.remove('valid');
+        element.querySelector('i').className = 'fas fa-circle';
+      }
+    }
+
+    function updatePasswordMeter(strength) {
+      passwordMeter.className = 'password-meter-bar';
+
+      if (strength === 0) {
+        passwordMeter.style.width = '0%';
+      } else if (strength === 1) {
+        passwordMeter.classList.add('weak');
+      } else if (strength === 2) {
+        passwordMeter.classList.add('medium');
+      } else if (strength === 3) {
+        passwordMeter.classList.add('strong');
+      }
+    }
+
+    // اعتبارسنجی تطابق رمز عبور و تکرار آن
+    const confirmPasswordInput = document.getElementById('register-confirm-password');
+    const confirmPasswordFeedback = document.getElementById('confirm-password-feedback');
+
+    confirmPasswordInput.addEventListener('input', function () {
+      const password = document.getElementById('register-password').value;
+      const confirmPassword = this.value;
+
+      if (confirmPassword && password !== confirmPassword) {
+        confirmPasswordFeedback.classList.remove('hidden');
+        this.classList.add('border-red-500');
+        this.classList.remove('border-gray-300');
+      } else {
+        confirmPasswordFeedback.classList.add('hidden');
+        this.classList.remove('border-red-500');
+        this.classList.add('border-gray-300');
+      }
+    });
+
+    document.querySelectorAll('.toggle-password').forEach(icon => {
+      icon.addEventListener('click', () => {
+        const targetId = icon.getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        const isPassword = input.type === "password";
+
+        input.type = isPassword ? "text" : "password";
+        icon.classList.toggle("fa-eye");
+        icon.classList.toggle("fa-eye-slash");
+      });
+    });
+
+
+  </script>
+</body>
+
+</html>

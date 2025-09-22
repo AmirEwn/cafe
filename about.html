@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>درباره ما - کافه‌رستوران‌یاب</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Vazirmatn', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              500: '#6d28d9',
+              400: '#8b5cf6',
+            },
+            secondary: '#f59e0b',
+            dark: '#1e293b',
+            light: '#f8fafc',
+            gray: {
+              500: '#64748b',
+              300: '#e2e8f0',
+            },
+            success: '#10b981',
+            danger: '#ef4444',
+          },
+          boxShadow: {
+            card: '0 4px 20px rgba(0, 0, 0, 0.08)',
+            'card-hover': '0 10px 25px rgba(0, 0, 0, 0.1)',
+          },
+        }
+      }
+    }
+  </script>
+  <style type="text/css">
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+    }
+    .gradient-bg {
+      background: linear-gradient(to left, #f9fafb, #f3f4f6);
+    }
+    .gradient-bg-reverse {
+      background: linear-gradient(to right, #f9fafb, #f3f4f6);
+    }
+    .gradient-primary {
+      background: linear-gradient(135deg, #6d28d9, #8b5cf6);
+    }
+    .mission-card:hover .mission-icon {
+      background-color: #6d28d9;
+      color: white;
+      transform: scale(1.1);
+    }
+    .team-member:hover .member-image img {
+      transform: scale(1.05);
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 50%;
+      transform: translateX(50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, #6d28d9, #8b5cf6);
+      border-radius: 2px;
+    }
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50px;
+      height: 3px;
+      background-color: #6d28d9;
+      border-radius: 2px;
+    }
+    .active-nav-link {
+      color: #6d28d9;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-dark">
+  <!-- هدر -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4">
+      <nav class="flex justify-between items-center py-4">
+        <a href="index.html" class="text-xl font-extrabold text-primary-500">کافه‌رستوران‌یاب</a>
+        <div class="hidden md:flex items-center space-x-6 space-x-reverse">
+          <a href="index.html" class="font-medium hover:text-primary-500 transition">خانه</a>
+          <a href="#" class="font-medium hover:text-primary-500 transition">کافه‌ها و رستوران‌ها</a>
+          <a href="#" class="font-medium hover:text-primary-500 transition">دسته‌بندی‌ها</a>
+          <a href="#" class="font-medium hover:text-primary-500 transition">وبلاگ</a>
+          <a href="contact.html" class="font-medium hover:text-primary-500 transition">تماس با ما</a>
+          <a href="about.html" class="font-medium text-primary-500 transition active-nav-link">درباره ما</a>
+        </div>
+        <div class="hidden md:flex items-center space-x-4 space-x-reverse">
+          <a href="#" class="px-4 py-2 border border-primary-500 text-primary-500 rounded-lg font-medium hover:bg-primary-500/10 transition">ورود</a>
+          <a href="#" class="px-4 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-400 transition">ثبت‌نام</a>
+        </div>
+        <button class="md:hidden text-2xl">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- بخش هیرو درباره ما -->
+  <section class="gradient-bg py-20">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col lg:flex-row items-center gap-12">
+        <div class="lg:w-1/2 text-center lg:text-right">
+          <h1 class="text-3xl md:text-4xl font-extrabold leading-tight mb-6">درباره کافه‌رستوران‌یاب</h1>
+          <p class="text-gray-500 text-lg mb-8 max-w-lg mx-auto lg:mr-0">ما در کافه‌رستوران‌یاب باور داریم که هر وعده غذایی باید یک تجربه منحصر به فرد باشد. ماموریت ما این است که با ارائه اطلاعات دقیق و به‌روز، به شما کمک کنیم بهترین کافه‌ها و رستوران‌های اطراف خود را کشف کنید.</p>
+          <a href="contact.html" class="inline-block px-8 py-4 bg-primary-500 text-white rounded-xl font-medium hover:bg-primary-400 transition">تماس با ما</a>
+        </div>
+        <div class="lg:w-1/2 flex justify-center">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="درباره کافه‌رستوران‌یاب" class="rounded-xl shadow-card max-w-full h-auto">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- بخش ماموریت و ارزش‌ها -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-center mb-4 relative pb-4 section-title">ماموریت و ارزش‌های ما</h2>
+      <p class="text-gray-500 text-center mb-12 max-w-2xl mx-auto">چرا کافه‌رستوران‌یاب را انتخاب کنید؟</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="mission-card bg-gray-50 rounded-xl p-8 text-center relative overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover">
+          <div class="mission-icon w-20 h-20 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-3xl mb-6 mx-auto transition">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">ماموریت ما</h3>
+          <p class="text-gray-500">ایجاد پلی بین علاقه‌مندان به فرهنگ کافه‌نشینی و رستوران‌گردی با بهترین مکان‌های شهر</p>
+        </div>
+        <div class="mission-card bg-gray-50 rounded-xl p-8 text-center relative overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover">
+          <div class="mission-icon w-20 h-20 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-3xl mb-6 mx-auto transition">
+            <i class="fas fa-eye"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">چشم‌انداز</h3>
+          <p class="text-gray-500">تبدیل شدن به مرجع اصلی انتخاب کافه و رستوران در ایران و منطقه</p>
+        </div>
+        <div class="mission-card bg-gray-50 rounded-xl p-8 text-center relative overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover">
+          <div class="mission-icon w-20 h-20 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-3xl mb-6 mx-auto transition">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">ارزش‌ها</h3>
+          <p class="text-gray-500">صداقت، شفافیت، نوآوری و تعهد به ارائه بهترین تجربه به کاربران</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- بخش تیم ما -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-center mb-4 relative pb-4 section-title">تیم ما</h2>
+      <p class="text-gray-500 text-center mb-12 max-w-2xl mx-auto">افرادی که پشت این پروژه هستند</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- عضو تیم ۱ -->
+        <div class="team-member bg-white rounded-xl shadow-card overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover">
+          <div class="member-image relative h-64 overflow-hidden">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="علی محمدی" class="w-full h-full object-cover transition">
+          </div>
+          <div class="p-6 text-center">
+            <h3 class="text-xl font-bold mb-2">علی محمدی</h3>
+            <span class="text-primary-500 text-sm mb-4 inline-block">بنیان‌گذار و مدیرعامل</span>
+            <p class="text-gray-500 mb-6">کارآفرین و علاقه‌مند به صنعت غذا و نوشیدنی با بیش از ۱۰ سال سابقه</p>
+            <div class="flex justify-center gap-4">
+              <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary-500 hover:text-white transition">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary-500 hover:text-white transition">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary-500 hover:text-white transition">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- عضو تیم ۲ -->
+        <div class="team-member bg-white rounded-xl shadow-card overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover">
+          <div class="member-image relative h-64 overflow-hidden">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="سارا احمدی" class="w-full h-full object-cover transition">
+          </div>
+          <div class="p-6 text-center">
+            <h3 class="text-xl font-bold mb-2">سارا احمدی</h3>
+            <span class="text-primary-500 text-sm mb-4 inline-block">مدیر فنی</span>
+            <p class="text-gray-500 mb-6">متخصص فناوری اطلاعات و توسعه نرم‌افزار با تمرکز بر تجربه کاربری</p>
+            <div class="flex justify-center gap-4">
+              <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary-500 hover:text-white transition">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary-500 hover:text-white transition">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary-500 hover:text-white transition">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- عضو تیم ۳ -->
+        <div class="team-member bg-white rounded-xl shadow-card overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover">
+          <div class="member-image relative h-64 overflow-hidden">
+            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="رضا حسینی" class="w-full h-full object-cover transition">
+          </div>
+          <div class="p-6 text-center">
+            <h3 class="text-xl font-bold mb-2">رضا حسینی</h3>
+            <span class="text-primary-500 text-sm mb-4 inline-block">مدیر بازاریابی</span>
+            <p class="text-gray-500 mb-6">متخصص بازاریابی دیجیتال و استراتژی‌های رشد کسب‌وکار</p>
+            <div class="flex justify-center gap-4">
+              <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary-500 hover:text-white transition">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary-500 hover:text-white transition">
+                <i class="fab fa-telegram"></i>
+              </a>
+              <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary-500 hover:text-white transition">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- عضو تیم ۴ -->
+        <div class="team-member bg-white rounded-xl shadow-card overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover">
+          <div class="member-image relative h-64 overflow-hidden">
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="نازنین رضایی" class="w-full h-full object-cover transition">
+          </div>
+          <div class="p-6 text-center">
+            <h3 class="text-xl font-bold mb-2">نازنین رضایی</h3>
+            <span class="text-primary-500 text-sm mb-4 inline-block">سرآشپز و مشاور غذایی</span>
+            <p class="text-gray-500 mb-6">آشپز حرفه‌ای با تخصص در آشپزی بین‌المللی و تجربه مدیریت رستوران</p>
+            <div class="flex justify-center gap-4">
+              <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary-500 hover:text-white transition">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-primary-500 hover:text-white transition">
+                <i class="fab fa-youtube"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- بخش آمار و ارقام -->
+  <section class="gradient-primary py-20 text-white">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        <div class="stat-item">
+          <h3 class="text-4xl font-extrabold mb-2">۱۲۰۰+</h3>
+          <p class="text-lg opacity-90">کافه و رستوران</p>
+        </div>
+        <div class="stat-item">
+          <h3 class="text-4xl font-extrabold mb-2">۵۰,۰۰۰+</h3>
+          <p class="text-lg opacity-90">کاربر فعال</p>
+        </div>
+        <div class="stat-item">
+          <h3 class="text-4xl font-extrabold mb-2">۱۵+</h3>
+          <p class="text-lg opacity-90">شهر تحت پوشش</p>
+        </div>
+        <div class="stat-item">
+          <h3 class="text-4xl font-extrabold mb-2">۹۵%</h3>
+          <p class="text-lg opacity-90">رضایت کاربران</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- فوتر -->
+  <footer class="bg-dark text-white pt-16">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div class="footer-col">
+          <h3 class="text-xl font-bold mb-6 relative pb-3">کافه‌رستوران‌یاب</h3>
+          <p class="text-gray-300 mb-6">کافه‌رستوران‌یاب به شما کمک می‌کند بهترین کافه‌ها، رستوران‌ها و کافه‌رستوران‌های اطراف خود را پیدا کرده و تجربه‌ای لذت‌بخش داشته باشید.</p>
+          <div class="flex gap-4">
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-500 hover:-translate-y-1 transition">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-500 hover:-translate-y-1 transition">
+              <i class="fab fa-telegram"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-500 hover:-translate-y-1 transition">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-500 hover:-translate-y-1 transition">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h3 class="text-xl font-bold mb-6 relative pb-3">لینک‌های سریع</h3>
+          <ul class="space-y-3">
+            <li><a href="index.html" class="text-gray-300 hover:text-white hover:pr-2 transition">خانه</a></li>
+            <li><a href="about.html" class="text-gray-300 hover:text-white hover:pr-2 transition">درباره ما</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">کافه‌ها و رستوران‌ها</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">مقالات</a></li>
+            <li><a href="contact.html" class="text-gray-300 hover:text-white hover:pr-2 transition">تماس با ما</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3 class="text-xl font-bold mb-6 relative pb-3">دسته‌بندی‌ها</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">کافه‌ها</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">رستوران‌ها</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">کافه‌رستوران‌ها</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">فست فود</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">بین‌المللی</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3 class="text-xl font-bold mb-6 relative pb-3">تماس با ما</h3>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3 text-gray-300">
+              <i class="fas fa-map-marker-alt text-primary-500 mt-1"></i>
+              تهران، خیابان آزادی، بلوار کشاورز
+            </li>
+            <li class="flex items-start gap-3 text-gray-300">
+              <i class="fas fa-phone text-primary-500 mt-1"></i>
+              021-12345678
+            </li>
+            <li class="flex items-start gap-3 text-gray-300">
+              <i class="fas fa-envelope text-primary-500 mt-1"></i>
+              info@cafe-restaurant-finder.com
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-gray-300 text-sm">© 1402 تمام حقوق برای کافه‌رستوران‌یاب محفوظ است.</p>
+        <div class="flex gap-6">
+          <a href="#" class="text-gray-300 hover:text-white text-sm transition">قوانین و مقررات</a>
+          <a href="#" class="text-gray-300 hover:text-white text-sm transition">حریم خصوصی</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+</body>
+</html>

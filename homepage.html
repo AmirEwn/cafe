@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>کافه‌رستوران‌یاب - پیدا کردن بهترین کافه‌ها و رستوران‌های اطراف شما</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Vazirmatn', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              500: '#6d28d9',
+              400: '#8b5cf6',
+            },
+            secondary: '#f59e0b',
+            dark: '#1e293b',
+            light: '#f8fafc',
+            gray: {
+              500: '#64748b',
+              300: '#e2e8f0',
+            },
+            success: '#10b981',
+            danger: '#ef4444',
+          },
+          boxShadow: {
+            card: '0 4px 20px rgba(0, 0, 0, 0.08)',
+            'card-hover': '0 10px 25px rgba(0, 0, 0, 0.1)',
+          },
+        }
+      }
+    }
+  </script>
+
+  <style type="text/css">
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .gradient-bg {
+      background: linear-gradient(to left, #f9fafb, #f3f4f6);
+    }
+
+    .gradient-bg-reverse {
+      background: linear-gradient(to right, #f9fafb, #f3f4f6);
+    }
+
+    .gradient-primary {
+      background: linear-gradient(135deg, #6d28d9, #8b5cf6);
+    }
+
+    .category-card:hover .category-icon {
+      background-color: #6d28d9;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .feature-card:hover .feature-icon {
+      background-color: #6d28d9;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 50%;
+      transform: translateX(50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, #6d28d9, #8b5cf6);
+      border-radius: 2px;
+    }
+
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50px;
+      height: 3px;
+      background-color: #6d28d9;
+      border-radius: 2px;
+    }
+
+    .place-card:hover .place-image img {
+      transform: scale(1.05);
+    }
+
+    .blog-card:hover .blog-image img {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-dark">
+  <!-- هدر -->
+  <!-- هدر اصلاح شده -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4">
+      <nav class="flex justify-between items-center py-4">
+        <a href="#" class="text-xl font-extrabold text-primary-500">کافه‌رستوران‌یاب</a>
+
+        <div class="hidden md:flex items-center space-x-6 space-x-reverse">
+          <a href="#" class="font-medium hover:text-primary-500 transition">خانه</a>
+          <a href="#" class="font-medium hover:text-primary-500 transition">کافه‌ها و رستوران‌ها</a>
+          <a href="#" class="font-medium hover:text-primary-500 transition">دسته‌بندی‌ها</a>
+          <a href="#" class="font-medium hover:text-primary-500 transition">وبلاگ</a>
+          <a href="#" class="font-medium hover:text-primary-500 transition">تماس با ما</a>
+        </div>
+
+        <div class="hidden md:flex items-center space-x-4 space-x-reverse">
+          <div class="relative group">
+            <button class="flex items-center gap-2 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition">
+              <span class="text-primary-500">سلام، محمد!</span>
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="پروفایل کاربر"
+                class="w-8 h-8 rounded-full object-cover">
+            </button>
+            <div class="absolute hidden group-hover:block right-0 w-48 bg-white rounded-md shadow-lg py-1 z-50 ">
+              <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">پروفایل من</a>
+              <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">علاقه‌مندی‌ها</a>
+              <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">رزروهای من</a>
+              <div class="border-t border-gray-200"></div>
+              <a href="#" class="block px-4 py-2 text-danger hover:bg-gray-100">خروج</a>
+            </div>
+          </div>
+        </div>
+
+        <button class="md:hidden text-2xl">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- بخش هیرو -->
+  <section class="gradient-bg py-20">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col lg:flex-row items-center gap-12">
+        <div class="lg:w-1/2 text-center lg:text-right">
+          <h1 class="text-3xl md:text-4xl font-extrabold leading-tight mb-6">بهترین کافه‌ها و رستوران‌های اطراف خود را
+            کشف کنید</h1>
+          <p class="text-gray-500 text-lg mb-8 max-w-lg mx-auto lg:mr-0">با کافه‌رستوران‌یاب می‌توانید بین صدها کافه،
+            رستوران و کافه‌رستوران در شهر خود جستجو کرده و تجربه‌ای لذت‌بخش داشته باشید.</p>
+
+          <div class="flex flex-col sm:flex-row gap-4 mb-8 max-w-lg mx-auto lg:mr-0">
+            <div class="relative flex-1">
+              <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <input type="text" placeholder="محل خود را وارد کنید..."
+                class="w-full px-6 py-4 pr-12 border border-gray-300 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition">
+            </div>
+            <button
+              class="px-6 py-4 bg-primary-500 text-white rounded-xl font-medium hover:bg-primary-400 transition">جستجو</button>
+          </div>
+        </div>
+
+        <div class="lg:w-1/2 flex justify-center">
+          <img
+            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            alt="کافه‌رستوران‌یاب" class="rounded-xl shadow-card max-w-full h-auto">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- بخش دسته‌بندی‌ها -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-center mb-4 relative pb-4 section-title">کافه‌ها و رستوران‌ها را بر اساس
+        سلیقه خود پیدا کنید</h2>
+      <p class="text-gray-500 text-center mb-12 max-w-2xl mx-auto">دسته‌بندی مورد علاقه خود را انتخاب کنید</p>
+
+      <div class="flex flex-wrap justify-center gap-3 mb-12">
+        <button
+          class="category-tab-btn px-6 py-3 bg-primary-500 text-white rounded-full font-medium flex items-center gap-2"
+          data-tab="all">
+          <i class="fas fa-th-large"></i>
+          همه دسته‌بندی‌ها
+        </button>
+        <button
+          class="category-tab-btn px-6 py-3 bg-gray-200 text-dark rounded-full font-medium flex items-center gap-2"
+          data-tab="restaurants">
+          <i class="fas fa-utensils"></i>
+          رستوران‌ها
+        </button>
+        <button
+          class="category-tab-btn px-6 py-3 bg-gray-200 text-dark rounded-full font-medium flex items-center gap-2"
+          data-tab="cafes">
+          <i class="fas fa-coffee"></i>
+          کافه‌ها
+        </button>
+        <button
+          class="category-tab-btn px-6 py-3 bg-gray-200 text-dark rounded-full font-medium flex items-center gap-2"
+          data-tab="cafe-restaurants">
+          <i class="fas fa-blender"></i>
+          کافه‌رستوران‌ها
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <!-- دسته‌بندی‌های رستوران‌ها -->
+        <div
+          class="category-card bg-white rounded-xl shadow-card border border-gray-200 text-center p-10 relative overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover"
+          data-category="restaurants">
+          <div
+            class="category-icon w-16 h-16 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-2xl mb-6 mx-auto transition">
+            <i class="fas fa-utensils"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">رستوران ایرانی</h3>
+          <p class="text-gray-500 mb-4">غذاهای اصیل و سنتی ایرانی</p>
+          <span class="inline-block px-3 py-1 bg-gray-200 text-gray-500 rounded-full text-sm font-medium">۴۲۸
+            مکان</span>
+        </div>
+
+        <div
+          class="category-card bg-white rounded-xl shadow-card border border-gray-200 text-center p-10 relative overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover"
+          data-category="restaurants">
+          <div
+            class="category-icon w-16 h-16 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-2xl mb-6 mx-auto transition">
+            <i class="fas fa-pizza-slice"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">ایتالیایی</h3>
+          <p class="text-gray-500 mb-4">پاستا، پیتزا و غذاهای ایتالیایی</p>
+          <span class="inline-block px-3 py-1 bg-gray-200 text-gray-500 rounded-full text-sm font-medium">۱۹۶
+            مکان</span>
+        </div>
+
+        <div
+          class="category-card bg-white rounded-xl shadow-card border border-gray-200 text-center p-10 relative overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover"
+          data-category="restaurants">
+          <div
+            class="category-icon w-16 h-16 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-2xl mb-6 mx-auto transition">
+            <i class="fas fa-hamburger"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">فست فود</h3>
+          <p class="text-gray-500 mb-4">ساندویچ، برگر و غذاهای سریع</p>
+          <span class="inline-block px-3 py-1 bg-gray-200 text-gray-500 rounded-full text-sm font-medium">۵۳۲
+            مکان</span>
+        </div>
+
+        <div
+          class="category-card bg-white rounded-xl shadow-card border border-gray-200 text-center p-10 relative overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover"
+          data-category="restaurants">
+          <div
+            class="category-icon w-16 h-16 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-2xl mb-6 mx-auto transition">
+            <i class="fas fa-fish"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">غذای دریایی</h3>
+          <p class="text-gray-500 mb-4">غذاهای دریایی تازه و خوشمزه</p>
+          <span class="inline-block px-3 py-1 bg-gray-200 text-gray-500 rounded-full text-sm font-medium">۸۷ مکان</span>
+        </div>
+
+        <!-- دسته‌بندی‌های کافه‌ها -->
+        <div
+          class="category-card bg-white rounded-xl shadow-card border border-gray-200 text-center p-10 relative overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover"
+          data-category="cafes">
+          <div
+            class="category-icon w-16 h-16 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-2xl mb-6 mx-auto transition">
+            <i class="fas fa-coffee"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">کافه تخصصی قهوه</h3>
+          <p class="text-gray-500 mb-4">انواع قهوه‌های ویژه و اسپشیالیتی</p>
+          <span class="inline-block px-3 py-1 bg-gray-200 text-gray-500 rounded-full text-sm font-medium">۲۷۶
+            مکان</span>
+        </div>
+
+        <div
+          class="category-card bg-white rounded-xl shadow-card border border-gray-200 text-center p-10 relative overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover"
+          data-category="cafes">
+          <div
+            class="category-icon w-16 h-16 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-2xl mb-6 mx-auto transition">
+            <i class="fas fa-book"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">کافه کتاب</h3>
+          <p class="text-gray-500 mb-4">فضایی آرام برای مطالعه و کتابخوانی</p>
+          <span class="inline-block px-3 py-1 bg-gray-200 text-gray-500 rounded-full text-sm font-medium">۱۳۲
+            مکان</span>
+        </div>
+
+        <div
+          class="category-card bg-white rounded-xl shadow-card border border-gray-200 text-center p-10 relative overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover"
+          data-category="cafes">
+          <div
+            class="category-icon w-16 h-16 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-2xl mb-6 mx-auto transition">
+            <i class="fas fa-paw"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">کافه حیوانات</h3>
+          <p class="text-gray-500 mb-4">همراهی با حیوانات خانگی دوست‌داشتنی</p>
+          <span class="inline-block px-3 py-1 bg-gray-200 text-gray-500 rounded-full text-sm font-medium">۶۸ مکان</span>
+        </div>
+
+        <div
+          class="category-card bg-white rounded-xl shadow-card border border-gray-200 text-center p-10 relative overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover"
+          data-category="cafes">
+          <div
+            class="category-icon w-16 h-16 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-2xl mb-6 mx-auto transition">
+            <i class="fas fa-gamepad"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">کافه بازی</h3>
+          <p class="text-gray-500 mb-4">انواع بازی‌های رومیزی و ویدیویی</p>
+          <span class="inline-block px-3 py-1 bg-gray-200 text-gray-500 rounded-full text-sm font-medium">۹۴ مکان</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- بخش کافه‌ها و رستوران‌های پرطرفدار -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-12">
+        <h2 class="text-3xl font-extrabold mb-4 md:mb-0">کافه‌ها و رستوران‌های پرطرفدار</h2>
+
+        <div class="flex flex-wrap gap-3">
+          <button class="tab-btn px-4 py-2 bg-primary-500 text-white rounded-full text-sm font-medium"
+            data-tab="all">همه</button>
+          <button
+            class="tab-btn px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:border-primary-500 hover:text-primary-500 transition"
+            data-tab="cafes">کافه‌ها</button>
+          <button
+            class="tab-btn px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:border-primary-500 hover:text-primary-500 transition"
+            data-tab="restaurants">رستوران‌ها</button>
+          <button
+            class="tab-btn px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:border-primary-500 hover:text-primary-500 transition"
+            data-tab="cafe-restaurants">کافه‌رستوران‌ها</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <!-- کافه ۱ -->
+        <div
+          class="place-card bg-white rounded-xl shadow-card overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover"
+          data-category="cafes">
+          <div class="place-image relative h-48 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
+              alt="کافه کتابخانه" class="w-full h-full object-cover transition">
+            <div
+              class="rating-badge absolute top-4 right-4 bg-white/90 px-3 py-1 rounded-full flex items-center gap-1 font-semibold">
+              <i class="fas fa-star text-secondary"></i>
+              <span>4.8</span>
+            </div>
+            <span
+              class="category-badge absolute bottom-4 right-4 bg-primary-500 text-white px-3 py-1 rounded-full text-xs font-medium">کافه</span>
+          </div>
+
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">کافه کتابخانه</h3>
+            <p class="text-gray-500 flex items-center gap-2 mb-4 text-sm">
+              <i class="fas fa-map-marker-alt text-primary-500"></i>
+              تهران، خیابان انقلاب
+            </p>
+            <p class="text-gray-500 mb-4">کافه‌ای دنج با کتاب‌های متنوع و فضای آرام برای مطالعه</p>
+
+            <div class="flex flex-wrap gap-3 mb-6">
+              <span class="flex items-center gap-1 text-gray-500 text-xs">
+                <i class="fas fa-wifi text-primary-500"></i>
+                وای‌فای رایگان
+              </span>
+              <span class="flex items-center gap-1 text-gray-500 text-xs">
+                <i class="fas fa-smoking-ban text-primary-500"></i>
+                محیط غیرسیگاری
+              </span>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <a href="#"
+                class="px-4 py-2 border border-primary-500 text-primary-500 rounded-xl text-sm font-medium hover:bg-primary-500/10 transition">مشاهده
+                جزئیات</a>
+              <span class="text-gray-500 text-sm">450 متر</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- رستوران ۱ -->
+        <div
+          class="place-card bg-white rounded-xl shadow-card overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover"
+          data-category="restaurants">
+          <div class="place-image relative h-48 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+              alt="رستوران ایتالیایی" class="w-full h-full object-cover transition">
+            <div
+              class="rating-badge absolute top-4 right-4 bg-white/90 px-3 py-1 rounded-full flex items-center gap-1 font-semibold">
+              <i class="fas fa-star text-secondary"></i>
+              <span>4.6</span>
+            </div>
+            <span
+              class="category-badge absolute bottom-4 right-4 bg-primary-500 text-white px-3 py-1 rounded-full text-xs font-medium">رستوران</span>
+          </div>
+
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">رستوران ایتالیایی</h3>
+            <p class="text-gray-500 flex items-center gap-2 mb-4 text-sm">
+              <i class="fas fa-map-marker-alt text-primary-500"></i>
+              تهران، خیابان ولیعصر
+            </p>
+            <p class="text-gray-500 mb-4">پاستا و پیتزاهای ایتالیایی اصیل با مواد اولیه وارداتی</p>
+
+            <div class="flex flex-wrap gap-3 mb-6">
+              <span class="flex items-center gap-1 text-gray-500 text-xs">
+                <i class="fas fa-parking text-primary-500"></i>
+                پارکینگ
+              </span>
+              <span class="flex items-center gap-1 text-gray-500 text-xs">
+                <i class="fas fa-credit-card text-primary-500"></i>
+                پذیرش کارت
+              </span>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <a href="#"
+                class="px-4 py-2 border border-primary-500 text-primary-500 rounded-xl text-sm font-medium hover:bg-primary-500/10 transition">مشاهده
+                جزئیات</a>
+              <span class="text-gray-500 text-sm">1.2 کیلومتر</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- کافه‌رستوران ۱ -->
+        <div
+          class="place-card bg-white rounded-xl shadow-card overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover"
+          data-category="cafe-restaurants">
+          <div class="place-image relative h-48 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1485182708500-e8f1f318ba72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1410&q=80"
+              alt="کافه‌رستوران سبز" class="w-full h-full object-cover transition">
+            <div
+              class="rating-badge absolute top-4 right-4 bg-white/90 px-3 py-1 rounded-full flex items-center gap-1 font-semibold">
+              <i class="fas fa-star text-secondary"></i>
+              <span>4.7</span>
+            </div>
+            <span
+              class="category-badge absolute bottom-4 right-4 bg-primary-500 text-white px-3 py-1 rounded-full text-xs font-medium">کافه‌رستوران</span>
+          </div>
+
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">کافه‌رستوران سبز</h3>
+            <p class="text-gray-500 flex items-center gap-2 mb-4 text-sm">
+              <i class="fas fa-map-marker-alt text-primary-500"></i>
+              تهران، محله یوسف‌آباد
+            </p>
+            <p class="text-gray-500 mb-4">ترکیبی از کافه‌ای دنج و رستورانی با منوی بین‌المللی</p>
+
+            <div class="flex flex-wrap gap-3 mb-6">
+              <span class="flex items-center gap-1 text-gray-500 text-xs">
+                <i class="fas fa-tree text-primary-500"></i>
+                فضای سبز
+              </span>
+              <span class="flex items-center gap-1 text-gray-500 text-xs">
+                <i class="fas fa-music text-primary-500"></i>
+                موسیقی زنده
+              </span>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <a href="#"
+                class="px-4 py-2 border border-primary-500 text-primary-500 rounded-xl text-sm font-medium hover:bg-primary-500/10 transition">مشاهده
+                جزئیات</a>
+              <span class="text-gray-500 text-sm">800 متر</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="#"
+          class="inline-block px-8 py-4 bg-primary-500 text-white rounded-xl font-medium hover:bg-primary-400 transition">مشاهده
+          همه کافه‌ها و رستوران‌ها</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- بخش ویژگی‌های متمایز -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-center mb-4 relative pb-4 section-title">چرا کافه‌رستوران‌یاب؟</h2>
+      <p class="text-gray-500 text-center mb-12 max-w-2xl mx-auto">ویژگی‌هایی که تجربه شما را بهتر می‌کنند</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div
+          class="feature-card bg-gray-50 rounded-xl p-8 text-center transition hover:-translate-y-1 hover:shadow-card">
+          <div
+            class="feature-icon w-20 h-20 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-3xl mb-6 mx-auto transition">
+            <i class="fas fa-filter"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">فیلترهای پیشرفته</h3>
+          <p class="text-gray-500">کافه‌ها و رستوران‌ها را بر اساس نوع، امکانات و سلیقه خود فیلتر کنید</p>
+        </div>
+
+        <div
+          class="feature-card bg-gray-50 rounded-xl p-8 text-center transition hover:-translate-y-1 hover:shadow-card">
+          <div
+            class="feature-icon w-20 h-20 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-3xl mb-6 mx-auto transition">
+            <i class="fas fa-star"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">امتیازدهی واقعی</h3>
+          <p class="text-gray-500">بر اساس نظرات واقعی کاربران امتیاز داده می‌شود</p>
+        </div>
+
+        <div
+          class="feature-card bg-gray-50 rounded-xl p-8 text-center transition hover:-translate-y-1 hover:shadow-card">
+          <div
+            class="feature-icon w-20 h-20 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-3xl mb-6 mx-auto transition">
+            <i class="fas fa-utensils"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">منوی کامل</h3>
+          <p class="text-gray-500">منوی کامل کافه‌ها و رستوران‌ها با قیمت‌های به‌روز</p>
+        </div>
+
+        <div
+          class="feature-card bg-gray-50 rounded-xl p-8 text-center transition hover:-translate-y-1 hover:shadow-card">
+          <div
+            class="feature-icon w-20 h-20 bg-primary-500/10 rounded-full flex items-center justify-center text-primary-500 text-3xl mb-6 mx-auto transition">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">رزرو آنلاین</h3>
+          <p class="text-gray-500">رزرو میز در بهترین کافه‌ها و رستوران‌ها بدون نیاز به تماس</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- بخش اپلیکیشن موبایل -->
+  <section class="gradient-bg-reverse py-20">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col lg:flex-row items-center gap-12">
+        <div class="lg:w-1/2">
+          <h2 class="text-3xl font-extrabold mb-6">اپلیکیشن کافه‌رستوران‌یاب را دانلود کنید</h2>
+          <p class="text-gray-500 mb-8">همیشه و در هر جا بهترین کافه‌ها و رستوران‌های اطراف خود را پیدا کنید. اپلیکیشن
+            ما را دانلود کرده و از امکانات ویژه آن استفاده کنید.</p>
+
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="#" class="app-download transition hover:-translate-y-1">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png"
+                alt="دانلود از گوگل پلی" class="h-12 rounded-xl">
+            </a>
+            <a href="#" class="app-download transition hover:-translate-y-1">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/2560px-Download_on_the_App_Store_Badge.svg.png"
+                alt="دانلود از اپ استور" class="h-12 rounded-xl">
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:w-1/2 flex justify-center">
+          <img
+            src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1367&q=80"
+            alt="اپلیکیشن کافه‌رستوران‌یاب" class="rounded-xl shadow-card max-w-full h-auto">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- بخش نظرات کاربران -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-center mb-4 relative pb-4 section-title">نظرات کاربران</h2>
+      <p class="text-gray-500 text-center mb-12 max-w-2xl mx-auto">تجربیات واقعی از کافه‌ها و رستوران‌ها</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          class="testimonial-card bg-gray-50 rounded-xl p-8 relative transition hover:-translate-y-1 hover:shadow-card">
+          <div class="quote-icon absolute top-6 right-6 text-primary-400/20 text-4xl">
+            <i class="fas fa-quote-right"></i>
+          </div>
+
+          <div class="testimonial-content relative z-10 mb-6">
+            <p class="text-dark leading-relaxed">با استفاده از کافه‌رستوران‌یاب توانستم یک رستوران ایتالیایی عالی برای
+              جشن تولد پیدا کنم. فضای رستوران و غذاها فوق‌العاده بودند.</p>
+          </div>
+
+          <div class="testimonial-author flex items-center gap-4">
+            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="نازنین محمدی"
+              class="w-14 h-14 rounded-full object-cover">
+            <div class="author-info">
+              <h4 class="font-bold">نازنین محمدی</h4>
+              <span class="text-gray-500 text-sm">معلم</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="testimonial-card bg-gray-50 rounded-xl p-8 relative transition hover:-translate-y-1 hover:shadow-card">
+          <div class="quote-icon absolute top-6 right-6 text-primary-400/20 text-4xl">
+            <i class="fas fa-quote-right"></i>
+          </div>
+
+          <div class="testimonial-content relative z-10 mb-6">
+            <p class="text-dark leading-relaxed">به عنوان یک فریلنسر همیشه به دنبال کافه‌های مناسب برای کار بودم.
+              کافه‌رستوران‌یاب با فیلترهای دقیقش این کار را برایم آسان کرد.</p>
+          </div>
+
+          <div class="testimonial-author flex items-center gap-4">
+            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="امیر حسینی"
+              class="w-14 h-14 rounded-full object-cover">
+            <div class="author-info">
+              <h4 class="font-bold">امیر حسینی</h4>
+              <span class="text-gray-500 text-sm">توسعه‌دهنده وب</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="testimonial-card bg-gray-50 rounded-xl p-8 relative transition hover:-translate-y-1 hover:shadow-card">
+          <div class="quote-icon absolute top-6 right-6 text-primary-400/20 text-4xl">
+            <i class="fas fa-quote-right"></i>
+          </div>
+
+          <div class="testimonial-content relative z-10 mb-6">
+            <p class="text-dark leading-relaxed">رزرو آنلاین میز از طریق این سایت واقعا زندگی را راحت کرده. دیگر نیازی
+              به تماس گرفتن و منتظر ماندن نیست.</p>
+          </div>
+
+          <div class="testimonial-author flex items-center gap-4">
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="سارا رضایی"
+              class="w-14 h-14 rounded-full object-cover">
+            <div class="author-info">
+              <h4 class="font-bold">سارا رضایی</h4>
+              <span class="text-gray-500 text-sm">مدیر بازاریابی</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- بخش بلاگ -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-center mb-4 relative pb-4 section-title">مقالات و راهنماها</h2>
+      <p class="text-gray-500 text-center mb-12 max-w-2xl mx-auto">آخرین مطالب درباره فرهنگ کافه‌نشینی و رستوران‌گردی
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          class="blog-card bg-white rounded-xl shadow-card overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover">
+          <div class="blog-image h-48 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+              alt="10 رستوران برتر تهران با فضای رمانتیک" class="w-full h-full object-cover transition">
+          </div>
+
+          <div class="p-6">
+            <span class="text-gray-500 text-sm mb-3 inline-block">15 خرداد 1402</span>
+            <h3 class="text-xl font-bold mb-4">10 رستوران برتر تهران با فضای رمانتیک</h3>
+            <p class="text-gray-500 mb-6">معرفی بهترین رستوران‌ها برای قرارهای عاشقانه و ویژه</p>
+            <a href="#"
+              class="read-more text-primary-500 font-medium flex items-center gap-2 hover:text-primary-400 hover:gap-3 transition">
+              ادامه مطلب
+              <i class="fas fa-arrow-left"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="blog-card bg-white rounded-xl shadow-card overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover">
+          <div class="blog-image h-48 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80"
+              alt="راهنمای انتخاب کافه برای دورکاری" class="w-full h-full object-cover transition">
+          </div>
+
+          <div class="p-6">
+            <span class="text-gray-500 text-sm mb-3 inline-block">2 تیر 1402</span>
+            <h3 class="text-xl font-bold mb-4">راهنمای انتخاب کافه برای دورکاری</h3>
+            <p class="text-gray-500 mb-6">معیارهای انتخاب یک کافه مناسب برای کار و مطالعه</p>
+            <a href="#"
+              class="read-more text-primary-500 font-medium flex items-center gap-2 hover:text-primary-400 hover:gap-3 transition">
+              ادامه مطلب
+              <i class="fas fa-arrow-left"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="blog-card bg-white rounded-xl shadow-card overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover">
+          <div class="blog-image h-48 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+              alt="تفاوت کافه، رستوران و کافه‌رستوران" class="w-full h-full object-cover transition">
+          </div>
+
+          <div class="p-6">
+            <span class="text-gray-500 text-sm mb-3 inline-block">20 اردیبهشت 1402</span>
+            <h3 class="text-xl font-bold mb-4">تفاوت کافه، رستوران و کافه‌رستوران</h3>
+            <p class="text-gray-500 mb-6">هر کدام چه ویژگی‌هایی دارند و چگونه انتخاب کنیم؟</p>
+            <a href="#"
+              class="read-more text-primary-500 font-medium flex items-center gap-2 hover:text-primary-400 hover:gap-3 transition">
+              ادامه مطلب
+              <i class="fas fa-arrow-left"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- بخش خبرنامه -->
+  <!-- بخش خبرنامه اصلاح شده -->
+  <section class="gradient-primary py-20 text-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-3xl font-extrabold mb-4">از جدیدترین کافه‌ها و رستوران‌ها با خبر شوید</h2>
+        <p class="opacity-90 mb-8">جدیدترین کافه‌ها و رستوران‌ها، تخفیف‌های ویژه و مقالات جذاب را در ایمیل خود دریافت
+          کنید.</p>
+
+        <form class="flex flex-col sm:flex-row gap-4">
+          <input type="email" placeholder="آدرس ایمیل شما"
+            class="flex-1 px-6 py-4 rounded-xl focus:ring-2 focus:ring-white/30">
+          <button type="submit"
+            class="px-6 py-4 bg-white text-primary-500 rounded-xl font-medium hover:bg-gray-100 transition">عضویت در
+            خبرنامه</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- فوتر -->
+  <footer class="bg-dark text-white pt-16">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div class="footer-col">
+          <h3 class="text-xl font-bold mb-6 relative pb-3">کافه‌رستوران‌یاب</h3>
+          <p class="text-gray-300 mb-6">کافه‌رستوران‌یاب به شما کمک می‌کند بهترین کافه‌ها، رستوران‌ها و کافه‌رستوران‌های
+            اطراف خود را پیدا کرده و تجربه‌ای لذت‌بخش داشته باشید.</p>
+
+          <div class="flex gap-4">
+            <a href="#"
+              class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-500 hover:-translate-y-1 transition">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#"
+              class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-500 hover:-translate-y-1 transition">
+              <i class="fab fa-telegram"></i>
+            </a>
+            <a href="#"
+              class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-500 hover:-translate-y-1 transition">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#"
+              class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-500 hover:-translate-y-1 transition">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="text-xl font-bold mb-6 relative pb-3">لینک‌های سریع</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">خانه</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">درباره ما</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">کافه‌ها و رستوران‌ها</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">مقالات</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">تماس با ما</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="text-xl font-bold mb-6 relative pb-3">دسته‌بندی‌ها</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">کافه‌ها</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">رستوران‌ها</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">کافه‌رستوران‌ها</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">فست فود</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white hover:pr-2 transition">بین‌المللی</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="text-xl font-bold mb-6 relative pb-3">تماس با ما</h3>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3 text-gray-300">
+              <i class="fas fa-map-marker-alt text-primary-500 mt-1"></i>
+              تهران، خیابان آزادی، بلوار کشاورز
+            </li>
+            <li class="flex items-start gap-3 text-gray-300">
+              <i class="fas fa-phone text-primary-500 mt-1"></i>
+              021-12345678
+            </li>
+            <li class="flex items-start gap-3 text-gray-300">
+              <i class="fas fa-envelope text-primary-500 mt-1"></i>
+              info@cafe-restaurant-finder.com
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-gray-300 text-sm">© 1402 تمام حقوق برای کافه‌رستوران‌یاب محفوظ است.</p>
+
+        <div class="flex gap-6">
+          <a href="#" class="text-gray-300 hover:text-white text-sm transition">قوانین و مقررات</a>
+          <a href="#" class="text-gray-300 hover:text-white text-sm transition">حریم خصوصی</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // اسکریپت برای فیلتر کردن دسته‌بندی‌ها
+    document.addEventListener('DOMContentLoaded', function () {
+      // فیلتر دسته‌بندی‌ها
+      const categoryTabButtons = document.querySelectorAll('.category-tab-btn');
+      const categoryCards = document.querySelectorAll('.category-card');
+
+      categoryTabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // حذف کلاس active از همه دکمه‌ها
+          categoryTabButtons.forEach(btn => {
+            btn.classList.remove('bg-primary-500', 'text-white');
+            btn.classList.add('bg-gray-200', 'text-dark');
+          });
+
+          // اضافه کردن کلاس active به دکمه کلیک شده
+          button.classList.remove('bg-gray-200', 'text-dark');
+          button.classList.add('bg-primary-500', 'text-white');
+
+          const filter = button.dataset.tab;
+
+          // فیلتر کردن کارت‌ها
+          categoryCards.forEach(card => {
+            if (filter === 'all' || card.dataset.category === filter) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // فیلتر مکان‌های پرطرفدار
+      const placeTabButtons = document.querySelectorAll('.tab-btn');
+      const placeCards = document.querySelectorAll('.place-card');
+
+      placeTabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // حذف کلاس active از همه دکمه‌ها
+          placeTabButtons.forEach(btn => {
+            btn.classList.remove('bg-primary-500', 'text-white', 'border-primary-500');
+            btn.classList.add('border-gray-200');
+          });
+
+          // اضافه کردن کلاس active به دکمه کلیک شده
+          button.classList.remove('border-gray-200');
+          button.classList.add('bg-primary-500', 'text-white', 'border-primary-500');
+
+          const filter = button.dataset.tab;
+
+          // فیلتر کردن کارت‌ها
+          placeCards.forEach(card => {
+            if (filter === 'all' || card.dataset.category === filter) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

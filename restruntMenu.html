@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رستوران ایرانی | منوی دیجیتال</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            500: '#6d28d9',
+                            400: '#8b5cf6',
+                        },
+                        secondary: '#f59e0b',
+                        dark: '#1e293b',
+                        light: '#f8fafc',
+                        gray: {
+                            500: '#64748b',
+                            300: '#e2e8f0',
+                        },
+                        success: '#10b981',
+                        danger: '#ef4444',
+                    },
+                    boxShadow: {
+                        card: '0 4px 20px rgba(0, 0, 0, 0.08)',
+                        'card-hover': '0 10px 25px rgba(0, 0, 0, 0.1)',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .gradient-primary {
+            background: linear-gradient(135deg, #6d28d9, #8b5cf6);
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #6d28d9, #8b5cf6);
+            border-radius: 2px;
+        }
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #6d28d9;
+            border-radius: 2px;
+        }
+        /* Animation for add to cart button */
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(50, 50);
+                opacity: 0;
+            }
+        }
+        /* Animation for modal */
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+        /* Animation for tabs */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Sticky category tabs */
+        .sticky-categories {
+            position: sticky;
+            top: 80px; /* Height of main header */
+            z-index: 40;
+            background-color: white;
+        }
+        /* Center modal */
+        .center-modal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .center-modal-content {
+            animation: fadeIn 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-dark">
+    <!-- هدر اصلی -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-4">
+                <a href="#" class="text-xl font-extrabold text-primary-500">کافه‌رستوران‌یاب</a>
+                <div class="hidden md:flex items-center space-x-6 space-x-reverse">
+                    <a href="#" class="font-medium hover:text-primary-500 transition">خانه</a>
+                    <a href="#" class="font-medium hover:text-primary-500 transition">کافه‌ها و رستوران‌ها</a>
+                    <a href="#" class="font-medium hover:text-primary-500 transition">دسته‌بندی‌ها</a>
+                    <a href="#" class="font-medium hover:text-primary-500 transition">وبلاگ</a>
+                    <a href="#" class="font-medium hover:text-primary-500 transition">تماس با ما</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4 space-x-reverse">
+                    <a href="#" class="px-4 py-2 border border-primary-500 text-primary-500 rounded-lg font-medium hover:bg-primary-500/10 transition">ورود</a>
+                    <a href="#" class="px-4 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-400 transition">ثبت‌نام</a>
+                </div>
+                <button class="md:hidden text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- هدر رستوران -->
+    <header class="bg-gradient-to-r from-blue-800 to-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="w-40 h-40 md:w-48 md:h-48 rounded-xl overflow-hidden shadow-lg border-4 border-white transform hover:rotate-1 transition duration-300">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="لوگو رستوران" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                </div>
+                <div class="flex-1 text-center md:text-right">
+                    <h1 class="text-3xl md:text-4xl font-bold mb-2">رستوران ایرانی</h1>
+                    <p class="text-blue-100 mb-4">طعم اصیل ایرانی با کیفیت درجه یک</p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm flex items-center hover:bg-white/30 transition duration-200">
+                            <i class="fas fa-star text-yellow-300 ml-1"></i> امتیاز ۴.۸
+                        </span>
+                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm flex items-center hover:bg-white/30 transition duration-200">
+                            <i class="fas fa-bolt text-yellow-300 ml-1"></i> ارسال سریع
+                        </span>
+                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm flex items-center hover:bg-white/30 transition duration-200">
+                            <i class="fas fa-clock text-yellow-300 ml-1"></i> میانگین تحویل: ۳۵ دقیقه
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- بخش اصلی -->
+    <div class="flex flex-row container mx-auto my-6" dir="ltr">
+        <!-- سبد خرید دسکتاپ -->
+        <aside class="w-96 hidden md:block h-screen bg-white shadow-xl border-l border-gray-100 p-6 overflow-y-auto sticky top-0">
+            <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
+                <h2 class="text-xl font-bold flex items-center text-gray-800">
+                    <i class="fas fa-shopping-basket ml-2 text-blue-600"></i> سبد خرید شما
+                    <span id="cart-count" class="bg-blue-100 text-blue-800 text-xs font-medium ml-2 px-2.5 py-0.5 rounded-full">0</span>
+                </h2>
+                <button id="clear-cart" class="text-red-500 hover:text-red-700 text-sm flex items-center transition duration-200">
+                    <i class="fas fa-trash-alt ml-1"></i> پاک کردن
+                </button>
+            </div>
+            <div id="cart-items" class="space-y-4">
+                <div class="flex flex-col items-center justify-center py-16 text-gray-400">
+                    <i class="fas fa-shopping-basket text-5xl mb-4 opacity-30"></i>
+                    <p class="text-gray-500 font-medium">سبد خرید شما خالی است</p>
+                    <p class="text-sm mt-1 text-gray-400">محصولات مورد نظر خود را به سبد اضافه کنید</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 pt-6 mt-6">
+                <div class="space-y-3 mb-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">جمع اقلام:</span>
+                        <span id="total-items" class="font-medium">۰ عدد</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">هزینه ارسال:</span>
+                        <span id="delivery-cost" class="font-medium">۱۵٬۰۰۰ تومان</span>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
+                    <span class="font-bold text-lg text-gray-800">مبلغ قابل پرداخت:</span>
+                    <span id="total-price" class="text-blue-600 font-bold text-xl">۰ تومان</span>
+                </div>
+                <button id="checkout-btn" class="w-full mt-6 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white py-3.5 rounded-xl font-medium transition duration-300 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    <i class="fas fa-wallet ml-2"></i> پرداخت نهایی
+                </button>
+            </div>
+        </aside>
+
+        <!-- محتوای اصلی -->
+        <div class="flex-1" dir="rtl">
+            <!-- تب‌های اصلی -->
+            <nav class="bg-white px-6 py-3 flex gap-3 overflow-x-auto sticky top-0 z-10 shadow-sm">
+                <button class="main-tab-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md hover:shadow-lg" data-tab="menu">
+                    <i class="fas fa-utensils ml-2"></i> منو رستوران
+                </button>
+                <button class="main-tab-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200" data-tab="info">
+                    <i class="fas fa-info-circle ml-2 text-blue-500"></i> اطلاعات رستوران
+                </button>
+                <button class="main-tab-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200" data-tab="reviews">
+                    <i class="fas fa-comment-alt ml-2 text-purple-500"></i> نظرات کاربران
+                </button>
+            </nav>
+
+            <!-- محتوای تب‌ها -->
+            <div class="p-6">
+                <!-- تب منو -->
+                <div id="menu-tab" class="tab-content active">
+                    <!-- تب دسته‌بندی غذاها -->
+                    <nav class="sticky-categories px-6 py-3 mb-6 flex gap-3 overflow-x-auto rounded-lg shadow-sm">
+                        <button class="category-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md hover:shadow-lg" data-category="all">
+                            <i class="fas fa-bars ml-2"></i> همه موارد
+                        </button>
+                        <button class="category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200" data-category="main">
+                            <i class="fas fa-utensils ml-2 text-blue-500"></i> غذاهای اصلی
+                        </button>
+                        <button class="category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200" data-category="appetizer">
+                            <i class="fas fa-seedling ml-2 text-green-500"></i> پیش غذا
+                        </button>
+                        <button class="category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200" data-category="drink">
+                            <i class="fas fa-glass-martini-alt ml-2 text-purple-500"></i> نوشیدنی
+                        </button>
+                    </nav>
+
+                    <!-- کارت‌های منو -->
+                    <div id="food-items-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- غذاها به صورت داینامیک در اینجا نمایش داده می‌شوند -->
+                    </div>
+                </div>
+
+                <!-- تب اطلاعات رستوران -->
+                <div id="info-tab" class="tab-content hidden">
+                    <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-info-circle text-blue-500 ml-2"></i> درباره رستوران ایرانی
+                        </h2>
+                        <p class="text-gray-600 mb-4 leading-relaxed">
+                            رستوران ایرانی با بیش از ۲۰ سال سابقه در زمینه ارائه غذاهای اصیل و خوشمزه ایرانی، همواره تلاش کرده است تا با استفاده از بهترین مواد اولیه و به کارگیری شیوه‌های سنتی پخت، تجربه‌ای متفاوت از طعم‌های اصیل ایرانی را برای مشتریان خود به ارمغان بیاورد.
+                        </p>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            ما در رستوران ایرانی معتقدیم که غذا فقط برای سیر کردن شکم نیست، بلکه یک هنر و فرهنگ است. به همین دلیل در تهیه تمامی غذاهایمان نهایت دقت و حوصله را به کار می‌گیریم تا رضایت کامل شما را جلب کنیم.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                    <i class="fas fa-clock text-blue-500 ml-2"></i> ساعات کاری
+                                </h3>
+                                <ul class="space-y-2">
+                                    <li class="flex justify-between items-center border-b border-gray-100 pb-2">
+                                        <span class="text-gray-600">شنبه تا چهارشنبه:</span>
+                                        <span class="font-medium">۱۱:۰۰ - ۲۳:۰۰</span>
+                                    </li>
+                                    <li class="flex justify-between items-center border-b border-gray-100 pb-2">
+                                        <span class="text-gray-600">پنجشنبه:</span>
+                                        <span class="font-medium">۱۱:۰۰ - ۲۴:۰۰</span>
+                                    </li>
+                                    <li class="flex justify-between items-center">
+                                        <span class="text-gray-600">جمعه:</span>
+                                        <span class="font-medium">۱۲:۰۰ - ۲۴:۰۰</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                    <i class="fas fa-map-marker-alt text-blue-500 ml-2"></i> اطلاعات تماس
+                                </h3>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-map-marker-alt text-gray-400 mt-1 ml-2"></i>
+                                        <span class="text-gray-600">تهران، خیابان ولیعصر، کوچه فلان، پلاک ۱۲۳</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-phone-alt text-gray-400 ml-2"></i>
+                                        <span class="text-gray-600">۰۲۱-۱۲۳۴۵۶۷۸</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-mobile-alt text-gray-400 ml-2"></i>
+                                        <span class="text-gray-600">۰۹۱۲۳۴۵۶۷۸۹</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-images text-blue-500 ml-2"></i> گالری رستوران
+                        </h2>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            <div class="rounded-lg overflow-hidden h-40 transform hover:scale-105 transition duration-300">
+                                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="فضای داخلی رستوران" class="w-full h-full object-cover">
+                            </div>
+                            <div class="rounded-lg overflow-hidden h-40 transform hover:scale-105 transition duration-300">
+                                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="فضای داخلی رستوران" class="w-full h-full object-cover">
+                            </div>
+                            <div class="rounded-lg overflow-hidden h-40 transform hover:scale-105 transition duration-300">
+                                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="فضای داخلی رستوران" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- تب نظرات کاربران -->
+                <div id="reviews-tab" class="tab-content hidden">
+                    <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-comment-alt text-blue-500 ml-2"></i> نظرات مشتریان
+                        </h2>
+                        <div id="restaurant-reviews-container" class="space-y-6">
+                            <!-- نظرات رستوران به صورت داینامیک در اینجا نمایش داده می‌شوند -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- سبد خرید موبایل -->
+    <div class="md:hidden fixed bottom-4 left-4 right-4 z-50">
+        <div class="bg-white rounded-xl shadow-xl p-4 flex justify-between items-center border border-gray-200 transform hover:-translate-y-1 transition duration-300">
+            <div class="flex items-center">
+                <div class="relative">
+                    <i class="fas fa-shopping-basket text-blue-600 text-2xl"></i>
+                    <span id="mobile-cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">0</span>
+                </div>
+                <div class="mr-3">
+                    <span id="mobile-cart-total" class="block font-bold text-gray-800">۰ تومان</span>
+                    <span class="text-xs text-gray-500">هزینه ارسال: ۱۵,۰۰۰ تومان</span>
+                </div>
+            </div>
+            <button id="mobile-cart-btn" class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-4 py-2.5 rounded-lg font-medium shadow-md hover:shadow-lg">
+                مشاهده سبد خرید
+            </button>
+        </div>
+    </div>
+
+    <!-- مودال سبد خرید موبایل -->
+    <div id="mobile-cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl p-5 max-h-[85vh] overflow-y-auto" style="animation: slideUp 0.3s ease-out;">
+            <div class="flex justify-between items-center mb-5 pb-3 border-b border-gray-200 sticky top-0 bg-white">
+                <h2 class="text-lg font-bold flex items-center text-gray-800">
+                    <i class="fas fa-shopping-basket ml-2 text-blue-600"></i> سبد خرید شما
+                    <span id="mobile-cart-count-badge" class="bg-blue-100 text-blue-800 text-xs font-medium ml-2 px-2 py-0.5 rounded-full">0</span>
+                </h2>
+                <button id="close-mobile-cart" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="mobile-cart-items" class="space-y-4">
+                <div class="flex flex-col items-center justify-center py-16 text-gray-400">
+                    <i class="fas fa-shopping-basket text-5xl mb-4 opacity-30"></i>
+                    <p class="text-gray-500 font-medium">سبد خرید شما خالی است</p>
+                    <p class="text-sm mt-1 text-gray-400">محصولات مورد نظر خود را به سبد اضافه کنید</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 pt-6 mt-6 sticky bottom-0 bg-white">
+                <div class="space-y-3 mb-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">جمع اقلام:</span>
+                        <span id="mobile-total-items" class="font-medium">۰ عدد</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">هزینه ارسال:</span>
+                        <span id="mobile-delivery-cost" class="font-medium">۱۵,۰۰۰ تومان</span>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
+                    <span class="font-bold text-lg text-gray-800">مبلغ قابل پرداخت:</span>
+                    <span id="mobile-total-price" class="text-blue-600 font-bold text-xl">۰ تومان</span>
+                </div>
+                <button id="mobile-checkout-btn" class="w-full mt-6 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white py-3.5 rounded-xl font-medium transition duration-300 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    <i class="fas fa-wallet ml-2"></i> پرداخت نهایی
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال نظرات -->
+    <div class="reviews-modal fixed inset-0 bg-black bg-opacity-50 z-50 hidden center-modal" id="reviews-modal">
+        <div class="reviews-modal-content bg-white rounded-xl w-full max-w-2xl max-h-[80vh] overflow-y-auto center-modal-content">
+            <div class="reviews-modal-header p-6 border-b border-gray-200 sticky top-0 bg-white z-10 flex justify-between items-center">
+                <h3 class="reviews-modal-title text-xl font-bold text-blue-800 flex items-center">
+                    <i class="fas fa-comment-alt ml-2"></i>
+                    <span id="modal-item-title">نظرات</span>
+                </h3>
+                <button class="reviews-modal-close text-gray-500 hover:text-blue-800 text-2xl transition duration-300" id="reviews-modal-close">
+                    &times;
+                </button>
+            </div>
+            <div class="reviews-modal-body p-6">
+                <!-- میانگین امتیاز -->
+                <div class="modal-average-rating bg-gray-50 p-4 rounded-xl border border-gray-200 mb-6 flex items-center justify-between">
+                    <div class="modal-average-rating-stars flex flex-col items-center">
+                        <div class="flex text-yellow-400 text-xl" id="modal-average-stars">
+                            <!-- ستاره‌های میانگین امتیاز -->
+                        </div>
+                        <div class="modal-average-rating-count text-gray-500 text-sm mt-1" id="modal-review-count">بر اساس ۰ نظر</div>
+                    </div>
+                    <div class="modal-average-rating-value text-blue-800 font-bold text-3xl" id="modal-average-rating">۰</div>
+                </div>
+
+                <!-- لیست نظرات -->
+                <div class="modal-reviews-list space-y-4" id="modal-reviews-list">
+                    <!-- نظرات آیتم‌های منو به صورت داینامیک در اینجا نمایش داده می‌شوند -->
+                </div>
+
+                <!-- فرم ثبت نظر جدید در مودال -->
+                <div class="modal-review-form bg-gray-50 p-6 rounded-xl border border-gray-200 mt-8">
+                    <h5 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-edit ml-2"></i>ثبت نظر جدید
+                    </h5>
+                    <div class="modal-review-form-rating mb-4">
+                        <label class="block text-gray-700 mb-2">امتیاز شما:</label>
+                        <div class="modal-review-form-rating-stars flex text-gray-300 text-2xl">
+                            <i class="fas fa-star star cursor-pointer hover:text-yellow-400 transition duration-200" data-rating="1"></i>
+                            <i class="fas fa-star star cursor-pointer hover:text-yellow-400 transition duration-200" data-rating="2"></i>
+                            <i class="fas fa-star star cursor-pointer hover:text-yellow-400 transition duration-200" data-rating="3"></i>
+                            <i class="fas fa-star star cursor-pointer hover:text-yellow-400 transition duration-200" data-rating="4"></i>
+                            <i class="fas fa-star star cursor-pointer hover:text-yellow-400 transition duration-200" data-rating="5"></i>
+                        </div>
+                    </div>
+                    <div class="modal-review-form-group mb-4">
+                        <label for="reviewer-name" class="block text-gray-700 mb-2">نام شما:</label>
+                        <input type="text" id="reviewer-name" placeholder="نام خود را وارد کنید" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div class="modal-review-form-group mb-4">
+                        <label for="review-comment" class="block text-gray-700 mb-2">نظر شما:</label>
+                        <textarea id="review-comment" rows="3" placeholder="نظر خود را درباره این غذا بنویسید..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                    <button type="submit" class="modal-review-form-submit bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-6 py-2.5 rounded-lg font-medium shadow-md transform hover:-translate-y-1 transition duration-300 flex items-center" id="submit-item-review">
+                        <i class="fas fa-paper-plane ml-2"></i> ارسال نظر
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // داده‌های لوکال برای رستوران
+        const restaurantData = {
+            name: "رستوران ایرانی",
+            description: "طعم اصیل ایرانی با کیفیت درجه یک",
+            rating: 4.8,
+            deliveryTime: "۳۵ دقیقه",
+            workingHours: {
+                weekdays: "۱۱:۰۰ - ۲۳:۰۰",
+                thursday: "۱۱:۰۰ - ۲۴:۰۰",
+                friday: "۱۲:۰۰ - ۲۴:۰۰"
+            },
+            contact: {
+                address: "تهران، خیابان ولیعصر، کوچه فلان، پلاک ۱۲۳",
+                phone: "۰۲۱-۱۲۳۴۵۶۷۸",
+                mobile: "۰۹۱۲۳۴۵۶۷۸۹"
+            },
+            images: [
+                "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+                "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+            ],
+            reviews: [
+                {
+                    id: 1,
+                    name: "نگار محمدی",
+                    avatar: "https://randomuser.me/api/portraits/women/32.jpg",
+                    rating: 5,
+                    date: "۲ هفته پیش",
+                    comment: "بهترین چلوکبابی که تا حالا خوردم! کیفیت گوشت فوق العاده بود و برنجش هم خیلی خوش پخت بود. پیشنهاد می‌کنم حتما این رستوران رو امتحان کنید."
+                },
+                {
+                    id: 2,
+                    name: "امیر حسینی",
+                    avatar: "https://randomuser.me/api/portraits/men/45.jpg",
+                    rating: 4.5,
+                    date: "۱ ماه پیش",
+                    comment: "قیمه سنتی این رستوران واقعا عالی بود. طعمش دقیقا مثل قیمه‌ای بود که مادربزرگم درست می‌کرد. سرویس دهی هم خیلی سریع و با ادب بود."
+                },
+                {
+                    id: 3,
+                    name: "سارا رضایی",
+                    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+                    rating: 4,
+                    date: "۳ ماه پیش",
+                    comment: "محیط خیلی دنج و آرومی داشت. غذاها خوشمزه بودند اما فکر می‌کنم قیمت‌ها کمی بالا هستند. به هر حال کیفیت مواد اولیه خوب بود."
+                }
+            ]
+        };
+
+        // داده‌های لوکال برای منو
+        const menuItems = [
+            {
+                id: 1,
+                title: "چلوکباب سلطانی",
+                description: "برنج ایرانی با دو عدد کباب برگ، دو عدد کباب کوبیده و زعفران ممتاز. این غذا با گوشت گوسفندی تازه و ادویه‌های مخصوص تهیه می‌شود.",
+                price: 145000,
+                calories: 450,
+                category: "main",
+                image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                badge: {
+                    text: "پرفروش",
+                    color: "from-red-500 to-red-600"
+                },
+                reviews: [
+                    {
+                        id: 1,
+                        name: "علی محمدی",
+                        avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+                        rating: 5,
+                        date: "۱ هفته پیش",
+                        comment: "بهترین چلوکبابی که تا حالا خوردم! کیفیت گوشت فوق العاده بود."
+                    },
+                    {
+                        id: 2,
+                        name: "فاطمه احمدی",
+                        avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+                        rating: 4,
+                        date: "۲ هفته پیش",
+                        comment: "طعم عالی داشت اما مقدار گوشت کمی کمتر از انتظارم بود."
+                    }
+                ],
+                averageRating: 4.5,
+                reviewCount: 12
+            },
+            {
+                id: 2,
+                title: "قیمه سنتی",
+                description: "لپه پخته شده با گوشت گوسفندی، ادویه‌های مخصوص و آبغوره. این غذا به همراه سیب زمینی سرخ شده و ترشی سرو می‌شود.",
+                price: 98000,
+                calories: 380,
+                category: "main",
+                image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1313&q=80",
+                badge: {
+                    text: "محبوب",
+                    color: "from-amber-500 to-amber-600"
+                },
+                reviews: [
+                    {
+                        id: 1,
+                        name: "رضا کریمی",
+                        avatar: "https://randomuser.me/api/portraits/men/22.jpg",
+                        rating: 4,
+                        date: "۳ روز پیش",
+                        comment: "طعم سنتی و خوشمزه‌ای داشت، دقیقاً مثل قیمه‌ای که مادربزرگم درست می‌کرد."
+                    }
+                ],
+                averageRating: 4.2,
+                reviewCount: 8
+            },
+            {
+                id: 3,
+                title: "زرشک پلو با مرغ",
+                description: "برنج ایرانی با زرشک تازه، مرغ کاملاً پخته شده با زعفران. این غذا با خلال بادام و پسته تزیین می‌شود.",
+                price: 110000,
+                calories: 400,
+                category: "main",
+                image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1371&q=80",
+                badge: {
+                    text: "جدید",
+                    color: "from-blue-500 to-blue-600"
+                },
+                reviews: [],
+                averageRating: 4.7,
+                reviewCount: 5
+            },
+            {
+                id: 4,
+                title: "سالاد شیرازی",
+                description: "ترکیبی از خیار، گوجه فرنگی، پیاز و نعنا تازه با آبغوره و نمک. این سالاد تازه و خوشمزه همراه با غذاهای اصلی سرو می‌شود.",
+                price: 35000,
+                calories: 120,
+                category: "appetizer",
+                image: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+                reviews: [
+                    {
+                        id: 1,
+                        name: "نرگس رضوی",
+                        avatar: "https://randomuser.me/api/portraits/women/65.jpg",
+                        rating: 5,
+                        date: "۴ روز پیش",
+                        comment: "تازه و خوشمزه بود، دقیقاً با ذائقه ایرانی سازگار بود."
+                    }
+                ],
+                averageRating: 4.8,
+                reviewCount: 7
+            },
+            {
+                id: 5,
+                title: "ماست و خیار",
+                description: "ماست چکیده محلی با خیار تازه، نعنا خشک و گردو. این پیش غذا به عنوان مکمل غذاهای اصلی سرو می‌شود.",
+                price: 28000,
+                calories: 150,
+                category: "appetizer",
+                image: "https://images.unsplash.com/photo-1601050690117-94f5f6fa3bd0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+                reviews: [],
+                averageRating: 4.3,
+                reviewCount: 3
+            },
+            {
+                id: 6,
+                title: "دوغ محلی",
+                description: "دوغ سنتی گازدار با طعم نعنا و کاکوتی. این نوشیدنی خنک و گوارا همراه با غذاهای ایرانی سرو می‌شود.",
+                price: 25000,
+                calories: 80,
+                category: "drink",
+                image: "https://images.unsplash.com/photo-1551029506-0807df4e2031?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1394&q=80",
+                reviews: [
+                    {
+                        id: 1,
+                        name: "محمد حسینی",
+                        avatar: "https://randomuser.me/api/portraits/men/75.jpg",
+                        rating: 5,
+                        date: "۱ ماه پیش",
+                        comment: "دوغ واقعاً محلی و خوشمزه بود، طعم نعنا و کاکوتی عالی داشت."
+                    },
+                    {
+                        id: 2,
+                        name: "زهرا محمدی",
+                        avatar: "https://randomuser.me/api/portraits/women/33.jpg",
+                        rating: 4,
+                        date: "۲ ماه پیش",
+                        comment: "گازدار و خنک بود، همراه با غذا واقعاً عالی بود."
+                    }
+                ],
+                averageRating: 4.5,
+                reviewCount: 9
+            }
+        ];
+
+        // ساختار سبد خرید
+        let cartItems = {};
+        const deliveryCost = 15000;
+
+        // متغیرهای مربوط به نظرات
+        let currentItemReviews = [];
+        let currentItemId = null;
+        let currentItemTitle = '';
+        let currentUserRating = 0;
+
+        // عناصر DOM
+        const cartContainer = document.getElementById("cart-items");
+        const totalPriceElem = document.getElementById("total-price");
+        const totalItemsElem = document.getElementById("total-items");
+        const deliveryCostElem = document.getElementById("delivery-cost");
+        const checkoutBtn = document.getElementById("checkout-btn");
+        const clearCartBtn = document.getElementById("clear-cart");
+        const cartCountElem = document.getElementById("cart-count");
+        const foodItemsContainer = document.getElementById("food-items-container");
+        const restaurantReviewsContainer = document.getElementById("restaurant-reviews-container");
+
+        // عناصر موبایل
+        const mobileCartCount = document.getElementById("mobile-cart-count");
+        const mobileCartTotal = document.getElementById("mobile-cart-total");
+        const mobileCartBtn = document.getElementById("mobile-cart-btn");
+        const mobileCartModal = document.getElementById("mobile-cart-modal");
+        const closeMobileCart = document.getElementById("close-mobile-cart");
+        const mobileCartItems = document.getElementById("mobile-cart-items");
+        const mobileTotalPrice = document.getElementById("mobile-total-price");
+        const mobileTotalItems = document.getElementById("mobile-total-items");
+        const mobileDeliveryCost = document.getElementById("mobile-delivery-cost");
+        const mobileCheckoutBtn = document.getElementById("mobile-checkout-btn");
+        const mobileCartCountBadge = document.getElementById("mobile-cart-count-badge");
+
+        // عناصر مودال نظرات
+        const reviewsModal = document.getElementById("reviews-modal");
+        const reviewsModalClose = document.getElementById("reviews-modal-close");
+        const modalItemTitle = document.getElementById("modal-item-title");
+        const modalReviewsList = document.getElementById("modal-reviews-list");
+        const modalAverageRating = document.getElementById("modal-average-rating");
+        const modalReviewCount = document.getElementById("modal-review-count");
+        const modalAverageStars = document.getElementById("modal-average-stars");
+        const submitItemReviewBtn = document.getElementById("submit-item-review");
+
+        // دسته‌بندی‌ها
+        const categoryBtns = document.querySelectorAll(".category-btn");
+
+        // تب‌های اصلی
+        const mainTabBtns = document.querySelectorAll(".main-tab-btn");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        // محاسبه جمع کل سبد خرید
+        function calculateCartTotal() {
+            let total = 0;
+            let totalQuantity = 0;
+            for (const id in cartItems) {
+                total += cartItems[id].price * cartItems[id].quantity;
+                totalQuantity += cartItems[id].quantity;
+            }
+            return { total, totalQuantity };
+        }
+
+        // رندر سبد خرید
+        function renderCart() {
+            const ids = Object.keys(cartItems);
+            const { total, totalQuantity } = calculateCartTotal();
+
+            // آپدیت شمارنده سبد خرید
+            cartCountElem.textContent = totalQuantity;
+            mobileCartCount.textContent = totalQuantity;
+            mobileCartCountBadge.textContent = totalQuantity;
+
+            // رندر دسکتاپ
+            if (ids.length === 0) {
+                cartContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-16 text-gray-400">
+                        <i class="fas fa-shopping-basket text-5xl mb-4 opacity-30"></i>
+                        <p class="text-gray-500 font-medium">سبد خرید شما خالی است</p>
+                        <p class="text-sm mt-1 text-gray-400">محصولات مورد نظر خود را به سبد اضافه کنید</p>
+                    </div>
+                `;
+                totalPriceElem.textContent = "۰ تومان";
+                totalItemsElem.textContent = "۰ عدد";
+                checkoutBtn.disabled = true;
+                checkoutBtn.classList.add("opacity-50");
+            } else {
+                cartContainer.innerHTML = "";
+                ids.forEach(id => {
+                    const item = cartItems[id];
+                    const price = item.price * item.quantity;
+                    cartContainer.innerHTML += `
+                        <div class="flex justify-between items-center p-4 border border-gray-200 rounded-lg hover:shadow-md transition duration-300">
+                            <div class="flex-1 min-w-0">
+                                <p class="font-semibold text-gray-800">${item.title}</p>
+                                <p class="text-xs text-gray-500 mt-1">${item.price.toLocaleString()} تومان</p>
+                            </div>
+                            <div class="flex items-center mx-3">
+                                <button class="decrease-quantity text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center transition duration-200" data-id="${id}">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <span class="mx-2 font-medium min-w-[20px] text-center">${item.quantity}</span>
+                                <button class="increase-quantity text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center transition duration-200" data-id="${id}">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
+                            <span class="text-green-600 font-medium min-w-[90px] text-left">${price.toLocaleString()} تومان</span>
+                            <button class="remove-item text-red-500 hover:text-red-700 ml-3 transition duration-200" data-id="${id}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+                totalPriceElem.textContent = `${(total + deliveryCost).toLocaleString()} تومان`;
+                totalItemsElem.textContent = `${totalQuantity} عدد`;
+                checkoutBtn.disabled = false;
+                checkoutBtn.classList.remove("opacity-50");
+            }
+
+            // رندر موبایل
+            if (ids.length === 0) {
+                mobileCartItems.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-16 text-gray-400">
+                        <i class="fas fa-shopping-basket text-5xl mb-4 opacity-30"></i>
+                        <p class="text-gray-500 font-medium">سبد خرید شما خالی است</p>
+                        <p class="text-sm mt-1 text-gray-400">محصولات مورد نظر خود را به سبد اضافه کنید</p>
+                    </div>
+                `;
+                mobileTotalPrice.textContent = "۰ تومان";
+                mobileTotalItems.textContent = "۰ عدد";
+                mobileCheckoutBtn.disabled = true;
+                mobileCheckoutBtn.classList.add("opacity-50");
+            } else {
+                mobileCartItems.innerHTML = "";
+                ids.forEach(id => {
+                    const item = cartItems[id];
+                    const price = item.price * item.quantity;
+                    mobileCartItems.innerHTML += `
+                        <div class="flex justify-between items-center p-4 border border-gray-200 rounded-lg hover:shadow-md transition duration-300">
+                            <div class="flex-1 min-w-0">
+                                <p class="font-semibold text-gray-800">${item.title}</p>
+                                <p class="text-xs text-gray-500 mt-1">${item.price.toLocaleString()} تومان</p>
+                            </div>
+                            <div class="flex items-center mx-3">
+                                <button class="decrease-quantity text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center transition duration-200" data-id="${id}">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <span class="mx-2 font-medium min-w-[20px] text-center">${item.quantity}</span>
+                                <button class="increase-quantity text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center transition duration-200" data-id="${id}">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
+                            <span class="text-green-600 font-medium min-w-[90px] text-left">${price.toLocaleString()} تومان</span>
+                            <button class="remove-item text-red-500 hover:text-red-700 ml-3 transition duration-200" data-id="${id}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+                mobileTotalPrice.textContent = `${(total + deliveryCost).toLocaleString()} تومان`;
+                mobileTotalItems.textContent = `${totalQuantity} عدد`;
+                mobileCheckoutBtn.disabled = false;
+                mobileCheckoutBtn.classList.remove("opacity-50");
+            }
+
+            // آپدیت اطلاعات سبد خرید در نوار پایین موبایل
+            const { total: cartTotal } = calculateCartTotal();
+            mobileCartTotal.textContent = cartTotal > 0 ? `${(cartTotal + deliveryCost).toLocaleString()} تومان` : "۰ تومان";
+        }
+
+        // رندر منوی غذاها
+        function renderMenuItems() {
+            foodItemsContainer.innerHTML = '';
+            menuItems.forEach(item => {
+                const ratingStars = renderStars(item.averageRating);
+                let badgeHTML = '';
+                if (item.badge) {
+                    badgeHTML = `<span class="absolute top-3 right-3 bg-gradient-to-r ${item.badge.color} text-white px-3 py-1 rounded-full text-xs font-medium">${item.badge.text}</span>`;
+                }
+                foodItemsContainer.innerHTML += `
+                    <div class="bg-white rounded-xl shadow-card overflow-hidden transition hover:-translate-y-1 hover:shadow-card-hover" data-category="${item.category}">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                            <div class="absolute inset-0 bg-black/80 opacity-0 hover:opacity-100 transition duration-500 flex flex-col justify-center p-6 text-white">
+                                <h3 class="text-xl font-bold mb-2">${item.title}</h3>
+                                <p class="text-gray-200 text-sm">${item.description}</p>
+                                <div class="mt-4 flex items-center">
+                                    <span class="text-yellow-300 font-medium">${item.price.toLocaleString()} تومان</span>
+                                    <span class="text-xs bg-blue-500 text-white px-2 py-1 rounded-full mr-2">${item.calories} کالری</span>
+                                </div>
+                            </div>
+                            ${badgeHTML}
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">${item.title}</h3>
+                            <div class="flex justify-between items-center">
+                                <span class="text-green-600 font-bold text-lg">${item.price.toLocaleString()} تومان</span>
+                                <button class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg transition duration-300" data-id="${item.id}" data-title="${item.title}" data-price="${item.price}">
+                                    <i class="fas fa-plus ml-2"></i> افزودن
+                                </button>
+                            </div>
+                            <div class="mt-3">
+                                <div class="flex items-center mb-2">
+                                    <div class="flex text-yellow-400 text-sm">
+                                        ${ratingStars}
+                                    </div>
+                                    <span class="text-gray-500 text-xs mr-2">${item.averageRating.toFixed(1)} (${item.reviewCount} نظر)</span>
+                                </div>
+                                <button class="view-reviews-btn bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-3 py-1 rounded-lg text-sm font-medium shadow-md hover:shadow-lg transition duration-300 flex items-center" data-item-id="${item.id}" data-item-title="${item.title}">
+                                    <i class="fas fa-comment-alt ml-2"></i> مشاهده نظرات
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // رندر نظرات رستوران
+        function renderRestaurantReviews() {
+            restaurantReviewsContainer.innerHTML = '';
+            restaurantData.reviews.forEach(review => {
+                const stars = renderStars(review.rating);
+                restaurantReviewsContainer.innerHTML += `
+                    <div class="bg-white rounded-xl shadow-card p-5 hover:-translate-y-1 transition duration-300">
+                        <div class="flex items-start mb-4">
+                            <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
+                                <img src="${review.avatar}" alt="کاربر" class="w-full h-full object-cover">
+                            </div>
+                            <div class="mr-3">
+                                <h4 class="font-bold text-gray-800">${review.name}</h4>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex text-yellow-400">
+                                        ${stars}
+                                    </div>
+                                    <span class="text-gray-500 text-sm mr-2">${review.date}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600">${review.comment}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // رندر ستاره‌های امتیاز
+        function renderStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            for (let i = 1; i <= 5; i++) {
+                if (i <= fullStars) {
+                    stars += '<i class="fas fa-star"></i>';
+                } else if (i === fullStars + 1 && hasHalfStar) {
+                    stars += '<i class="fas fa-star-half-alt"></i>';
+                } else {
+                    stars += '<i class="far fa-star"></i>';
+                }
+            }
+            return stars;
+        }
+
+        // رندر نظرات آیتم منو در مودال
+        function renderItemReviewsModal() {
+            modalReviewsList.innerHTML = '';
+            if (currentItemReviews.length === 0) {
+                modalReviewsList.innerHTML = `
+                    <div class="bg-gray-50 p-6 rounded-xl border border-dashed border-gray-300 text-center text-gray-500">
+                        <i class="fas fa-comment-slash text-2xl mb-2"></i>
+                        <p>هنوز نظری برای این آیتم ثبت نشده است.</p>
+                    </div>
+                `;
+                return;
+            }
+            currentItemReviews.forEach(review => {
+                const stars = renderStars(review.rating);
+                modalReviewsList.innerHTML += `
+                    <div class="bg-white rounded-xl shadow-sm p-5 mb-4 border border-gray-200">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full overflow-hidden bg-gray-200 ml-3">
+                                <img src="${review.avatar}" alt="${review.name}">
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-gray-800">${review.name}</h4>
+                                <div class="flex items-center">
+                                    <div class="flex text-yellow-400">
+                                        ${stars}
+                                    </div>
+                                    <span class="text-gray-500 text-xs mr-2">${review.date}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm">${review.comment}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // آپدیت میانگین امتیاز در مودال
+        function updateAverageRating() {
+            if (currentItemReviews.length === 0) {
+                modalAverageRating.textContent = '۰';
+                modalReviewCount.textContent = 'بر اساس ۰ نظر';
+                modalAverageStars.innerHTML = renderStars(0);
+                return;
+            }
+            const totalRating = currentItemReviews.reduce((sum, review) => sum + review.rating, 0);
+            const average = totalRating / currentItemReviews.length;
+            modalAverageRating.textContent = average.toFixed(1);
+            modalReviewCount.textContent = `بر اساس ${currentItemReviews.length} نظر`;
+            modalAverageStars.innerHTML = renderStars(average);
+        }
+
+        // باز کردن مودال نظرات برای یک آیتم
+        function openItemReviewsModal(itemId, itemTitle) {
+            currentItemId = itemId;
+            currentItemTitle = itemTitle;
+            // پیدا کردن آیتم در منو
+            const item = menuItems.find(item => item.id == itemId);
+            if (item) {
+                currentItemReviews = [...item.reviews];
+                modalItemTitle.textContent = `نظرات برای ${itemTitle}`;
+                renderItemReviewsModal();
+                updateAverageRating();
+                reviewsModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // افزودن به سبد خرید
+        document.addEventListener("click", function(e) {
+            if (e.target.closest(".add-to-cart")) {
+                const btn = e.target.closest(".add-to-cart");
+                const id = btn.dataset.id;
+                const title = btn.dataset.title;
+                const price = parseInt(btn.dataset.price);
+                
+                if (cartItems[id]) {
+                    cartItems[id].quantity += 1;
+                } else {
+                    cartItems[id] = { title, price, quantity: 1 };
+                }
+                renderCart();
+                
+                // تغییر موقت دکمه
+                const originalContent = btn.innerHTML;
+                const originalClasses = btn.className;
+                btn.innerHTML = '<i class="fas fa-check ml-2"></i> افزوده شد';
+                btn.className = originalClasses.replace('from-green-500 to-green-600', 'from-blue-500 to-blue-600');
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.className = originalClasses;
+                }, 1500);
+            }
+        });
+
+        // مدیریت رویدادهای سبد خرید
+        document.addEventListener("click", function(e) {
+            // کاهش تعداد
+            if (e.target.closest(".decrease-quantity")) {
+                const id = e.target.closest(".decrease-quantity").dataset.id;
+                if (cartItems[id].quantity > 1) {
+                    cartItems[id].quantity -= 1;
+                } else {
+                    delete cartItems[id];
+                }
+                renderCart();
+            }
+            
+            // افزایش تعداد
+            if (e.target.closest(".increase-quantity")) {
+                const id = e.target.closest(".increase-quantity").dataset.id;
+                cartItems[id].quantity += 1;
+                renderCart();
+            }
+            
+            // حذف آیتم
+            if (e.target.closest(".remove-item")) {
+                const id = e.target.closest(".remove-item").dataset.id;
+                delete cartItems[id];
+                renderCart();
+            }
+            
+            // مشاهده نظرات آیتم
+            if (e.target.closest(".view-reviews-btn")) {
+                const btn = e.target.closest(".view-reviews-btn");
+                const itemId = btn.dataset.itemId;
+                const itemTitle = btn.dataset.itemTitle;
+                openItemReviewsModal(itemId, itemTitle);
+            }
+        });
+
+        // پاک کردن سبد خرید
+        clearCartBtn.addEventListener("click", () => {
+            if (Object.keys(cartItems).length > 0) {
+                if (confirm("آیا از پاک کردن تمام آیتم‌های سبد خرید مطمئن هستید؟")) {
+                    cartItems = {};
+                    renderCart();
+                }
+            } else {
+                alert("سبد خرید شما خالی است!");
+            }
+        });
+
+        // تسویه حساب
+        checkoutBtn.addEventListener("click", () => {
+            if (Object.keys(cartItems).length > 0) {
+                const { total } = calculateCartTotal();
+                const finalAmount = total + deliveryCost;
+                alert(`پرداخت مبلغ ${finalAmount.toLocaleString()} تومان با موفقیت انجام شد!\n\nسفارش شما در حال آماده‌سازی است.`);
+                cartItems = {};
+                renderCart();
+            }
+        });
+
+        // فیلتر دسته‌بندی‌ها
+        categoryBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const category = btn.dataset.category;
+                
+                // آپدیت تب فعال
+                categoryBtns.forEach(b => {
+                    b.classList.remove("active", "bg-gradient-to-r", "from-blue-600", "to-blue-500", "text-white", "shadow-md");
+                    b.className = "category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200";
+                });
+                btn.className = "category-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md hover:shadow-lg";
+                
+                // فیلتر کارت‌ها
+                const cards = document.querySelectorAll("[data-category]");
+                cards.forEach(card => {
+                    if (category === "all" || card.dataset.category === category) {
+                        card.style.display = "block";
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            });
+        });
+
+        // مدیریت تب‌های اصلی
+        mainTabBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const tabId = btn.dataset.tab;
+                
+                // آپدیت تب فعال
+                mainTabBtns.forEach(b => {
+                    b.classList.remove("active", "bg-gradient-to-r", "from-blue-600", "to-blue-500", "text-white", "shadow-md");
+                    b.className = "main-tab-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200";
+                });
+                btn.className = "main-tab-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md hover:shadow-lg";
+                
+                // نمایش محتوای تب مربوطه
+                tabContents.forEach(content => {
+                    content.classList.remove("active");
+                    content.classList.add("hidden");
+                    if (content.id === `${tabId}-tab`) {
+                        content.classList.remove("hidden");
+                        content.classList.add("active");
+                    }
+                });
+            });
+        });
+
+        // مدیریت سبد خرید موبایل
+        mobileCartBtn.addEventListener("click", () => {
+            mobileCartModal.classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+        });
+
+        closeMobileCart.addEventListener("click", () => {
+            mobileCartModal.classList.add("hidden");
+            document.body.style.overflow = "auto";
+        });
+
+        mobileCheckoutBtn.addEventListener("click", () => {
+            if (Object.keys(cartItems).length > 0) {
+                const { total } = calculateCartTotal();
+                const finalAmount = total + deliveryCost;
+                alert(`پرداخت مبلغ ${finalAmount.toLocaleString()} تومان با موفقیت انجام شد!\n\nسفارش شما در حال آماده‌سازی است.`);
+                cartItems = {};
+                renderCart();
+                mobileCartModal.classList.add("hidden");
+                document.body.style.overflow = "auto";
+            }
+        });
+
+        // بستن مودال با کلیک خارج از آن
+        mobileCartModal.addEventListener("click", (e) => {
+            if (e.target === mobileCartModal) {
+                mobileCartModal.classList.add("hidden");
+                document.body.style.overflow = "auto";
+            }
+        });
+
+        // ارسال نظر برای آیتم منو
+        submitItemReviewBtn.addEventListener('click', function() {
+            const name = document.getElementById('reviewer-name').value;
+            const comment = document.getElementById('review-comment').value;
+            
+            if (currentUserRating === 0) {
+                alert('لطفاً امتیاز خود را انتخاب کنید');
+                return;
+            }
+            
+            if (!name || !comment) {
+                alert('لطفاً نام و نظر خود را وارد کنید');
+                return;
+            }
+            
+            // ایجاد نظر جدید
+            const newReview = {
+                id: Date.now(),
+                name,
+                rating: currentUserRating,
+                comment,
+                date: 'همین الان',
+                avatar: `https://randomuser.me/api/portraits/${Math.random() > 0.5 ? 'men' : 'women'}/${Math.floor(Math.random() * 100)}.jpg`
+            };
+            
+            // اضافه کردن نظر به لیست
+            currentItemReviews.unshift(newReview);
+            renderItemReviewsModal();
+            updateAverageRating();
+            
+            // ریست فرم
+            document.getElementById('reviewer-name').value = '';
+            document.getElementById('review-comment').value = '';
+            currentUserRating = 0;
+            document.querySelectorAll('.modal-review-form-rating-stars .star').forEach(s => {
+                s.classList.remove('active');
+                s.style.color = '#d1d5db';
+            });
+            
+            alert('نظر شما با موفقیت ثبت شد!');
+        });
+
+        // مدیریت ستاره‌های امتیازدهی در مودال آیتم
+        document.querySelectorAll('.modal-review-form-rating-stars .star').forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = parseInt(this.dataset.rating);
+                currentUserRating = rating;
+                
+                // آپدیت ظاهر ستاره‌ها
+                const stars = this.parentElement.querySelectorAll('.star');
+                stars.forEach((s, index) => {
+                    if (index < rating) {
+                        s.classList.add('active');
+                        s.style.color = '#f59e0b';
+                    } else {
+                        s.classList.remove('active');
+                        s.style.color = '#d1d5db';
+                    }
+                });
+            });
+            
+            // افکت hover
+            star.addEventListener('mouseover', function() {
+                const rating = parseInt(this.dataset.rating);
+                const stars = this.parentElement.querySelectorAll('.star');
+                stars.forEach((s, index) => {
+                    if (index < rating && !s.classList.contains('active')) {
+                        s.style.color = '#f59e0b';
+                    }
+                });
+            });
+            
+            star.addEventListener('mouseout', function() {
+                const stars = this.parentElement.querySelectorAll('.star');
+                stars.forEach((s, index) => {
+                    if (index >= currentUserRating && !s.classList.contains('active')) {
+                        s.style.color = '#d1d5db';
+                    }
+                });
+            });
+        });
+
+        // بستن مودال نظرات
+        reviewsModalClose.addEventListener('click', () => {
+            reviewsModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+
+        // بستن مودال با کلیک خارج از آن
+        reviewsModal.addEventListener('click', (e) => {
+            if (e.target === reviewsModal) {
+                reviewsModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // مقداردهی اولیه
+        renderMenuItems();
+        renderRestaurantReviews();
+        renderCart();
+        deliveryCostElem.textContent = `${deliveryCost.toLocaleString()} تومان`;
+        mobileDeliveryCost.textContent = `${deliveryCost.toLocaleString()} تومان`;
+    </script>
+</body>
+</html>
