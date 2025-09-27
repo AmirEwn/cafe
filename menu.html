@@ -229,13 +229,13 @@
         <div class="container mx-auto px-4 py-6">
             <div class="flex flex-col md:flex-row items-center gap-6">
                 <div class="w-40 h-40 md:w-48 md:h-48 rounded-xl overflow-hidden shadow-lg border-4 border-white transform hover:rotate-1 transition duration-300">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                    <img id="menuImage" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
                          alt="لوگو رستوران" 
                          class="w-full h-full object-cover hover:scale-105 transition duration-500">
                 </div>
                 <div class="flex-1 text-center md:text-right">
-                    <h1 class="text-3xl md:text-4xl font-bold mb-2">رستوران ایرانی</h1>
-                    <p class="text-blue-100 mb-4">طعم اصیل ایرانی با کیفیت درجه یک</p>
+                    <h1 id="menuName" class="text-3xl md:text-4xl  font-bold  mb-2">رستوران ایرانی</h1>
+                    <p class="text-blue-100 mb-4"></p>
                     <div class="flex flex-wrap justify-center md:justify-start gap-2">
                         <span class="bg-white/20 px-3 py-1 rounded-full text-sm flex items-center hover:bg-white/30 transition duration-200">
                             <i class="fas fa-star text-yellow-300 ml-1"></i> امتیاز ۴.۸
@@ -1099,6 +1099,45 @@
         renderCart();
         deliveryCostElem.textContent = `${deliveryCost.toLocaleString()} تومان`;
         mobileDeliveryCost.textContent = `${deliveryCost.toLocaleString()} تومان`;
+
+
+
+
+
+
+
+
+        document.addEventListener('DOMContentLoaded', async function () {
+    const token = sessionStorage.getItem('accessToken');
+    const menuName = document.getElementById('menuName');
+    const menuImage = document.getElementById('menuImage');
+    
+
+    try {
+        // دریافت اطلاعات رستوران و منوها
+        const response = await fetch("http://135.125.238.202:7050/menu/", {
+            method: "GET",
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const menusList = await response.json();
+
+        // فرض: اولین منو مربوط به رستوران ایرانی است
+        if (menusList.length > 0) {
+            const mainMenu = menusList[1];
+            menuName.textContent = mainMenu.name || "رستوران ایرانی";
+            if (mainMenu.image_path) {
+                menuImage.src = "http://135.125.238.202:7050" + mainMenu.image_path;
+            }
+        }
+    } catch (error) {
+       
+    }
+});
+
+    const token = sessionStorage.getItem('accessToken');
+        if (!token) {
+            window.location.href = "login.html";
+        }
     </script>
 </body>
 </html>
