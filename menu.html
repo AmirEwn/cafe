@@ -342,198 +342,22 @@
                 <!-- تب منو -->
                 <div id="menu-tab" class="tab-content active">
                     <!-- تب دسته‌بندی غذاها -->
-                    <nav
+                    <nav id="categories-nav"
                         class="sticky-categories bg-white px-6 py-3 mb-6 flex gap-3 overflow-x-auto rounded-lg shadow-sm">
                         <button
                             class="category-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md hover:shadow-lg"
                             data-category="all">
                             <i class="fas fa-bars ml-2"></i> همه موارد
                         </button>
-                        <button
-                            class="category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200"
-                            data-category="main">
-                            <i class="fas fa-utensils ml-2 text-blue-500"></i> غذاهای اصلی
-                        </button>
-                        <button
-                            class="category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200"
-                            data-category="appetizer">
-                            <i class="fas fa-seedling ml-2 text-green-500"></i> پیش غذا
-                        </button>
-                        <button
-                            class="category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200"
-                            data-category="drink">
-                            <i class="fas fa-glass-martini-alt ml-2 text-purple-500"></i> نوشیدنی
-                        </button>
+                        <!-- دسته‌بندی‌ها به صورت داینامیک اضافه می‌شوند -->
                     </nav>
 
                     <!-- کارت‌های منو -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- غذا 1 -->
-                        <div class="food-card" data-category="main">
-                            <div class="food-card-image rounded-t-xl overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                                    alt="چلوکباب سلطانی" class="w-full h-full object-cover">
-                                <div class="food-description">
-                                    <h3 class="text-xl font-bold text-white mb-2">چلوکباب سلطانی</h3>
-                                    <p class="text-gray-200 text-sm">برنج ایرانی با دو عدد کباب برگ، دو عدد کباب کوبیده
-                                        و زعفران ممتاز. این غذا با گوشت گوسفندی تازه و ادویه‌های مخصوص تهیه می‌شود.</p>
-                                    <div class="mt-4 flex items-center">
-
-                                    </div>
-                                </div>
-                                <span
-                                    class="food-badge bg-gradient-to-r from-red-500 to-red-600 text-white">پرفروش</span>
-                            </div>
-                            <div class="p-5">
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">چلوکباب سلطانی</h3>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-green-600 font-bold text-lg">۱۴۵,۰۰۰ تومان</span>
-                                    <button
-                                        class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
-                                        data-id="1" data-title="چلوکباب سلطانی" data-price="145000">
-                                        <i class="fas fa-plus ml-2"></i> افزودن
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- غذا 2 -->
-                        <div class="food-card" data-category="main">
-                            <div class="food-card-image rounded-t-xl overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1313&q=80"
-                                    alt="قیمه سنتی" class="w-full h-full object-cover">
-                                <div class="food-description">
-                                    <h3 class="text-xl font-bold text-white mb-2">قیمه سنتی</h3>
-                                    <p class="text-gray-200 text-sm">لپه پخته شده با گوشت گوسفندی، ادویه‌های مخصوص و
-                                        آبغوره. این غذا به همراه سیب زمینی سرخ شده و ترشی سرو می‌شود.</p>
-                                    <div class="mt-4 flex items-center">
-
-                                    </div>
-                                </div>
-                                <span
-                                    class="food-badge bg-gradient-to-r from-amber-500 to-amber-600 text-white">محبوب</span>
-                            </div>
-                            <div class="p-5">
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">قیمه سنتی</h3>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-green-600 font-bold text-lg">۹۸,۰۰۰ تومان</span>
-                                    <button
-                                        class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
-                                        data-id="2" data-title="قیمه سنتی" data-price="98000">
-                                        <i class="fas fa-plus ml-2"></i> افزودن
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- غذا 3 -->
-                        <div class="food-card" data-category="main">
-                            <div class="food-card-image rounded-t-xl overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1371&q=80"
-                                    alt="زرشک پلو با مرغ" class="w-full h-full object-cover">
-                                <div class="food-description">
-                                    <h3 class="text-xl font-bold text-white mb-2">زرشک پلو با مرغ</h3>
-                                    <p class="text-gray-200 text-sm">برنج ایرانی با زرشک تازه، مرغ کاملاً پخته شده با
-                                        زعفران. این غذا با خلال بادام و پسته تزیین می‌شود.</p>
-                                    <div class="mt-4 flex items-center">
-
-                                    </div>
-                                </div>
-                                <span
-                                    class="food-badge bg-gradient-to-r from-blue-500 to-blue-600 text-white">جدید</span>
-                            </div>
-                            <div class="p-5">
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">زرشک پلو با مرغ</h3>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-green-600 font-bold text-lg">۱۱۰,۰۰۰ تومان</span>
-                                    <button
-                                        class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
-                                        data-id="3" data-title="زرشک پلو با مرغ" data-price="110000">
-                                        <i class="fas fa-plus ml-2"></i> افزودن
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- پیش غذا 1 -->
-                        <div class="food-card" data-category="appetizer">
-                            <div class="food-card-image rounded-t-xl overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
-                                    alt="سالاد شیرازی" class="w-full h-full object-cover">
-                                <div class="food-description">
-                                    <h3 class="text-xl font-bold text-white mb-2">سالاد شیرازی</h3>
-                                    <p class="text-gray-200 text-sm">ترکیبی از خیار، گوجه فرنگی، پیاز و نعنا تازه با
-                                        آبغوره و نمک. این سالاد تازه و خوشمزه همراه با غذاهای اصلی سرو می‌شود.</p>
-                                    <div class="mt-4 flex items-center">
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">سالاد شیرازی</h3>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-green-600 font-bold text-lg">۳۵,۰۰۰ تومان</span>
-                                    <button
-                                        class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
-                                        data-id="4" data-title="سالاد شیرازی" data-price="35000">
-                                        <i class="fas fa-plus ml-2"></i> افزودن
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- پیش غذا 2 -->
-                        <div class="food-card" data-category="appetizer">
-                            <div class="food-card-image rounded-t-xl overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1601050690117-94f5f6fa3bd0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
-                                    alt="ماست و خیار" class="w-full h-full object-cover">
-                                <div class="food-description">
-                                    <h3 class="text-xl font-bold text-white mb-2">ماست و خیار</h3>
-                                    <p class="text-gray-200 text-sm">ماست چکیده محلی با خیار تازه، نعنا خشک و گردو. این
-                                        پیش غذا به عنوان مکمل غذاهای اصلی سرو می‌شود.</p>
-                                    <div class="mt-4 flex items-center">
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">ماست و خیار</h3>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-green-600 font-bold text-lg">۲۸,۰۰۰ تومان</span>
-                                    <button
-                                        class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
-                                        data-id="5" data-title="ماست و خیار" data-price="28000">
-                                        <i class="fas fa-plus ml-2"></i> افزودن
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- نوشیدنی 1 -->
-                        <div class="food-card" data-category="drink">
-                            <div class="food-card-image rounded-t-xl overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1551029506-0807df4e2031?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1394&q=80"
-                                    alt="دوغ محلی" class="w-full h-full object-cover">
-                                <div class="food-description">
-                                    <h3 class="text-xl font-bold text-white mb-2">دوغ محلی</h3>
-                                    <p class="text-gray-200 text-sm">دوغ سنتی گازدار با طعم نعنا و کاکوتی. این نوشیدنی
-                                        خنک و گوارا همراه با غذاهای ایرانی سرو می‌شود.</p>
-                                    <div class="mt-4 flex items-center">
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">دوغ محلی</h3>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-green-600 font-bold text-lg">۲۵,۰۰۰ تومان</span>
-                                    <button
-                                        class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
-                                        data-id="6" data-title="دوغ محلی" data-price="25000">
-                                        <i class="fas fa-plus ml-2"></i> افزودن
-                                    </button>
-                                </div>
-                            </div>
+                    <div id="menu-items-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- آیتم‌های منو به صورت داینامیک اضافه می‌شوند -->
+                        <div class="text-center py-10 text-gray-500" id="loading-message">
+                            <i class="fas fa-spinner fa-spin text-3xl mb-3"></i>
+                            <p>در حال بارگذاری منو...</p>
                         </div>
                     </div>
                 </div>
@@ -983,34 +807,6 @@
             mobileCartTotal.textContent = cartTotal > 0 ? `${(cartTotal + deliveryCost).toLocaleString()} تومان` : "۰ تومان";
         }
 
-        // افزودن به سبد خرید
-        document.querySelectorAll(".add-to-cart").forEach(btn => {
-            btn.addEventListener("click", function () {
-                const id = this.dataset.id;
-                const title = this.dataset.title;
-                const price = parseInt(this.dataset.price);
-
-                if (cartItems[id]) {
-                    cartItems[id].quantity += 1;
-                } else {
-                    cartItems[id] = { title, price, quantity: 1 };
-                }
-
-                renderCart();
-
-                // تغییر موقت دکمه
-                const originalContent = this.innerHTML;
-                const originalClasses = this.className;
-                this.innerHTML = '<i class="fas fa-check ml-2"></i> افزوده شد';
-                this.className = originalClasses.replace('from-green-500 to-green-600', 'from-blue-500 to-blue-600');
-
-                setTimeout(() => {
-                    this.innerHTML = originalContent;
-                    this.className = originalClasses;
-                }, 1500);
-            });
-        });
-
         // مدیریت رویدادهای سبد خرید
         document.addEventListener("click", function (e) {
             // کاهش تعداد
@@ -1063,28 +859,33 @@
         });
 
         // فیلتر دسته‌بندی‌ها
-        categoryBtns.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const category = btn.dataset.category;
+        function setupCategoryFiltering() {
+            const categoryBtns = document.querySelectorAll(".category-btn");
+            const foodCards = document.querySelectorAll(".food-card");
 
-                // آپدیت تب فعال
-                categoryBtns.forEach(b => {
-                    b.classList.remove("active", "bg-gradient-to-r", "from-blue-600", "to-blue-500", "text-white", "shadow-md");
-                    b.className = "category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200";
-                });
+            categoryBtns.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const category = btn.dataset.category;
 
-                btn.className = "category-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md";
+                    // آپدیت تب فعال
+                    categoryBtns.forEach(b => {
+                        b.classList.remove("active", "bg-gradient-to-r", "from-blue-600", "to-blue-500", "text-white", "shadow-md");
+                        b.className = "category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200";
+                    });
 
-                // فیلتر کارت‌ها
-                foodCards.forEach(card => {
-                    if (category === "all" || card.dataset.category === category) {
-                        card.style.display = "block";
-                    } else {
-                        card.style.display = "none";
-                    }
+                    btn.className = "category-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md";
+
+                    // فیلتر کارت‌ها
+                    foodCards.forEach(card => {
+                        if (category === "all" || card.dataset.category === category) {
+                            card.style.display = "block";
+                        } else {
+                            card.style.display = "none";
+                        }
+                    });
                 });
             });
-        });
+        }
 
         // مدیریت تب‌های اصلی
         mainTabBtns.forEach(btn => {
@@ -1186,49 +987,154 @@
             }
         }
 
-        // مقداردهی اولیه
-        renderCart();
-        deliveryCostElem.textContent = `${deliveryCost.toLocaleString()} تومان`;
-        mobileDeliveryCost.textContent = `${deliveryCost.toLocaleString()} تومان`;
+        // تابع برای نمایش منو
+        function renderMenu(menuData) {
+            const menuContainer = document.getElementById('menu-items-container');
+            const categoriesNav = document.getElementById('categories-nav');
+            
+            // پاک کردن محتوای قبلی
+            menuContainer.innerHTML = '';
+            
+            // ایجاد دسته‌بندی‌ها
+            if (menuData.menu_categories && menuData.menu_categories.length > 0) {
+                menuData.menu_categories.forEach(category => {
+                    // اضافه کردن دکمه دسته‌بندی
+                    const categoryBtn = document.createElement('button');
+                    categoryBtn.className = 'category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200';
+                    categoryBtn.dataset.category = category.id;
+                    categoryBtn.innerHTML = `<i class=" ml-2 text-blue-500"></i> ${category.name}`;
+                    
+                    // پیدا کردن دکمه "همه موارد" و اضافه کردن بعد از آن
+                    const allBtn = document.querySelector('[data-category="all"]');
+                    allBtn.parentNode.insertBefore(categoryBtn, allBtn.nextSibling);
+                    
+                    // ایجاد کارت‌های غذا برای این دسته‌بندی
+                    if (category.menu_items && category.menu_items.length > 0) {
+                        category.menu_items.forEach(item => {
+                            if (item.is_available) {
+                                const itemCard = document.createElement('div');
+                                itemCard.className = 'food-card';
+                                itemCard.dataset.category = category.id;
+                                
+                                // تعیین تصویر آیتم
+                                const itemImage = item.image_path ? 
+                                    `http://135.125.238.202:7050${item.image_path}` : 
+                                    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80';
+                                
+                                itemCard.innerHTML = `
+                                    <div class="food-card-image rounded-t-xl overflow-hidden">
+                                        <img src="${itemImage}" alt="${item.name}" class="w-full h-full object-cover">
+                                        <div class="food-description">
+                                            <h3 class="text-xl font-bold text-white mb-2">${item.name}</h3>
+                                            <p class="text-gray-200 text-sm">${item.description || 'توضیحاتی برای این آیتم موجود نیست.'}</p>
+                                        </div>
+                                    </div>
+                                    <div class="p-5">
+                                        <h3 class="text-xl font-bold text-gray-800 mb-2">${item.name}</h3>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-green-600 font-bold text-lg">${parseInt(item.price).toLocaleString()} تومان</span>
+                                            <button class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
+                                                data-id="${item.id}" data-title="${item.name}" data-price="${item.price}">
+                                                <i class="fas fa-plus ml-2"></i> افزودن
+                                            </button>
+                                        </div>
+                                    </div>
+                                `;
+                                
+                                menuContainer.appendChild(itemCard);
+                            }
+                        });
+                    }
+                });
+            }
+            
+            // اضافه کردن event listener برای دکمه‌های افزودن به سبد خرید
+            document.querySelectorAll('.add-to-cart').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const id = this.dataset.id;
+                    const title = this.dataset.title;
+                    const price = parseInt(this.dataset.price);
 
+                    if (cartItems[id]) {
+                        cartItems[id].quantity += 1;
+                    } else {
+                        cartItems[id] = { title, price, quantity: 1 };
+                    }
 
+                    renderCart();
 
+                    // تغییر موقت دکمه
+                    // const originalContent = this.innerHTML;
+                    // const originalClasses = this.className;
+                    // this.innerHTML = '<i class="fas fa-check ml-2"></i> افزوده شد';
+                    // this.className = originalClasses.replace('from-green-500 to-green-600', 'from-blue-500 to-blue-600');
 
+                    // setTimeout(() => {
+                    //     this.innerHTML = originalContent;
+                    //     this.className = originalClasses;
+                    // }, 1500);
+                });
+            });
+            
+            // راه‌اندازی مجدد فیلترینگ دسته‌بندی‌ها
+            setupCategoryFiltering();
+        }
 
-
-
-
-        document.addEventListener('DOMContentLoaded', async function () {
+        // دریافت اطلاعات رستوران و منوها
+        async function loadFullMenu() {
             const token = sessionStorage.getItem('accessToken');
             const menuName = document.getElementById('menuName');
             const menuImage = document.getElementById('menuImage');
-
-
+            
             try {
-                // دریافت اطلاعات رستوران و منوها
-                const response = await fetch("http://135.125.238.202:7050/menu/", {
+                const response = await fetch("http://135.125.238.202:7050/menu/show/10/", {
                     method: "GET",
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
-                const menusList = await response.json();
 
-                // فرض: اولین منو مربوط به رستوران ایرانی است
-                if (menusList.length > 0) {
-                    const mainMenu = menusList[0];
-                    menuName.textContent = mainMenu.name || "رستوران ایرانی";
-                    if (mainMenu.image_path) {
-                        menuImage.src = "http://135.125.238.202:7050" + mainMenu.image_path;
-                    }
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
+
+                const menuData = await response.json();
+                console.log("داده‌های منو:", menuData);
+                
+                // آپدیت اطلاعات رستوران
+                menuName.textContent = menuData.name || "رستوران ایرانی";
+                if (menuData.image_path) {
+                    menuImage.src = "http://135.125.238.202:7050" + menuData.image_path;
+                }
+                
+                // نمایش منو
+                renderMenu(menuData);
+                
             } catch (error) {
-
+                console.error("خطا در گرفتن منو:", error);
+                document.getElementById('loading-message').innerHTML = `
+                    <div class="text-center py-10 text-red-500">
+                        <i class="fas fa-exclamation-triangle text-3xl mb-3"></i>
+                        <p>خطا در بارگذاری منو</p>
+                        <p class="text-sm mt-2">لطفاً صفحه را مجدداً بارگذاری کنید</p>
+                    </div>
+                `;
             }
-        });
-
-        const token = sessionStorage.getItem('accessToken');
-        if (!token) {
-            window.location.href = "login.html";
         }
+
+        // مقداردهی اولیه
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = sessionStorage.getItem('accessToken');
+            if (!token) {
+                window.location.href = "login.html";
+                return;
+            }
+            
+            renderCart();
+            deliveryCostElem.textContent = `${deliveryCost.toLocaleString()} تومان`;
+            mobileDeliveryCost.textContent = `${deliveryCost.toLocaleString()} تومان`;
+            
+            // بارگذاری منو
+            loadFullMenu();
+        });
     </script>
 </body>
 
