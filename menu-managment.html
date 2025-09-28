@@ -616,6 +616,50 @@
         </div>
     </div>
 
+
+    <!-- مودال ویرایش آیتم -->
+    <div id="item-edit-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-6 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold" id="item-edit-modal-title">ویرایش آیتم</h3>
+                <button id="close-edit-item-modal" class="text-gray-500 hover:text-dark transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="item-edit-form" class="space-y-4">
+                <div>
+                    <label for="item-edit-name" class="block text-gray-700 mb-2">نام آیتم</label>
+                    <input type="text" id="item-edit-name"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition">
+                </div>
+
+                <div>
+                    <label for="item-edit-price" class="block text-gray-700 mb-2">قیمت</label>
+                    <input type="number" id="item-edit-price"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition">
+                </div>
+
+                <div>
+                    <label class="flex items-center">
+                        <input id="item-edit-status" type="checkbox"
+                            class="rounded border-gray-300 text-primary-500 focus:ring-primary-500">
+                        <span class="mr-2">آیتم فعال باشد</span>
+                    </label>
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="button" id="cancel-edit-item-modal"
+                        class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-100 transition">انصراف</button>
+                    <button type="submit"
+                        class="flex-1 px-4 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-400 transition">ذخیره</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
     <!-- مودال ایجاد منوی جدید -->
     <div id="menu-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-xl p-6 w-full max-w-md mx-4">
@@ -1310,6 +1354,7 @@
 
             //نمایش آیتم ها
             const items = document.getElementById("items");
+            let currentItemId = null;
             async function loadItem() {
 
                 try {
@@ -1353,7 +1398,7 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex gap-2">
-                                            <button class="text-primary-500 hover:text-primary-400 transition">
+                                            <button class="edit-item-btn text-primary-500 hover:text-primary-400 transition" item-id="${item.id}">
                                                 <i class="fas fa-edit"></i>
                                             </button>
                                             <button class="delete-item-btn text-danger hover:text-red-600 transition" item-id="${item.id}">
@@ -1390,11 +1435,77 @@
                         });
                     });
 
+                    document.querySelectorAll('.edit-item-btn').forEach(btn => {
+                        const itemModal = document.getElementById('item-edit-modal');
+                        const closeItemModalBtn = document.getElementById('close-edit-item-modal');
+                        const cancelItemModalBtn = document.getElementById('cancel-edit-item-modal');
+
+
+                        btn.addEventListener('click', () => {
+                            currentItemId = btn.getAttribute('item-id');
+                            document.getElementById('item-edit-modal-title').textContent = 'ویرایش آیتم';
+                            itemModal.classList.remove('hidden');
+                        });
+
+                        closeItemModalBtn.addEventListener('click', () => {
+                            itemModal.classList.add('hidden');
+                        });
+
+                        cancelItemModalBtn.addEventListener('click', () => {
+                            itemModal.classList.add('hidden');
+                        });
+                    });
+
                 } catch (error) {
 
                 }
 
             }
+            const itemEditForm = document.getElementById('item-edit-form');
+            itemEditForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const itemModal = document.getElementById('item-edit-modal');
+
+                const itemName = document.getElementById("item-edit-name").value;               
+                const itemPrice = parseInt(document.getElementById("item-edit-price").value) || 0;           
+                const status = document.getElementById("item-edit-status").checked;
+                
+                const formData = new FormData();
+                formData.append("name", itemName);                
+                formData.append("price", itemPrice);
+                formData.append("is_available", status);
+
+                try {
+                    const response = await fetch(`http://135.125.238.202:7050/menu/item/${currentItemId}/`, {
+                        method: "PUT",
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: formData
+
+                    })
+
+                    if (!response.ok) {
+                        throw new Error(`خطا در ارسال: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+
+                    console.log(" سرور جواب داد:", data);
+
+                    alert("آیتم با موفقیت ذخیره شد!");
+
+                    itemModal.classList.add("hidden");
+                    loadItem();
+
+                } catch (error) {
+                    console.error(" خطا:", error);
+                    alert("مشکلی در ذخیره آیتم پیش آمد.");
+                }
+
+               
+                itemModal.classList.add('hidden');
+            });
             loadItem();
 
             // مودال منوی جدید
