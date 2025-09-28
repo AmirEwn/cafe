@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>رستوران ایرانی | منوی دیجیتال</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
-        
+
         body {
             font-family: 'Vazirmatn', sans-serif;
             background-color: #f8f9fa;
             scroll-behavior: smooth;
         }
-        
+
         /* استایل کارت غذا */
         .food-card {
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -24,12 +25,12 @@
             background: white;
             position: relative;
         }
-        
+
         .food-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
-        
+
         .food-card::before {
             content: '';
             position: absolute;
@@ -41,25 +42,25 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        
+
         .food-card:hover::before {
             opacity: 1;
         }
-        
+
         /* استایل تصویر و توضیحات غذا */
         .food-card-image {
             height: 200px;
             overflow: hidden;
             position: relative;
         }
-        
+
         .food-card-image img {
             transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
+
         .food-description {
             position: absolute;
             top: 0;
@@ -77,16 +78,16 @@
             transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
             backdrop-filter: blur(2px);
         }
-        
+
         .food-card:hover .food-description {
             opacity: 1;
             transform: translateY(0);
         }
-        
+
         .food-card:hover .food-card-image img {
             transform: scale(1.1);
         }
-        
+
         /* استایل دسته‌بندی‌های ثابت */
         .sticky-categories {
             position: sticky;
@@ -96,14 +97,14 @@
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
-        
+
         /* استایل دکمه‌ها */
         .add-to-cart {
             position: relative;
             overflow: hidden;
             transition: all 0.3s;
         }
-        
+
         .add-to-cart::after {
             content: '';
             position: absolute;
@@ -117,22 +118,23 @@
             transform: scale(1, 1) translate(-50%, -50%);
             transform-origin: 50% 50%;
         }
-        
+
         .add-to-cart:active::after {
             animation: ripple 0.6s ease-out;
         }
-        
+
         @keyframes ripple {
             0% {
                 transform: scale(0, 0);
                 opacity: 1;
             }
+
             100% {
                 transform: scale(50, 50);
                 opacity: 0;
             }
         }
-        
+
         /* استایل سبد خرید */
         .cart-item {
             transition: all 0.3s ease;
@@ -140,57 +142,69 @@
             background: white;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
-        
+
         .cart-item:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
-        
+
         /* استایل تب‌ها */
         .tab-content {
             display: none;
             animation: fadeIn 0.4s ease-out;
         }
-        
+
         .tab-content.active {
             display: block;
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
+
         /* استایل اسکرول بار */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
-        
+
         ::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.05);
             border-radius: 10px;
         }
-        
+
         ::-webkit-scrollbar-thumb {
             background: rgba(59, 130, 246, 0.5);
             border-radius: 10px;
         }
-        
+
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(59, 130, 246, 0.7);
         }
-        
+
         /* استایل مودال موبایل */
         @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
+            from {
+                transform: translateY(100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
         }
-        
+
         .mobile-cart-modal {
             animation: slideUp 0.3s ease-out;
         }
-        
+
         /* استایل باج غذاها */
         .food-badge {
             position: absolute;
@@ -204,11 +218,11 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
-        
+
         .food-card:hover .food-badge {
             transform: translateY(-5px);
         }
-        
+
         /* استایل نقد و بررسی */
         .review-card {
             border-radius: 12px;
@@ -216,34 +230,39 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
         }
-        
+
         .review-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
+
 <body class="bg-gray-50">
     <!-- هدر رستوران -->
     <header class="bg-gradient-to-r from-blue-800 to-blue-600 text-white shadow-xl">
         <div class="container mx-auto px-4 py-6">
             <div class="flex flex-col md:flex-row items-center gap-6">
-                <div class="w-40 h-40 md:w-48 md:h-48 rounded-xl overflow-hidden shadow-lg border-4 border-white transform hover:rotate-1 transition duration-300">
-                    <img id="menuImage" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                         alt="لوگو رستوران" 
-                         class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                <div
+                    class="w-40 h-40 md:w-48 md:h-48 rounded-xl overflow-hidden shadow-lg border-4 border-white transform hover:rotate-1 transition duration-300">
+                    <img id="menuImage"
+                        src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                        alt="لوگو رستوران" class="w-full h-full object-cover hover:scale-105 transition duration-500">
                 </div>
                 <div class="flex-1 text-center md:text-right">
                     <h1 id="menuName" class="text-3xl md:text-4xl  font-bold  mb-2">رستوران ایرانی</h1>
                     <p class="text-blue-100 mb-4"></p>
                     <div class="flex flex-wrap justify-center md:justify-start gap-2">
-                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm flex items-center hover:bg-white/30 transition duration-200">
+                        <span
+                            class="bg-white/20 px-3 py-1 rounded-full text-sm flex items-center hover:bg-white/30 transition duration-200">
                             <i class="fas fa-star text-yellow-300 ml-1"></i> امتیاز ۴.۸
                         </span>
-                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm flex items-center hover:bg-white/30 transition duration-200">
+                        <span
+                            class="bg-white/20 px-3 py-1 rounded-full text-sm flex items-center hover:bg-white/30 transition duration-200">
                             <i class="fas fa-bolt text-yellow-300 ml-1"></i> ارسال سریع
                         </span>
-                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm flex items-center hover:bg-white/30 transition duration-200">
+                        <span
+                            class="bg-white/20 px-3 py-1 rounded-full text-sm flex items-center hover:bg-white/30 transition duration-200">
                             <i class="fas fa-clock text-yellow-300 ml-1"></i> میانگین تحویل: ۳۵ دقیقه
                         </span>
                     </div>
@@ -255,13 +274,16 @@
     <!-- بخش اصلی -->
     <div class="flex flex-row container mx-auto my-6" dir="ltr">
         <!-- سبد خرید دسکتاپ -->
-        <aside class="w-96 hidden md:block h-screen bg-white shadow-xl border-l border-gray-100 p-6 overflow-y-auto sticky top-0">
+        <aside
+            class="w-96 hidden md:block h-screen bg-white shadow-xl border-l border-gray-100 p-6 overflow-y-auto sticky top-0">
             <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
                 <h2 class="text-xl font-bold flex items-center text-gray-800">
                     <i class="fas fa-shopping-basket ml-2 text-blue-600"></i> سبد خرید شما
-                    <span id="cart-count" class="bg-blue-100 text-blue-800 text-xs font-medium ml-2 px-2.5 py-0.5 rounded-full">0</span>
+                    <span id="cart-count"
+                        class="bg-blue-100 text-blue-800 text-xs font-medium ml-2 px-2.5 py-0.5 rounded-full">0</span>
                 </h2>
-                <button id="clear-cart" class="text-red-500 hover:text-red-700 text-sm flex items-center transition duration-200">
+                <button id="clear-cart"
+                    class="text-red-500 hover:text-red-700 text-sm flex items-center transition duration-200">
                     <i class="fas fa-trash-alt ml-1"></i> پاک کردن
                 </button>
             </div>
@@ -287,7 +309,8 @@
                     <span class="font-bold text-lg text-gray-800">مبلغ قابل پرداخت:</span>
                     <span id="total-price" class="text-blue-600 font-bold text-xl">۰ تومان</span>
                 </div>
-                <button id="checkout-btn" class="w-full mt-6 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white py-3.5 rounded-xl font-medium transition duration-300 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                <button id="checkout-btn"
+                    class="w-full mt-6 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white py-3.5 rounded-xl font-medium transition duration-300 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                     <i class="fas fa-wallet ml-2"></i> پرداخت نهایی
                 </button>
             </div>
@@ -297,13 +320,19 @@
         <div class="flex-1" dir="rtl">
             <!-- تب‌های اصلی -->
             <nav class="bg-white px-6 py-3 flex gap-3 overflow-x-auto sticky top-0 z-10 shadow-sm">
-                <button class="main-tab-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md hover:shadow-lg" data-tab="menu">
+                <button
+                    class="main-tab-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md hover:shadow-lg"
+                    data-tab="menu">
                     <i class="fas fa-utensils ml-2"></i> منو رستوران
                 </button>
-                <button class="main-tab-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200" data-tab="info">
+                <button
+                    class="main-tab-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200"
+                    data-tab="info">
                     <i class="fas fa-info-circle ml-2 text-blue-500"></i> اطلاعات رستوران
                 </button>
-                <button class="main-tab-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200" data-tab="reviews">
+                <button
+                    class="main-tab-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200"
+                    data-tab="reviews">
                     <i class="fas fa-comment-alt ml-2 text-purple-500"></i> نظرات کاربران
                 </button>
             </nav>
@@ -313,17 +342,26 @@
                 <!-- تب منو -->
                 <div id="menu-tab" class="tab-content active">
                     <!-- تب دسته‌بندی غذاها -->
-                    <nav class="sticky-categories bg-white px-6 py-3 mb-6 flex gap-3 overflow-x-auto rounded-lg shadow-sm">
-                        <button class="category-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md hover:shadow-lg" data-category="all">
+                    <nav
+                        class="sticky-categories bg-white px-6 py-3 mb-6 flex gap-3 overflow-x-auto rounded-lg shadow-sm">
+                        <button
+                            class="category-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md hover:shadow-lg"
+                            data-category="all">
                             <i class="fas fa-bars ml-2"></i> همه موارد
                         </button>
-                        <button class="category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200" data-category="main">
+                        <button
+                            class="category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200"
+                            data-category="main">
                             <i class="fas fa-utensils ml-2 text-blue-500"></i> غذاهای اصلی
                         </button>
-                        <button class="category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200" data-category="appetizer">
+                        <button
+                            class="category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200"
+                            data-category="appetizer">
                             <i class="fas fa-seedling ml-2 text-green-500"></i> پیش غذا
                         </button>
-                        <button class="category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200" data-category="drink">
+                        <button
+                            class="category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200"
+                            data-category="drink">
                             <i class="fas fa-glass-martini-alt ml-2 text-purple-500"></i> نوشیدنی
                         </button>
                     </nav>
@@ -333,21 +371,26 @@
                         <!-- غذا 1 -->
                         <div class="food-card" data-category="main">
                             <div class="food-card-image rounded-t-xl overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="چلوکباب سلطانی" class="w-full h-full object-cover">
+                                <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                                    alt="چلوکباب سلطانی" class="w-full h-full object-cover">
                                 <div class="food-description">
                                     <h3 class="text-xl font-bold text-white mb-2">چلوکباب سلطانی</h3>
-                                    <p class="text-gray-200 text-sm">برنج ایرانی با دو عدد کباب برگ، دو عدد کباب کوبیده و زعفران ممتاز. این غذا با گوشت گوسفندی تازه و ادویه‌های مخصوص تهیه می‌شود.</p>
+                                    <p class="text-gray-200 text-sm">برنج ایرانی با دو عدد کباب برگ، دو عدد کباب کوبیده
+                                        و زعفران ممتاز. این غذا با گوشت گوسفندی تازه و ادویه‌های مخصوص تهیه می‌شود.</p>
                                     <div class="mt-4 flex items-center">
-                                        
+
                                     </div>
                                 </div>
-                                <span class="food-badge bg-gradient-to-r from-red-500 to-red-600 text-white">پرفروش</span>
+                                <span
+                                    class="food-badge bg-gradient-to-r from-red-500 to-red-600 text-white">پرفروش</span>
                             </div>
                             <div class="p-5">
                                 <h3 class="text-xl font-bold text-gray-800 mb-2">چلوکباب سلطانی</h3>
                                 <div class="flex justify-between items-center">
                                     <span class="text-green-600 font-bold text-lg">۱۴۵,۰۰۰ تومان</span>
-                                    <button class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg" data-id="1" data-title="چلوکباب سلطانی" data-price="145000">
+                                    <button
+                                        class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
+                                        data-id="1" data-title="چلوکباب سلطانی" data-price="145000">
                                         <i class="fas fa-plus ml-2"></i> افزودن
                                     </button>
                                 </div>
@@ -357,21 +400,26 @@
                         <!-- غذا 2 -->
                         <div class="food-card" data-category="main">
                             <div class="food-card-image rounded-t-xl overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1313&q=80" alt="قیمه سنتی" class="w-full h-full object-cover">
+                                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1313&q=80"
+                                    alt="قیمه سنتی" class="w-full h-full object-cover">
                                 <div class="food-description">
                                     <h3 class="text-xl font-bold text-white mb-2">قیمه سنتی</h3>
-                                    <p class="text-gray-200 text-sm">لپه پخته شده با گوشت گوسفندی، ادویه‌های مخصوص و آبغوره. این غذا به همراه سیب زمینی سرخ شده و ترشی سرو می‌شود.</p>
+                                    <p class="text-gray-200 text-sm">لپه پخته شده با گوشت گوسفندی، ادویه‌های مخصوص و
+                                        آبغوره. این غذا به همراه سیب زمینی سرخ شده و ترشی سرو می‌شود.</p>
                                     <div class="mt-4 flex items-center">
-                                      
+
                                     </div>
                                 </div>
-                                <span class="food-badge bg-gradient-to-r from-amber-500 to-amber-600 text-white">محبوب</span>
+                                <span
+                                    class="food-badge bg-gradient-to-r from-amber-500 to-amber-600 text-white">محبوب</span>
                             </div>
                             <div class="p-5">
                                 <h3 class="text-xl font-bold text-gray-800 mb-2">قیمه سنتی</h3>
                                 <div class="flex justify-between items-center">
                                     <span class="text-green-600 font-bold text-lg">۹۸,۰۰۰ تومان</span>
-                                    <button class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg" data-id="2" data-title="قیمه سنتی" data-price="98000">
+                                    <button
+                                        class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
+                                        data-id="2" data-title="قیمه سنتی" data-price="98000">
                                         <i class="fas fa-plus ml-2"></i> افزودن
                                     </button>
                                 </div>
@@ -381,21 +429,26 @@
                         <!-- غذا 3 -->
                         <div class="food-card" data-category="main">
                             <div class="food-card-image rounded-t-xl overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1371&q=80" alt="زرشک پلو با مرغ" class="w-full h-full object-cover">
+                                <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1371&q=80"
+                                    alt="زرشک پلو با مرغ" class="w-full h-full object-cover">
                                 <div class="food-description">
                                     <h3 class="text-xl font-bold text-white mb-2">زرشک پلو با مرغ</h3>
-                                    <p class="text-gray-200 text-sm">برنج ایرانی با زرشک تازه، مرغ کاملاً پخته شده با زعفران. این غذا با خلال بادام و پسته تزیین می‌شود.</p>
+                                    <p class="text-gray-200 text-sm">برنج ایرانی با زرشک تازه، مرغ کاملاً پخته شده با
+                                        زعفران. این غذا با خلال بادام و پسته تزیین می‌شود.</p>
                                     <div class="mt-4 flex items-center">
-                                        
+
                                     </div>
                                 </div>
-                                <span class="food-badge bg-gradient-to-r from-blue-500 to-blue-600 text-white">جدید</span>
+                                <span
+                                    class="food-badge bg-gradient-to-r from-blue-500 to-blue-600 text-white">جدید</span>
                             </div>
                             <div class="p-5">
                                 <h3 class="text-xl font-bold text-gray-800 mb-2">زرشک پلو با مرغ</h3>
                                 <div class="flex justify-between items-center">
                                     <span class="text-green-600 font-bold text-lg">۱۱۰,۰۰۰ تومان</span>
-                                    <button class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg" data-id="3" data-title="زرشک پلو با مرغ" data-price="110000">
+                                    <button
+                                        class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
+                                        data-id="3" data-title="زرشک پلو با مرغ" data-price="110000">
                                         <i class="fas fa-plus ml-2"></i> افزودن
                                     </button>
                                 </div>
@@ -405,12 +458,14 @@
                         <!-- پیش غذا 1 -->
                         <div class="food-card" data-category="appetizer">
                             <div class="food-card-image rounded-t-xl overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="سالاد شیرازی" class="w-full h-full object-cover">
+                                <img src="https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+                                    alt="سالاد شیرازی" class="w-full h-full object-cover">
                                 <div class="food-description">
                                     <h3 class="text-xl font-bold text-white mb-2">سالاد شیرازی</h3>
-                                    <p class="text-gray-200 text-sm">ترکیبی از خیار، گوجه فرنگی، پیاز و نعنا تازه با آبغوره و نمک. این سالاد تازه و خوشمزه همراه با غذاهای اصلی سرو می‌شود.</p>
+                                    <p class="text-gray-200 text-sm">ترکیبی از خیار، گوجه فرنگی، پیاز و نعنا تازه با
+                                        آبغوره و نمک. این سالاد تازه و خوشمزه همراه با غذاهای اصلی سرو می‌شود.</p>
                                     <div class="mt-4 flex items-center">
-                                      
+
                                     </div>
                                 </div>
                             </div>
@@ -418,7 +473,9 @@
                                 <h3 class="text-xl font-bold text-gray-800 mb-2">سالاد شیرازی</h3>
                                 <div class="flex justify-between items-center">
                                     <span class="text-green-600 font-bold text-lg">۳۵,۰۰۰ تومان</span>
-                                    <button class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg" data-id="4" data-title="سالاد شیرازی" data-price="35000">
+                                    <button
+                                        class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
+                                        data-id="4" data-title="سالاد شیرازی" data-price="35000">
                                         <i class="fas fa-plus ml-2"></i> افزودن
                                     </button>
                                 </div>
@@ -428,12 +485,14 @@
                         <!-- پیش غذا 2 -->
                         <div class="food-card" data-category="appetizer">
                             <div class="food-card-image rounded-t-xl overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1601050690117-94f5f6fa3bd0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="ماست و خیار" class="w-full h-full object-cover">
+                                <img src="https://images.unsplash.com/photo-1601050690117-94f5f6fa3bd0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+                                    alt="ماست و خیار" class="w-full h-full object-cover">
                                 <div class="food-description">
                                     <h3 class="text-xl font-bold text-white mb-2">ماست و خیار</h3>
-                                    <p class="text-gray-200 text-sm">ماست چکیده محلی با خیار تازه، نعنا خشک و گردو. این پیش غذا به عنوان مکمل غذاهای اصلی سرو می‌شود.</p>
+                                    <p class="text-gray-200 text-sm">ماست چکیده محلی با خیار تازه، نعنا خشک و گردو. این
+                                        پیش غذا به عنوان مکمل غذاهای اصلی سرو می‌شود.</p>
                                     <div class="mt-4 flex items-center">
-                                      
+
                                     </div>
                                 </div>
                             </div>
@@ -441,7 +500,9 @@
                                 <h3 class="text-xl font-bold text-gray-800 mb-2">ماست و خیار</h3>
                                 <div class="flex justify-between items-center">
                                     <span class="text-green-600 font-bold text-lg">۲۸,۰۰۰ تومان</span>
-                                    <button class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg" data-id="5" data-title="ماست و خیار" data-price="28000">
+                                    <button
+                                        class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
+                                        data-id="5" data-title="ماست و خیار" data-price="28000">
                                         <i class="fas fa-plus ml-2"></i> افزودن
                                     </button>
                                 </div>
@@ -451,12 +512,14 @@
                         <!-- نوشیدنی 1 -->
                         <div class="food-card" data-category="drink">
                             <div class="food-card-image rounded-t-xl overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1551029506-0807df4e2031?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1394&q=80" alt="دوغ محلی" class="w-full h-full object-cover">
+                                <img src="https://images.unsplash.com/photo-1551029506-0807df4e2031?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1394&q=80"
+                                    alt="دوغ محلی" class="w-full h-full object-cover">
                                 <div class="food-description">
                                     <h3 class="text-xl font-bold text-white mb-2">دوغ محلی</h3>
-                                    <p class="text-gray-200 text-sm">دوغ سنتی گازدار با طعم نعنا و کاکوتی. این نوشیدنی خنک و گوارا همراه با غذاهای ایرانی سرو می‌شود.</p>
+                                    <p class="text-gray-200 text-sm">دوغ سنتی گازدار با طعم نعنا و کاکوتی. این نوشیدنی
+                                        خنک و گوارا همراه با غذاهای ایرانی سرو می‌شود.</p>
                                     <div class="mt-4 flex items-center">
-                                      
+
                                     </div>
                                 </div>
                             </div>
@@ -464,7 +527,9 @@
                                 <h3 class="text-xl font-bold text-gray-800 mb-2">دوغ محلی</h3>
                                 <div class="flex justify-between items-center">
                                     <span class="text-green-600 font-bold text-lg">۲۵,۰۰۰ تومان</span>
-                                    <button class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg" data-id="6" data-title="دوغ محلی" data-price="25000">
+                                    <button
+                                        class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
+                                        data-id="6" data-title="دوغ محلی" data-price="25000">
                                         <i class="fas fa-plus ml-2"></i> افزودن
                                     </button>
                                 </div>
@@ -481,12 +546,16 @@
                             درباره رستوران ایرانی
                         </h2>
                         <p class="text-gray-600 mb-4 leading-relaxed">
-                            رستوران ایرانی با بیش از ۲۰ سال سابقه در زمینه ارائه غذاهای اصیل و خوشمزه ایرانی، همواره تلاش کرده است تا با استفاده از بهترین مواد اولیه و به کارگیری شیوه‌های سنتی پخت، تجربه‌ای متفاوت از طعم‌های اصیل ایرانی را برای مشتریان خود به ارمغان بیاورد.
+                            رستوران ایرانی با بیش از ۲۰ سال سابقه در زمینه ارائه غذاهای اصیل و خوشمزه ایرانی، همواره
+                            تلاش کرده است تا با استفاده از بهترین مواد اولیه و به کارگیری شیوه‌های سنتی پخت، تجربه‌ای
+                            متفاوت از طعم‌های اصیل ایرانی را برای مشتریان خود به ارمغان بیاورد.
                         </p>
                         <p class="text-gray-600 mb-6 leading-relaxed">
-                            ما در رستوران ایرانی معتقدیم که غذا فقط برای سیر کردن شکم نیست، بلکه یک هنر و فرهنگ است. به همین دلیل در تهیه تمامی غذاهایمان نهایت دقت و حوصله را به کار می‌گیریم تا رضایت کامل شما را جلب کنیم.
+                            ما در رستوران ایرانی معتقدیم که غذا فقط برای سیر کردن شکم نیست، بلکه یک هنر و فرهنگ است. به
+                            همین دلیل در تهیه تمامی غذاهایمان نهایت دقت و حوصله را به کار می‌گیریم تا رضایت کامل شما را
+                            جلب کنیم.
                         </p>
-                        
+
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
                                 <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
@@ -508,7 +577,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            
+
                             <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
                                 <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                                     <i class="fas fa-map-marker-alt text-blue-500 ml-2"></i>
@@ -531,21 +600,27 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="bg-white rounded-xl shadow-md p-6">
                         <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                             <i class="fas fa-images text-blue-500 ml-2"></i>
                             گالری رستوران
                         </h2>
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            <div class="rounded-lg overflow-hidden h-40 transform hover:scale-105 transition duration-300">
-                                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="فضای داخلی رستوران" class="w-full h-full object-cover">
+                            <div
+                                class="rounded-lg overflow-hidden h-40 transform hover:scale-105 transition duration-300">
+                                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                                    alt="فضای داخلی رستوران" class="w-full h-full object-cover">
                             </div>
-                            <div class="rounded-lg overflow-hidden h-40 transform hover:scale-105 transition duration-300">
-                                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="فضای داخلی رستوران" class="w-full h-full object-cover">
+                            <div
+                                class="rounded-lg overflow-hidden h-40 transform hover:scale-105 transition duration-300">
+                                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+                                    alt="فضای داخلی رستوران" class="w-full h-full object-cover">
                             </div>
-                            <div class="rounded-lg overflow-hidden h-40 transform hover:scale-105 transition duration-300">
-                                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="فضای داخلی رستوران" class="w-full h-full object-cover">
+                            <div
+                                class="rounded-lg overflow-hidden h-40 transform hover:scale-105 transition duration-300">
+                                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+                                    alt="فضای داخلی رستوران" class="w-full h-full object-cover">
                             </div>
                         </div>
                     </div>
@@ -558,13 +633,14 @@
                             <i class="fas fa-comment-alt text-blue-500 ml-2"></i>
                             نظرات مشتریان
                         </h2>
-                        
+
                         <div class="space-y-6">
                             <!-- نظر 1 -->
                             <div class="review-card p-5">
                                 <div class="flex items-start mb-4">
                                     <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
-                                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="کاربر" class="w-full h-full object-cover">
+                                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="کاربر"
+                                            class="w-full h-full object-cover">
                                     </div>
                                     <div class="mr-3">
                                         <h4 class="font-bold text-gray-800">نگار محمدی</h4>
@@ -581,15 +657,17 @@
                                     </div>
                                 </div>
                                 <p class="text-gray-600">
-                                    بهترین چلوکبابی که تا حالا خوردم! کیفیت گوشت فوق العاده بود و برنجش هم خیلی خوش پخت بود. پیشنهاد می‌کنم حتما این رستوران رو امتحان کنید.
+                                    بهترین چلوکبابی که تا حالا خوردم! کیفیت گوشت فوق العاده بود و برنجش هم خیلی خوش پخت
+                                    بود. پیشنهاد می‌کنم حتما این رستوران رو امتحان کنید.
                                 </p>
                             </div>
-                            
+
                             <!-- نظر 2 -->
                             <div class="review-card p-5">
                                 <div class="flex items-start mb-4">
                                     <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
-                                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="کاربر" class="w-full h-full object-cover">
+                                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="کاربر"
+                                            class="w-full h-full object-cover">
                                     </div>
                                     <div class="mr-3">
                                         <h4 class="font-bold text-gray-800">امیر حسینی</h4>
@@ -606,15 +684,17 @@
                                     </div>
                                 </div>
                                 <p class="text-gray-600">
-                                    قیمه سنتی این رستوران واقعا عالی بود. طعمش دقیقا مثل قیمه‌ای بود که مادربزرگم درست می‌کرد. سرویس دهی هم خیلی سریع و با ادب بود.
+                                    قیمه سنتی این رستوران واقعا عالی بود. طعمش دقیقا مثل قیمه‌ای بود که مادربزرگم درست
+                                    می‌کرد. سرویس دهی هم خیلی سریع و با ادب بود.
                                 </p>
                             </div>
-                            
+
                             <!-- نظر 3 -->
                             <div class="review-card p-5">
                                 <div class="flex items-start mb-4">
                                     <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
-                                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="کاربر" class="w-full h-full object-cover">
+                                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="کاربر"
+                                            class="w-full h-full object-cover">
                                     </div>
                                     <div class="mr-3">
                                         <h4 class="font-bold text-gray-800">سارا رضایی</h4>
@@ -631,18 +711,20 @@
                                     </div>
                                 </div>
                                 <p class="text-gray-600">
-                                    محیط خیلی دنج و آرومی داشت. غذاها خوشمزه بودند اما فکر می‌کنم قیمت‌ها کمی بالا هستند. به هر حال کیفیت مواد اولیه خوب بود.
+                                    محیط خیلی دنج و آرومی داشت. غذاها خوشمزه بودند اما فکر می‌کنم قیمت‌ها کمی بالا
+                                    هستند. به هر حال کیفیت مواد اولیه خوب بود.
                                 </p>
                             </div>
                         </div>
-                        
+
                         <!-- فرم ارسال نظر -->
                         <div class="bg-gray-50 p-5 rounded-lg border border-gray-200 mt-8">
                             <h3 class="text-lg font-semibold text-gray-800 mb-4">نظر خود را ثبت کنید</h3>
                             <form>
                                 <div class="mb-4">
                                     <label for="review-name" class="block text-gray-700 mb-2">نام شما</label>
-                                    <input type="text" id="review-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                    <input type="text" id="review-name"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
                                 </div>
                                 <div class="mb-4">
                                     <label for="review-rating" class="block text-gray-700 mb-2">امتیاز شما</label>
@@ -654,14 +736,17 @@
                                             <i class="fas fa-star cursor-pointer" data-rating="4"></i>
                                             <i class="fas fa-star cursor-pointer" data-rating="5"></i>
                                         </div>
-                                        <span class="text-gray-500 text-sm mr-2" id="rating-text">(هنوز امتیازی انتخاب نکرده‌اید)</span>
+                                        <span class="text-gray-500 text-sm mr-2" id="rating-text">(هنوز امتیازی انتخاب
+                                            نکرده‌اید)</span>
                                     </div>
                                 </div>
                                 <div class="mb-4">
                                     <label for="review-comment" class="block text-gray-700 mb-2">نظر شما</label>
-                                    <textarea id="review-comment" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
+                                    <textarea id="review-comment" rows="4"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
                                 </div>
-                                <button type="submit" class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-6 py-2.5 rounded-lg font-medium shadow-md transform hover:-translate-y-1 transition duration-300">
+                                <button type="submit"
+                                    class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-6 py-2.5 rounded-lg font-medium shadow-md transform hover:-translate-y-1 transition duration-300">
                                     ارسال نظر
                                 </button>
                             </form>
@@ -674,18 +759,21 @@
 
     <!-- سبد خرید موبایل -->
     <div class="md:hidden fixed bottom-4 left-4 right-4 z-50">
-        <div class="bg-white rounded-xl shadow-xl p-4 flex justify-between items-center border border-gray-200 transform hover:-translate-y-1 transition duration-300">
+        <div
+            class="bg-white rounded-xl shadow-xl p-4 flex justify-between items-center border border-gray-200 transform hover:-translate-y-1 transition duration-300">
             <div class="flex items-center">
                 <div class="relative">
                     <i class="fas fa-shopping-basket text-blue-600 text-2xl"></i>
-                    <span id="mobile-cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">0</span>
+                    <span id="mobile-cart-count"
+                        class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">0</span>
                 </div>
                 <div class="mr-3">
                     <span id="mobile-cart-total" class="block font-bold text-gray-800">۰ تومان</span>
                     <span class="text-xs text-gray-500">هزینه ارسال: ۱۵,۰۰۰ تومان</span>
                 </div>
             </div>
-            <button id="mobile-cart-btn" class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-4 py-2.5 rounded-lg font-medium shadow-md hover:shadow-lg">
+            <button id="mobile-cart-btn"
+                class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-4 py-2.5 rounded-lg font-medium shadow-md hover:shadow-lg">
                 مشاهده سبد خرید
             </button>
         </div>
@@ -693,11 +781,13 @@
 
     <!-- مودال سبد خرید موبایل -->
     <div id="mobile-cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
-        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl p-5 max-h-[85vh] overflow-y-auto mobile-cart-modal">
+        <div
+            class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl p-5 max-h-[85vh] overflow-y-auto mobile-cart-modal">
             <div class="flex justify-between items-center mb-5 pb-3 border-b border-gray-200 sticky top-0 bg-white">
                 <h2 class="text-lg font-bold flex items-center text-gray-800">
                     <i class="fas fa-shopping-basket ml-2 text-blue-600"></i> سبد خرید شما
-                    <span id="mobile-cart-count-badge" class="bg-blue-100 text-blue-800 text-xs font-medium ml-2 px-2 py-0.5 rounded-full">0</span>
+                    <span id="mobile-cart-count-badge"
+                        class="bg-blue-100 text-blue-800 text-xs font-medium ml-2 px-2 py-0.5 rounded-full">0</span>
                 </h2>
                 <button id="close-mobile-cart" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times text-xl"></i>
@@ -725,7 +815,8 @@
                     <span class="font-bold text-lg text-gray-800">مبلغ قابل پرداخت:</span>
                     <span id="mobile-total-price" class="text-blue-600 font-bold text-xl">۰ تومان</span>
                 </div>
-                <button id="mobile-checkout-btn" class="w-full mt-6 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white py-3.5 rounded-xl font-medium transition duration-300 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                <button id="mobile-checkout-btn"
+                    class="w-full mt-6 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white py-3.5 rounded-xl font-medium transition duration-300 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                     <i class="fas fa-wallet ml-2"></i> پرداخت نهایی
                 </button>
             </div>
@@ -894,25 +985,25 @@
 
         // افزودن به سبد خرید
         document.querySelectorAll(".add-to-cart").forEach(btn => {
-            btn.addEventListener("click", function() {
+            btn.addEventListener("click", function () {
                 const id = this.dataset.id;
                 const title = this.dataset.title;
                 const price = parseInt(this.dataset.price);
-                
+
                 if (cartItems[id]) {
                     cartItems[id].quantity += 1;
                 } else {
                     cartItems[id] = { title, price, quantity: 1 };
                 }
-                
+
                 renderCart();
-                
+
                 // تغییر موقت دکمه
                 const originalContent = this.innerHTML;
                 const originalClasses = this.className;
                 this.innerHTML = '<i class="fas fa-check ml-2"></i> افزوده شد';
                 this.className = originalClasses.replace('from-green-500 to-green-600', 'from-blue-500 to-blue-600');
-                
+
                 setTimeout(() => {
                     this.innerHTML = originalContent;
                     this.className = originalClasses;
@@ -921,7 +1012,7 @@
         });
 
         // مدیریت رویدادهای سبد خرید
-        document.addEventListener("click", function(e) {
+        document.addEventListener("click", function (e) {
             // کاهش تعداد
             if (e.target.closest(".decrease-quantity")) {
                 const id = e.target.closest(".decrease-quantity").dataset.id;
@@ -932,14 +1023,14 @@
                 }
                 renderCart();
             }
-            
+
             // افزایش تعداد
             if (e.target.closest(".increase-quantity")) {
                 const id = e.target.closest(".increase-quantity").dataset.id;
                 cartItems[id].quantity += 1;
                 renderCart();
             }
-            
+
             // حذف آیتم
             if (e.target.closest(".remove-item")) {
                 const id = e.target.closest(".remove-item").dataset.id;
@@ -975,15 +1066,15 @@
         categoryBtns.forEach(btn => {
             btn.addEventListener("click", () => {
                 const category = btn.dataset.category;
-                
+
                 // آپدیت تب فعال
                 categoryBtns.forEach(b => {
                     b.classList.remove("active", "bg-gradient-to-r", "from-blue-600", "to-blue-500", "text-white", "shadow-md");
                     b.className = "category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200";
                 });
-                
+
                 btn.className = "category-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md";
-                
+
                 // فیلتر کارت‌ها
                 foodCards.forEach(card => {
                     if (category === "all" || card.dataset.category === category) {
@@ -999,15 +1090,15 @@
         mainTabBtns.forEach(btn => {
             btn.addEventListener("click", () => {
                 const tabId = btn.dataset.tab;
-                
+
                 // آپدیت تب فعال
                 mainTabBtns.forEach(b => {
                     b.classList.remove("active", "bg-gradient-to-r", "from-blue-600", "to-blue-500", "text-white", "shadow-md");
                     b.className = "main-tab-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200";
                 });
-                
+
                 btn.className = "main-tab-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md";
-                
+
                 // نمایش محتوای تب مربوطه
                 tabContents.forEach(content => {
                     content.classList.remove("active");
@@ -1053,23 +1144,23 @@
         const stars = document.querySelectorAll('[data-rating]');
         const ratingText = document.getElementById('rating-text');
         let currentRating = 0;
-        
+
         stars.forEach(star => {
-            star.addEventListener('click', function() {
+            star.addEventListener('click', function () {
                 currentRating = parseInt(this.dataset.rating);
                 updateRatingStars(currentRating);
             });
-            
-            star.addEventListener('mouseover', function() {
+
+            star.addEventListener('mouseover', function () {
                 const hoverRating = parseInt(this.dataset.rating);
                 updateRatingStars(hoverRating, false);
             });
-            
-            star.addEventListener('mouseout', function() {
+
+            star.addEventListener('mouseout', function () {
                 updateRatingStars(currentRating);
             });
         });
-        
+
         function updateRatingStars(rating, updateText = true) {
             // آپدیت ستاره‌ها
             stars.forEach((star, index) => {
@@ -1081,7 +1172,7 @@
                     star.classList.add('text-gray-300', 'far');
                 }
             });
-            
+
             if (updateText) {
                 // آپدیت متن
                 const ratingTexts = [
@@ -1108,36 +1199,37 @@
 
 
         document.addEventListener('DOMContentLoaded', async function () {
-    const token = sessionStorage.getItem('accessToken');
-    const menuName = document.getElementById('menuName');
-    const menuImage = document.getElementById('menuImage');
-    
+            const token = sessionStorage.getItem('accessToken');
+            const menuName = document.getElementById('menuName');
+            const menuImage = document.getElementById('menuImage');
 
-    try {
-        // دریافت اطلاعات رستوران و منوها
-        const response = await fetch("http://135.125.238.202:7050/menu/", {
-            method: "GET",
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const menusList = await response.json();
 
-        // فرض: اولین منو مربوط به رستوران ایرانی است
-        if (menusList.length > 0) {
-            const mainMenu = menusList[0];
-            menuName.textContent = mainMenu.name || "رستوران ایرانی";
-            if (mainMenu.image_path) {
-                menuImage.src = "http://135.125.238.202:7050" + mainMenu.image_path;
+            try {
+                // دریافت اطلاعات رستوران و منوها
+                const response = await fetch("http://135.125.238.202:7050/menu/", {
+                    method: "GET",
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const menusList = await response.json();
+
+                // فرض: اولین منو مربوط به رستوران ایرانی است
+                if (menusList.length > 0) {
+                    const mainMenu = menusList[0];
+                    menuName.textContent = mainMenu.name || "رستوران ایرانی";
+                    if (mainMenu.image_path) {
+                        menuImage.src = "http://135.125.238.202:7050" + mainMenu.image_path;
+                    }
+                }
+            } catch (error) {
+
             }
-        }
-    } catch (error) {
-       
-    }
-});
+        });
 
-    const token = sessionStorage.getItem('accessToken');
+        const token = sessionStorage.getItem('accessToken');
         if (!token) {
             window.location.href = "login.html";
         }
     </script>
 </body>
+
 </html>
