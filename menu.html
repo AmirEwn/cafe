@@ -1123,7 +1123,7 @@
 
         // فرض: اولین منو مربوط به رستوران ایرانی است
         if (menusList.length > 0) {
-            const mainMenu = menusList[1];
+            const mainMenu = menusList[0];
             menuName.textContent = mainMenu.name || "رستوران ایرانی";
             if (mainMenu.image_path) {
                 menuImage.src = "http://135.125.238.202:7050" + mainMenu.image_path;
