@@ -455,7 +455,7 @@
         </div>
     </section>
 
-    <!-- مودال افزودن/ویرایش دسته‌بندی -->
+    <!-- مودال افزودن دسته‌بندی -->
     <div id="category-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-xl p-6 w-full max-w-md mx-4">
             <div class="flex justify-between items-center mb-4">
@@ -481,6 +481,33 @@
                 </div>
                 <div class="flex gap-3">
                     <button type="button" id="cancel-modal"
+                        class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-100 transition">انصراف</button>
+                    <button type="submit"
+                        class="flex-1 px-4 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-400 transition">ذخیره</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- مودال ویرایش دسته‌بندی -->
+    <div id="category-edit-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-6 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold" id="modal-edit-title">ویرایش دسته‌بندی جدید</h3>
+                <button id="close-edit-modal" class="text-gray-500 hover:text-dark transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="category-edit-form">
+                <div class="mb-4">
+                    <label for="category-edit-name" class="block text-gray-700 mb-2">نام دسته‌بندی</label>
+                    <input type="text" id="category-edit-name"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition">
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" id="cancel-edit-modal"
                         class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-100 transition">انصراف</button>
                     <button type="submit"
                         class="flex-1 px-4 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-400 transition">ذخیره</button>
@@ -818,7 +845,7 @@
 
             //نمایش منو ها
             const menus = document.getElementById("menus");
-
+            let currentMenuId = null;
             async function loadMenus() {
                 try {
                     const response = await fetch("http://135.125.238.202:7050/menu/", {
@@ -897,12 +924,12 @@
                         const menuModal = document.getElementById('menu-edit-modal');
                         const closeMenuModalBtn = document.getElementById('close-menu-edit-modal');
                         const cancelMenuModalBtn = document.getElementById('cancel-menu-edit-modal');
-                        const menuForm = document.getElementById('menu-edit-form');
+
                         const modalTitle = document.getElementById('menu-modal-edit-title');
 
                         btn.addEventListener('click', () => {
-                            const menuEditId = btn.getAttribute('data-id');
-                            modalTitle.textContent = `ویرایش منو` ;
+                            currentMenuId = btn.getAttribute('data-id');
+                            modalTitle.textContent = `ویرایش منو`;
                             menuModal.classList.remove('hidden');
                         });
 
@@ -914,40 +941,7 @@
                             menuModal.classList.add('hidden');
                         });
 
-                        menuForm.addEventListener('submit', async (e) => {
-                            e.preventDefault();
 
-                            const name = document.getElementById('menu-edit-name');
-                            const image = document.getElementById('menu-edit-image');
-
-                            const formData = new FormData();
-                            formData.append("name", name.value);
-                            if (image.files[0]) {
-                                formData.append("image", image.files[0]);
-                            }
-
-                            try {
-                                const response = await fetch("http://135.125.238.202:7050/menu/", {
-                                    method: "PUT",
-                                    headers: {
-                                        'Authorization': `Bearer ${token}`
-                                    },
-                                    body: formData
-                                });
-
-                                const data = await response.json();
-                                if (response.status === 201) {
-                                    alert('منو با موفقیت ذخیره شد ✔️');
-                                    menuModal.classList.add('hidden');
-                                    loadMenus();
-                                } else {
-                                    alert(' خطا در ارتباط با سرور');
-                                }
-
-                            } catch (error) {
-                                console.error(" ارور شما : ", error);
-                            }
-                        });
                     });
 
 
@@ -955,7 +949,43 @@
                     menus.innerHTML = '<div class="text-danger text-center">خطا در دریافت منوها</div>';
                 }
             }
+            const menuEditForm = document.getElementById('menu-edit-form');
+            menuEditForm.addEventListener('submit', async (e) => {
+                const menuModal = document.getElementById('menu-edit-modal');
+                e.preventDefault();
 
+                const name = document.getElementById('menu-edit-name');
+                const image = document.getElementById('menu-edit-image');
+
+                const formData = new FormData();
+                formData.append("name", name.value);
+                if (image.files[0]) {
+                    formData.append("image", image.files[0]);
+                }
+
+                try {
+
+                    const response = await fetch(`http://135.125.238.202:7050/menu/${currentMenuId}/`, {
+                        method: "PUT",
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: formData
+                    });
+
+                    const data = await response.json();
+                    if (response.status === 200) {
+                        alert('منو با موفقیت ذخیره شد ');
+                        menuModal.classList.add('hidden');
+                        loadMenus();
+                    } else {
+                        alert(' خطا در ارتباط با سرور');
+                    }
+
+                } catch (error) {
+                    console.error(" ارور شما : ", error);
+                }
+            });
 
             loadMenus();
 
@@ -1023,28 +1053,12 @@
                 categoryModal.classList.add('hidden');
             });
 
-            // مدیریت دکمه‌های ویرایش و حذف
-            const editButtons = document.querySelectorAll('.edit-category-btn');
-            // const deleteButtons = document.querySelectorAll('.delete-category-btn');
 
-            editButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    document.getElementById('modal-title').textContent = 'ویرایش دسته‌بندی';
-                    categoryModal.classList.remove('hidden');
-                });
-            });
 
-            // deleteButtons.forEach(button => {
-            //     button.addEventListener('click', () => {
-            //         if (confirm('آیا از حذف این دسته‌بندی اطمینان دارید؟')) {
-            //             // در اینجا کد حذف از API قرار می‌گیرد
-            //             alert('دسته‌بندی با موفقیت حذف شد!');
-            //         }
-            //     });
-            // });
 
             // نمایش دسته بندی ها
             const categorys = document.getElementById("categorys");
+            let currentCategoryId = null;
 
             async function loadCategory() {
 
@@ -1067,7 +1081,7 @@
                         card.innerHTML = `
                         <div class="flex justify-end mb-4">
                             <div class="flex gap-2 ">
-                                <button class="edit-category-btn text-primary-500 hover:text-primary-400 transition">
+                                <button class="edit-category-btn text-primary-500 hover:text-primary-400 transition" category-id="${category.id}">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <button class="delete-category-btn text-danger hover:text-red-600 transition" category-id="${category.id}">
@@ -1111,13 +1125,74 @@
                         });
                     });
 
+                    document.querySelectorAll('.edit-category-btn').forEach(btn => {
+
+                        const categoryModal = document.getElementById('category-edit-modal');
+                        const closeModalBtn = document.getElementById('close-edit-modal');
+                        const cancelModalBtn = document.getElementById('cancel-edit-modal');
+
+
+                        btn.addEventListener('click', () => {
+                            currentCategoryId = btn.getAttribute('category-id');
+                            document.getElementById('modal-edit-title').textContent = 'ویرایش دسته‌بندی';
+                            categoryModal.classList.remove('hidden');
+                        });
+
+                        closeModalBtn.addEventListener('click', () => {
+                            categoryModal.classList.add('hidden');
+                        });
+
+                        cancelModalBtn.addEventListener('click', () => {
+                            categoryModal.classList.add('hidden');
+                        });
+
+
+
+                    });
+
+
+
                 } catch (error) {
                     categorys.innerHTML = '<div class="text-danger text-center">خطا در دریافت منوها</div>';
                 }
 
 
             }
+            const categoryEditForm = document.getElementById('category-edit-form');
+            categoryEditForm.addEventListener('submit', async (e) => {
+                const categoryModal = document.getElementById('category-edit-modal');
+                e.preventDefault();
 
+                const name = document.getElementById('category-edit-name').value;
+                // const categoryId = .getAttribute('category-id');
+                try {
+                    const response = await fetch(`http://135.125.238.202:7050/menu/category/${currentCategoryId}/`, {
+                        method: "PUT",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            name
+                        })
+                    })
+
+                    const data = await response.json();
+                    if (response.status === 200) {
+                        alert('دسته بندی با موفقیت ذخیره شد ');
+                        categoryModal.classList.add('hidden');
+                        loadCategory();
+
+                    }
+                    else {
+                        alert(' خطا در ارتباط ');
+                    }
+
+
+                } catch (error) {
+                    console.error(" ارور شما : ", error);
+                }
+            });
 
             loadCategory();
 
