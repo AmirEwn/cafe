@@ -271,6 +271,14 @@
         </div>
     </header>
 
+    <!-- بالای صفحه، بعد از هدر یا قبل از بخش اصلی -->
+    <div class="container mx-auto px-4 py-4 flex justify-end">
+        <select id="menu-dropdown"
+            class="px-4 py-2 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
+            <option value="">انتخاب منو...</option>
+        </select>
+    </div>
+
     <!-- بخش اصلی -->
     <div class="flex flex-row container mx-auto my-6" dir="ltr">
         <!-- سبد خرید دسکتاپ -->
@@ -987,14 +995,52 @@
             }
         }
 
+
+        async function loadMenusForDropdown() {
+            const token = sessionStorage.getItem('accessToken');
+            const dropdown = document.getElementById('menu-dropdown');
+            dropdown.innerHTML = '<option value="">انتخاب منو...</option>';
+
+            try {
+                const response = await fetch("http://135.125.238.202:7050/menu/", {
+                    method: "GET",
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const menusList = await response.json();
+
+                menusList.forEach(menu => {
+                    const option = document.createElement('option');
+                    option.value = menu.id;
+                    option.textContent = menu.name;
+                    dropdown.appendChild(option);
+                });
+            } catch (error) {
+                dropdown.innerHTML = '<option value="">خطا در دریافت منوها</option>';
+            }
+        }
+
+        // تغییر منو و بارگذاری منوی انتخاب‌شده
+        document.getElementById('menu-dropdown').addEventListener('change', function () {
+            const selectedId = this.value;
+            if (selectedId) {
+                loadFullMenu(selectedId);
+            }
+        });
+
+
         // تابع برای نمایش منو
         function renderMenu(menuData) {
             const menuContainer = document.getElementById('menu-items-container');
             const categoriesNav = document.getElementById('categories-nav');
-            
+
             // پاک کردن محتوای قبلی
             menuContainer.innerHTML = '';
-            
+
+            // پاک کردن دسته‌بندی‌های قبلی و فقط نگه داشتن دکمه "همه موارد"
+            const allBtn = categoriesNav.querySelector('[data-category="all"]');
+            categoriesNav.innerHTML = '';
+            categoriesNav.appendChild(allBtn);
+
             // ایجاد دسته‌بندی‌ها
             if (menuData.menu_categories && menuData.menu_categories.length > 0) {
                 menuData.menu_categories.forEach(category => {
@@ -1003,11 +1049,9 @@
                     categoryBtn.className = 'category-btn whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-white hover:bg-gray-100 border border-gray-200';
                     categoryBtn.dataset.category = category.id;
                     categoryBtn.innerHTML = `<i class=" ml-2 text-blue-500"></i> ${category.name}`;
-                    
-                    // پیدا کردن دکمه "همه موارد" و اضافه کردن بعد از آن
-                    const allBtn = document.querySelector('[data-category="all"]');
-                    allBtn.parentNode.insertBefore(categoryBtn, allBtn.nextSibling);
-                    
+
+                    categoriesNav.appendChild(categoryBtn);
+
                     // ایجاد کارت‌های غذا برای این دسته‌بندی
                     if (category.menu_items && category.menu_items.length > 0) {
                         category.menu_items.forEach(item => {
@@ -1015,39 +1059,39 @@
                                 const itemCard = document.createElement('div');
                                 itemCard.className = 'food-card';
                                 itemCard.dataset.category = category.id;
-                                
+
                                 // تعیین تصویر آیتم
-                                const itemImage = item.image_path ? 
-                                    `http://135.125.238.202:7050${item.image_path}` : 
+                                const itemImage = item.image_path ?
+                                    `http://135.125.238.202:7050${item.image_path}` :
                                     'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80';
-                                
+
                                 itemCard.innerHTML = `
-                                    <div class="food-card-image rounded-t-xl overflow-hidden">
-                                        <img src="${itemImage}" alt="${item.name}" class="w-full h-full object-cover">
-                                        <div class="food-description">
-                                            <h3 class="text-xl font-bold text-white mb-2">${item.name}</h3>
-                                            <p class="text-gray-200 text-sm">${item.description || 'توضیحاتی برای این آیتم موجود نیست.'}</p>
-                                        </div>
-                                    </div>
-                                    <div class="p-5">
-                                        <h3 class="text-xl font-bold text-gray-800 mb-2">${item.name}</h3>
-                                        <div class="flex justify-between items-center">
-                                            <span class="text-green-600 font-bold text-lg">${parseInt(item.price).toLocaleString()} تومان</span>
-                                            <button class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
-                                                data-id="${item.id}" data-title="${item.name}" data-price="${item.price}">
-                                                <i class="fas fa-plus ml-2"></i> افزودن
-                                            </button>
-                                        </div>
-                                    </div>
-                                `;
-                                
+                            <div class="food-card-image rounded-t-xl overflow-hidden">
+                                <img src="${itemImage}" alt="${item.name}" class="w-full h-full object-cover">
+                                <div class="food-description">
+                                    <h3 class="text-xl font-bold text-white mb-2">${item.name}</h3>
+                                    <p class="text-gray-200 text-sm">${item.description || 'توضیحاتی برای این آیتم موجود نیست.'}</p>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">${item.name}</h3>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-green-600 font-bold text-lg">${parseInt(item.price).toLocaleString()} تومان</span>
+                                    <button class="add-to-cart bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center shadow-md hover:shadow-lg"
+                                        data-id="${item.id}" data-title="${item.name}" data-price="${item.price}">
+                                        <i class="fas fa-plus ml-2"></i> افزودن
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+
                                 menuContainer.appendChild(itemCard);
                             }
                         });
                     }
                 });
             }
-            
+
             // اضافه کردن event listener برای دکمه‌های افزودن به سبد خرید
             document.querySelectorAll('.add-to-cart').forEach(btn => {
                 btn.addEventListener('click', function () {
@@ -1062,32 +1106,21 @@
                     }
 
                     renderCart();
-
-                    // تغییر موقت دکمه
-                    // const originalContent = this.innerHTML;
-                    // const originalClasses = this.className;
-                    // this.innerHTML = '<i class="fas fa-check ml-2"></i> افزوده شد';
-                    // this.className = originalClasses.replace('from-green-500 to-green-600', 'from-blue-500 to-blue-600');
-
-                    // setTimeout(() => {
-                    //     this.innerHTML = originalContent;
-                    //     this.className = originalClasses;
-                    // }, 1500);
                 });
             });
-            
+
             // راه‌اندازی مجدد فیلترینگ دسته‌بندی‌ها
             setupCategoryFiltering();
         }
 
         // دریافت اطلاعات رستوران و منوها
-        async function loadFullMenu() {
+        async function loadFullMenu(menuId) {
             const token = sessionStorage.getItem('accessToken');
             const menuName = document.getElementById('menuName');
             const menuImage = document.getElementById('menuImage');
-            
+
             try {
-                const response = await fetch("http://135.125.238.202:7050/menu/show/10/", {
+                const response = await fetch(`http://135.125.238.202:7050/menu/show/${menuId}/`, {
                     method: "GET",
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
@@ -1097,43 +1130,39 @@
                 }
 
                 const menuData = await response.json();
-                console.log("داده‌های منو:", menuData);
-                
-                // آپدیت اطلاعات رستوران
+
                 menuName.textContent = menuData.name || "رستوران ایرانی";
                 if (menuData.image_path) {
                     menuImage.src = "http://135.125.238.202:7050" + menuData.image_path;
                 }
-                
-                // نمایش منو
+
                 renderMenu(menuData);
-                
+
             } catch (error) {
-                console.error("خطا در گرفتن منو:", error);
                 document.getElementById('loading-message').innerHTML = `
-                    <div class="text-center py-10 text-red-500">
-                        <i class="fas fa-exclamation-triangle text-3xl mb-3"></i>
-                        <p>خطا در بارگذاری منو</p>
-                        <p class="text-sm mt-2">لطفاً صفحه را مجدداً بارگذاری کنید</p>
-                    </div>
-                `;
+            <div class="text-center py-10 text-red-500">
+                <i class="fas fa-exclamation-triangle text-3xl mb-3"></i>
+                <p>خطا در بارگذاری منو</p>
+                <p class="text-sm mt-2">لطفاً صفحه را مجدداً بارگذاری کنید</p>
+            </div>
+        `;
             }
         }
 
         // مقداردهی اولیه
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const token = sessionStorage.getItem('accessToken');
             if (!token) {
                 window.location.href = "login.html";
                 return;
             }
-            
+
             renderCart();
             deliveryCostElem.textContent = `${deliveryCost.toLocaleString()} تومان`;
             mobileDeliveryCost.textContent = `${deliveryCost.toLocaleString()} تومان`;
-            
-            // بارگذاری منو
-            loadFullMenu();
+
+            loadMenusForDropdown();
+            loadFullMenu(); // مقدار اولیه (مثلاً 10)
         });
     </script>
 </body>
