@@ -2367,10 +2367,10 @@
                         </div>
                         <div class="mb-4">
                             <label class="flex items-center">
-                                
+
                                 <input id="status" type="checkbox"
-                                    class="rounded border-gray-300 text-primary-500 focus:ring-primary-500"> 
-                               آیتم فعال باشد
+                                    class="rounded border-gray-300 text-primary-500 focus:ring-primary-500">
+                                آیتم فعال باشد
                             </label>
                         </div>
                     </div>
@@ -2886,8 +2886,9 @@
                             </div>
                             
                             <div class="menu-actions-buttons">
-                                <button class="view-menu-btn">مشاهده منو</button>
-                               
+                                <button class="view-menu-btn" onclick="window.location.href='menu.html?id=${menu.id}'">
+                                 مشاهده منو
+                                </button>
                             </div>
                         `;
                         menus.appendChild(card);
@@ -3199,14 +3200,14 @@
                 const itemImage = document.getElementById("add-item-image");
                 const status = document.getElementById("status").checked;
 
-                
+
 
                 if (!itemCategory) {
                     alert('لطفاً یک دسته‌بندی انتخاب کنید');
                     return;
                 }
 
-                
+
 
                 // گرفتن سایزها و extras
                 const sizeCheckboxes = document.querySelectorAll('input[name="item-size"]:checked');

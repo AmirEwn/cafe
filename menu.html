@@ -272,12 +272,12 @@
     </header>
 
     <!-- بالای صفحه، بعد از هدر یا قبل از بخش اصلی -->
-    <div class="container mx-auto px-4 py-4 flex justify-end">
+    <!-- <div class="container mx-auto px-4 py-4 flex justify-end">
         <select id="menu-dropdown"
             class="px-4 py-2 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
             <option value="">انتخاب منو...</option>
         </select>
-    </div>
+    </div> -->
 
     <!-- بخش اصلی -->
     <div class="flex flex-row container mx-auto my-6" dir="ltr">
@@ -996,36 +996,36 @@
         }
 
 
-        async function loadMenusForDropdown() {
-            const token = sessionStorage.getItem('accessToken');
-            const dropdown = document.getElementById('menu-dropdown');
-            dropdown.innerHTML = '<option value="">انتخاب منو...</option>';
+        // async function loadMenusForDropdown() {
+        //     const token = sessionStorage.getItem('accessToken');
+        //     const dropdown = document.getElementById('menu-dropdown');
+        //     dropdown.innerHTML = '<option value="">انتخاب منو...</option>';
 
-            try {
-                const response = await fetch("http://135.125.238.202:7050/menu/", {
-                    method: "GET",
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                const menusList = await response.json();
+        //     try {
+        //         const response = await fetch("http://135.125.238.202:7050/menu/", {
+        //             method: "GET",
+        //             headers: { 'Authorization': `Bearer ${token}` }
+        //         });
+        //         const menusList = await response.json();
 
-                menusList.forEach(menu => {
-                    const option = document.createElement('option');
-                    option.value = menu.id;
-                    option.textContent = menu.name;
-                    dropdown.appendChild(option);
-                });
-            } catch (error) {
-                dropdown.innerHTML = '<option value="">خطا در دریافت منوها</option>';
-            }
-        }
+        //         menusList.forEach(menu => {
+        //             const option = document.createElement('option');
+        //             option.value = menu.id;
+        //             option.textContent = menu.name;
+        //             dropdown.appendChild(option);
+        //         });
+        //     } catch (error) {
+        //         dropdown.innerHTML = '<option value="">خطا در دریافت منوها</option>';
+        //     }
+        // }
 
         // تغییر منو و بارگذاری منوی انتخاب‌شده
-        document.getElementById('menu-dropdown').addEventListener('change', function () {
-            const selectedId = this.value;
-            if (selectedId) {
-                loadFullMenu(selectedId);
-            }
-        });
+        // document.getElementById('menu-dropdown').addEventListener('change', function () {
+        //     const selectedId = this.value;
+        //     if (selectedId) {
+        //         loadFullMenu(selectedId);
+        //     }
+        // });
 
 
         // تابع برای نمایش منو
@@ -1113,8 +1113,11 @@
             setupCategoryFiltering();
         }
 
+        const params = new URLSearchParams(window.location.search);
+        const menuId = params.get("id");
+        console.log(`id menu = ${menuId}`);
         // دریافت اطلاعات رستوران و منوها
-        async function loadFullMenu(menuId) {
+        async function loadFullMenu() {
             const token = sessionStorage.getItem('accessToken');
             const menuName = document.getElementById('menuName');
             const menuImage = document.getElementById('menuImage');
@@ -1161,7 +1164,7 @@
             deliveryCostElem.textContent = `${deliveryCost.toLocaleString()} تومان`;
             mobileDeliveryCost.textContent = `${deliveryCost.toLocaleString()} تومان`;
 
-            loadMenusForDropdown();
+            // loadMenusForDropdown();
             loadFullMenu(); // مقدار اولیه (مثلاً 10)
         });
     </script>
