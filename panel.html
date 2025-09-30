@@ -1676,14 +1676,18 @@
                         </div>
 
                         <form class="edit-form">
-                            <div class="form-row">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                                 <div class="form-group">
-                                    <label for="cafe-name">نام کافه</label>
-                                    <input type="text" id="cafe-name" value="کافه کتابخانه">
+                                    <label for="cafe-name" class="block text-sm font-medium text-gray-700 mb-2">نام
+                                        کافه</label>
+                                    <input type="text" id="cafe-name" value="کافه کتابخانه"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                                 </div>
                                 <div class="form-group">
-                                    <label for="cafe-category">دسته‌بندی</label>
-                                    <select id="cafe-category">
+                                    <label for="cafe-category"
+                                        class="block text-sm font-medium text-gray-700 mb-2">دسته‌بندی</label>
+                                    <select id="cafe-category"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                                         <option value="traditional">کافه سنتی</option>
                                         <option value="work" selected>کافه کار</option>
                                         <option value="book">کافه کتاب</option>
@@ -1694,115 +1698,150 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="cafe-address">آدرس</label>
-                                <input type="text" id="cafe-address" value="تهران، خیابان انقلاب، بین دانشگاه و فلسطین">
+                            <div class="form-group mb-6">
+                                <label for="cafe-address"
+                                    class="block text-sm font-medium text-gray-700 mb-2">آدرس</label>
+                                <input type="text" id="cafe-address" value="تهران، خیابان انقلاب، بین دانشگاه و فلسطین"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                             </div>
 
-                            <div class="form-row">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                                 <div class="form-group">
-                                    <label for="cafe-phone">تلفن</label>
-                                    <input type="tel" id="cafe-phone" value="021-12345678">
+                                    <label for="cafe-phone"
+                                        class="block text-sm font-medium text-gray-700 mb-2">تلفن</label>
+                                    <input type="tel" id="cafe-phone" value="021-12345678"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                                 </div>
                                 <div class="form-group">
-                                    <label for="cafe-email">ایمیل</label>
-                                    <input type="email" id="cafe-email" value="info@cafe-book.com">
+                                    <label for="cafe-email"
+                                        class="block text-sm font-medium text-gray-700 mb-2">ایمیل</label>
+                                    <input type="email" id="cafe-email" value="info@cafe-book.com"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="cafe-website">وبسایت (اختیاری)</label>
-                                <input type="url" id="cafe-website" value="https://cafe-book.com">
+                            <div class="form-group mb-6">
+                                <label for="cafe-website" class="block text-sm font-medium text-gray-700 mb-2">وبسایت
+                                    (اختیاری)</label>
+                                <input type="url" id="cafe-website" value="https://cafe-book.com"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                             </div>
 
-                            <div class="form-group">
-                                <label for="cafe-description">توضیحات کافه</label>
-                                <textarea id="cafe-description"
-                                    rows="5">کافه‌ای دنج با کتاب‌های متنوع و فضای آرام برای مطالعه. مناسب برای دانشجویان و علاقه‌مندان به کتاب. وای‌فای پرسرعت و محیطی آرام برای کار و مطالعه.</textarea>
+                            <div class="form-group mb-6">
+                                <label for="cafe-description"
+                                    class="block text-sm font-medium text-gray-700 mb-2">توضیحات کافه</label>
+                                <textarea id="cafe-description" rows="5"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">کافه‌ای دنج با کتاب‌های متنوع و فضای آرام برای مطالعه. مناسب برای دانشجویان و علاقه‌مندان به کتاب. وای‌فای پرسرعت و محیطی آرام برای کار و مطالعه.</textarea>
                             </div>
 
-                            <div class="form-group">
-                                <label>ویژگی‌ها</label>
-                                <div class="features-checkboxes">
-                                    <label class="checkbox-container">
-                                        <input type="checkbox" checked>
-                                        <span class="checkmark"></span>
-                                        وای‌فای رایگان
+                            <div class="form-group mb-6">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">ویژگی‌ها</label>
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" checked
+                                            class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
+                                        <span class="mr-2 text-gray-700">وای‌فای رایگان</span>
                                     </label>
-                                    <label class="checkbox-container">
-                                        <input type="checkbox" checked>
-                                        <span class="checkmark"></span>
-                                        محیط غیرسیگاری
+                                    <label class="flex items-center">
+                                        <input type="checkbox" checked
+                                            class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
+                                        <span class="mr-2 text-gray-700">محیط غیرسیگاری</span>
                                     </label>
-                                    <label class="checkbox-container">
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                        پارکینگ
+                                    <label class="flex items-center">
+                                        <input type="checkbox"
+                                            class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
+                                        <span class="mr-2 text-gray-700">پارکینگ</span>
                                     </label>
-                                    <label class="checkbox-container">
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                        پذیرش کارت
+                                    <label class="flex items-center">
+                                        <input type="checkbox"
+                                            class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
+                                        <span class="mr-2 text-gray-700">پذیرش کارت</span>
                                     </label>
-                                    <label class="checkbox-container">
-                                        <input type="checkbox" checked>
-                                        <span class="checkmark"></span>
-                                        میز کار
+                                    <label class="flex items-center">
+                                        <input type="checkbox" checked
+                                            class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
+                                        <span class="mr-2 text-gray-700">میز کار</span>
                                     </label>
-                                    <label class="checkbox-container">
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                        موسیقی زنده
+                                    <label class="flex items-center">
+                                        <input type="checkbox"
+                                            class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
+                                        <span class="mr-2 text-gray-700">موسیقی زنده</span>
                                     </label>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label>ساعات کاری</label>
-                                <div class="working-hours">
-                                    <div class="day-hour">
-                                        <span>شنبه تا چهارشنبه</span>
-                                        <input type="time" value="08:00"> تا <input type="time" value="23:00">
-                                    </div>
-                                    <div class="day-hour">
-                                        <span>پنجشنبه</span>
-                                        <input type="time" value="08:00"> تا <input type="time" value="24:00">
-                                    </div>
-                                    <div class="day-hour">
-                                        <span>جمعه</span>
-                                        <input type="time" value="10:00"> تا <input type="time" value="24:00">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>تصاویر کافه</label>
-                                <div class="image-uploader">
-                                    <div class="uploaded-images">
-                                        <div class="uploaded-image">
-                                            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                                                alt="کافه">
-                                            <button class="delete-image"><i class="fas fa-times"></i></button>
+                            <div class="form-group mb-6">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">ساعات کاری</label>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-gray-700 w-32">شنبه تا چهارشنبه</span>
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <input type="time" value="08:00"
+                                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                            <span class="text-gray-500">تا</span>
+                                            <input type="time" value="23:00"
+                                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                                         </div>
-                                        <div class="uploaded-image">
-                                            <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
-                                                alt="کافه">
-                                            <button class="delete-image"><i class="fas fa-times"></i></button>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-gray-700 w-32">پنجشنبه</span>
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <input type="time" value="08:00"
+                                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                            <span class="text-gray-500">تا</span>
+                                            <input type="time" value="24:00"
+                                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                                         </div>
-                                        <div class="upload-image-btn">
-                                            <input type="file" id="cafe-images" accept="image/*" multiple>
-                                            <label for="cafe-images">
-                                                <i class="fas fa-plus"></i>
-                                                افزودن تصویر
-                                            </label>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-gray-700 w-32">جمعه</span>
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <input type="time" value="10:00"
+                                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                            <span class="text-gray-500">تا</span>
+                                            <input type="time" value="24:00"
+                                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="form-actions">
-                                <button type="button" class="btn btn-outline">انصراف</button>
-                                <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+                            <div class="form-group mb-6">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">تصاویر کافه</label>
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                    <div class="relative group">
+                                        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                                            alt="کافه" class="w-full h-32 object-cover rounded-lg">
+                                        <button
+                                            class="absolute top-2 left-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                                            <i class="fas fa-times text-xs"></i>
+                                        </button>
+                                    </div>
+                                    <div class="relative group">
+                                        <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
+                                            alt="کافه" class="w-full h-32 object-cover rounded-lg">
+                                        <button
+                                            class="absolute top-2 left-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                                            <i class="fas fa-times text-xs"></i>
+                                        </button>
+                                    </div>
+                                    <div
+                                        class="border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center h-32 cursor-pointer hover:border-purple-500 transition">
+                                        <input type="file" id="cafe-images" accept="image/*" multiple class="hidden">
+                                        <label for="cafe-images" class="flex flex-col items-center cursor-pointer">
+                                            <i class="fas fa-plus text-gray-400 mb-2"></i>
+                                            <span class="text-gray-500 text-sm">افزودن تصویر</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end space-x-3 space-x-reverse mt-8 pt-6 border-t border-gray-200">
+                                <button type="button"
+                                    class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">انصراف</button>
+                                <button type="submit"
+                                    class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">ذخیره
+                                    تغییرات</button>
                             </div>
                         </form>
                     </section>
@@ -2886,7 +2925,7 @@
                             </div>
                             
                             <div class="menu-actions-buttons">
-                                <button class="view-menu-btn" onclick="window.location.href='menu.html?id=${menu.id}'">
+                                <button class="view-menu-btn" onclick="window.location.href='menu2.html?id=${menu.id}'">
                                  مشاهده منو
                                 </button>
                             </div>
