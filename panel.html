@@ -1675,7 +1675,27 @@
                             <p>اطلاعات عمومی و مشخصات کافه را به روزرسانی کنید</p>
                         </div>
 
-                        <form class="edit-form">
+                        <div id="test">
+                            <div>
+                                <label for="category-test">تست کتگوری</label>
+                                <input type="text" name="category-test" id="category-test"
+                                    class="w-50 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                <button id="send-category-test"
+                                    class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">send
+                                    category test</button>
+                            </div>
+                            <div>
+                                <label for="feature-test">تست فیچر</label>
+                                <input type="text" name="feature-test" id="feature-test"
+                                    class="w-50 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                <button id="send-feature-test"
+                                    class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">send
+                                    feature test</button>
+                            </div>
+                        </div>
+
+
+                        <form class="edit-form" id="edit-user">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                                 <div class="form-group">
                                     <label for="cafe-name" class="block text-sm font-medium text-gray-700 mb-2">نام
@@ -1696,7 +1716,17 @@
                                         <option value="pets">کافه حیوانات</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="cafe-features"
+                                        class="block text-sm font-medium text-gray-700 mb-2">ویژگی‌ها</label>
+                                    <select id="cafe-fetures"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                        <option value="0">انتخاب کنید</option>
+                                    </select>
+                                </div>
                             </div>
+
+
 
                             <div class="form-group mb-6">
                                 <label for="cafe-address"
@@ -1704,29 +1734,6 @@
                                 <input type="text" id="cafe-address" value="تهران، خیابان انقلاب، بین دانشگاه و فلسطین"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                             </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                <div class="form-group">
-                                    <label for="cafe-phone"
-                                        class="block text-sm font-medium text-gray-700 mb-2">تلفن</label>
-                                    <input type="tel" id="cafe-phone" value="021-12345678"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
-                                </div>
-                                <div class="form-group">
-                                    <label for="cafe-email"
-                                        class="block text-sm font-medium text-gray-700 mb-2">ایمیل</label>
-                                    <input type="email" id="cafe-email" value="info@cafe-book.com"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
-                                </div>
-                            </div>
-
-                            <div class="form-group mb-6">
-                                <label for="cafe-website" class="block text-sm font-medium text-gray-700 mb-2">وبسایت
-                                    (اختیاری)</label>
-                                <input type="url" id="cafe-website" value="https://cafe-book.com"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
-                            </div>
-
                             <div class="form-group mb-6">
                                 <label for="cafe-description"
                                     class="block text-sm font-medium text-gray-700 mb-2">توضیحات کافه</label>
@@ -1735,106 +1742,88 @@
                             </div>
 
                             <div class="form-group mb-6">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">ویژگی‌ها</label>
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    <label class="flex items-center">
-                                        <input type="checkbox" checked
-                                            class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
-                                        <span class="mr-2 text-gray-700">وای‌فای رایگان</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" checked
-                                            class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
-                                        <span class="mr-2 text-gray-700">محیط غیرسیگاری</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox"
-                                            class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
-                                        <span class="mr-2 text-gray-700">پارکینگ</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox"
-                                            class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
-                                        <span class="mr-2 text-gray-700">پذیرش کارت</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" checked
-                                            class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
-                                        <span class="mr-2 text-gray-700">میز کار</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox"
-                                            class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
-                                        <span class="mr-2 text-gray-700">موسیقی زنده</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="form-group mb-6">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">ساعات کاری</label>
+
                                 <div class="space-y-4">
                                     <div class="flex items-center justify-between">
-                                        <span class="text-gray-700 w-32">شنبه تا چهارشنبه</span>
+                                        <span class="text-gray-700 w-32">شنبه</span>
                                         <div class="flex items-center space-x-2 space-x-reverse">
-                                            <input type="time" value="08:00"
+                                            <input type="time" value="09:00"
                                                 class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                                             <span class="text-gray-500">تا</span>
-                                            <input type="time" value="23:00"
+                                            <input type="time" value="18:00"
                                                 class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                                         </div>
                                     </div>
+
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-gray-700 w-32">یکشنبه</span>
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <input type="time" value="09:00"
+                                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                            <span class="text-gray-500">تا</span>
+                                            <input type="time" value="18:00"
+                                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-gray-700 w-32">دوشنبه</span>
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <input type="time" value="09:00"
+                                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                            <span class="text-gray-500">تا</span>
+                                            <input type="time" value="18:00"
+                                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-gray-700 w-32">سه‌شنبه</span>
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <input type="time" value="09:00"
+                                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                            <span class="text-gray-500">تا</span>
+                                            <input type="time" value="18:00"
+                                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-gray-700 w-32">چهارشنبه</span>
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <input type="time" value="09:00"
+                                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                            <span class="text-gray-500">تا</span>
+                                            <input type="time" value="18:00"
+                                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                                        </div>
+                                    </div>
+
                                     <div class="flex items-center justify-between">
                                         <span class="text-gray-700 w-32">پنجشنبه</span>
                                         <div class="flex items-center space-x-2 space-x-reverse">
-                                            <input type="time" value="08:00"
+                                            <input type="time" value="09:00"
                                                 class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                                             <span class="text-gray-500">تا</span>
-                                            <input type="time" value="24:00"
+                                            <input type="time" value="22:00"
                                                 class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                                         </div>
                                     </div>
+
                                     <div class="flex items-center justify-between">
                                         <span class="text-gray-700 w-32">جمعه</span>
                                         <div class="flex items-center space-x-2 space-x-reverse">
                                             <input type="time" value="10:00"
                                                 class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                                             <span class="text-gray-500">تا</span>
-                                            <input type="time" value="24:00"
+                                            <input type="time" value="22:00"
                                                 class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="form-group mb-6">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">تصاویر کافه</label>
-                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                    <div class="relative group">
-                                        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                                            alt="کافه" class="w-full h-32 object-cover rounded-lg">
-                                        <button
-                                            class="absolute top-2 left-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                                            <i class="fas fa-times text-xs"></i>
-                                        </button>
-                                    </div>
-                                    <div class="relative group">
-                                        <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
-                                            alt="کافه" class="w-full h-32 object-cover rounded-lg">
-                                        <button
-                                            class="absolute top-2 left-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                                            <i class="fas fa-times text-xs"></i>
-                                        </button>
-                                    </div>
-                                    <div
-                                        class="border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center h-32 cursor-pointer hover:border-purple-500 transition">
-                                        <input type="file" id="cafe-images" accept="image/*" multiple class="hidden">
-                                        <label for="cafe-images" class="flex flex-col items-center cursor-pointer">
-                                            <i class="fas fa-plus text-gray-400 mb-2"></i>
-                                            <span class="text-gray-500 text-sm">افزودن تصویر</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="flex justify-end space-x-3 space-x-reverse mt-8 pt-6 border-t border-gray-200">
                                 <button type="button"
@@ -2834,9 +2823,249 @@
                 });
             }
 
+
+            // ============    بخش ویرایش اطلاعات  =============
+
+
+            const token = sessionStorage.getItem("accessToken"); // اگه JWT داری از لاگین
+
+            const API_URL = "http://135.125.238.202:7050/user/profile/";
+
+            // برای ساختن کتگوری و فیچر که بعدا باید توی پنل ادمین باشند
+
+            const btnCategoryTest = document.getElementById("send-category-test");
+            const btnFeatureTest = document.getElementById("send-feature-test");
+
+
+
+            btnCategoryTest.addEventListener("click", async function () {
+
+                const title = document.getElementById("category-test").value;
+
+                const payload = {
+                    title
+
+                };
+                console.log(payload)
+
+                const res = await fetch("http://135.125.238.202:7050/user/category/", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                        , "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                })
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    console.log("test category server not response :", data);
+                }
+                else {
+                    console.log("test category server response ok", data)
+                }
+
+            })
+
+            btnFeatureTest.addEventListener("click", async function () {
+
+                const title = document.getElementById("feature-test").value;
+
+                const payload = {
+                    title
+
+                };
+                console.log(payload)
+
+                const res = await fetch("http://135.125.238.202:7050/user/feature/", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                        , "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                })
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    console.log("test category server not response :", data);
+                }
+                else {
+                    console.log("test category server response ok", data)
+                }
+
+            })
+
+
+            // انتخاب المنت‌ها
+            const nameInput = document.getElementById("cafe-name");
+            const categorySelect = document.getElementById("cafe-category");
+            const addressInput = document.getElementById("cafe-address");
+            const descriptionInput = document.getElementById("cafe-description");
+            const featureSelect = document.getElementById("cafe-fetures"); // دقت کن با id هم‌خوانی داشته باشه
+            const timeInputs = document.querySelectorAll("input[type='time']");
+
+            const API_PROFILE = "http://135.125.238.202:7050/user/profile/";
+            const API_CATEGORY = "http://135.125.238.202:7050/user/category/";
+            const API_FEATURE = "http://135.125.238.202:7050/user/feature/";
+
+            async function loadUserData() {
+                try {
+                    const [profileRes, categoryRes, featureRes] = await Promise.all([
+                        fetch(API_PROFILE, { headers: { "Authorization": `Bearer ${token}` } }),
+                        fetch(API_CATEGORY, { headers: { "Authorization": `Bearer ${token}` } }),
+                        fetch(API_FEATURE, { headers: { "Authorization": `Bearer ${token}` } }),
+                    ]);
+
+                    const [profileData, categoryData, featureData] = await Promise.all([
+                        profileRes.json(),
+                        categoryRes.json(),
+                        featureRes.json(),
+                    ]);
+
+                    console.log("📘 Profile:", profileData);
+                    console.log("📗 Categories:", categoryData);
+                    console.log("📙 Features:", featureData);
+
+                    // ---- پر کردن اطلاعات اصلی ----
+                    nameInput.value = profileData.name || "";
+                    addressInput.value = profileData.address || "";
+                    descriptionInput.value = profileData.description || "";
+
+                    // ---- پر کردن دسته‌بندی‌ها ----
+                    categorySelect.innerHTML = `<option value="0">انتخاب کنید</option>`;
+                    function buildCategoryOptions(list, prefix = "") {
+                        if (!Array.isArray(list)) return;
+                        list.forEach(cat => {
+                            const opt = document.createElement("option");
+                            opt.value = cat.id;
+                            opt.textContent = prefix + cat.title;
+                            categorySelect.appendChild(opt);
+                            if (Array.isArray(cat.children) && cat.children.length > 0) {
+                                buildCategoryOptions(cat.children, prefix + "— ");
+                            }
+                        });
+                    }
+                    const categoryList = Array.isArray(categoryData[0]) ? categoryData[0] : categoryData;
+                    buildCategoryOptions(categoryList);
+
+                    if (Array.isArray(profileData.category) && profileData.category.length > 0) {
+                        categorySelect.value = profileData.category[0];
+                    }
+
+                    // ---- پر کردن فیچرها ----
+                    featureSelect.innerHTML = `<option value="0">انتخاب کنید</option>`;
+                    if (Array.isArray(featureData)) {
+                        featureData.forEach(feat => {
+                            const opt = document.createElement("option");
+                            opt.value = feat.id;
+                            opt.textContent = feat.title;
+                            featureSelect.appendChild(opt);
+                        });
+                    }
+
+                    if (Array.isArray(profileData.features) && profileData.features.length > 0) {
+                        featureSelect.value = profileData.features[0];
+                    }
+
+                    // ---- ساعات کاری ----
+                    if (profileData.work_hours) {
+                        const days = Object.keys(profileData.work_hours);
+                        days.forEach((day, i) => {
+                            const [start, end] = profileData.work_hours[day].split("-");
+                            if (timeInputs[i * 2]) timeInputs[i * 2].value = start.padStart(5, "0");
+                            if (timeInputs[i * 2 + 1]) timeInputs[i * 2 + 1].value = end.padStart(5, "0");
+                        });
+                    }
+
+                } catch (err) {
+                    console.error("❌ خطا در دریافت اطلاعات:", err);
+                }
+            }
+
+
+
+
+            // ✅ ارسال تغییرات (POST)
+            const form = document.getElementById("edit-user");
+
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                // ورودی‌ها
+                const address = document.getElementById("cafe-address").value.trim();
+                const description = document.getElementById("cafe-description").value.trim();
+                const category = [document.getElementById("cafe-category").value];
+                const checkboxes = document.querySelectorAll(".form-group input[type='checkbox']");
+                const timeInputs = document.querySelectorAll("input[type='time']");
+
+                // ویژگی‌ها
+                const features = Array.from(checkboxes)
+                    .map((c, i) => (c.checked ? i + 1 : null))
+                    .filter(Boolean);
+
+                // ساعات کاری (هر روز جداگانه)
+                const work_hours = {
+                    "شنبه": `${timeInputs[0].value}-${timeInputs[1].value}`,
+                    "یکشنبه": `${timeInputs[2].value}-${timeInputs[3].value}`,
+                    "دوشنبه": `${timeInputs[4].value}-${timeInputs[5].value}`,
+                    "سه‌شنبه": `${timeInputs[6].value}-${timeInputs[7].value}`,
+                    "چهارشنبه": `${timeInputs[8].value}-${timeInputs[9].value}`,
+                    "پنجشنبه": `${timeInputs[10].value}-${timeInputs[11].value}`,
+                    "جمعه": `${timeInputs[12].value}-${timeInputs[13].value}`,
+                };
+
+                // بدنه درخواست
+                const payload = {
+                    address,
+                    lat: 35.6892, // می‌تونی بعداً از GPS بگیری
+                    long: 51.389,
+                    description,
+                    work_hours,
+                    features,
+                    category,
+                };
+
+                console.log("📦 Payload نهایی:", payload);
+
+                try {
+                    const res = await fetch(API_URL, {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(payload),
+                    });
+
+                    const data = await res.json();
+
+                    if (!res.ok) {
+                        console.error("❌ خطا:", data);
+                        alert("درخواست نامعتبر است (400)");
+                        return;
+                    }
+
+                    alert("✅ اطلاعات با موفقیت ثبت شد!");
+                    console.log("✅ پاسخ سرور:", data);
+
+                } catch (err) {
+                    console.error("🚫 خطای شبکه:", err);
+                    alert("مشکلی در ارسال اطلاعات به سرور پیش آمد!");
+                }
+            });
+
+            // اجرای اولیه برای دریافت داده‌ها
+            loadUserData();
+
+
+
+
             // ============ API و منطق مدیریت منو از کد دوم ============
 
-            const token = sessionStorage.getItem('accessToken');
+            // const token = sessionStorage.getItem('accessToken');
 
             if (!token) {
                 window.location.href = "login.html";
@@ -3469,7 +3698,7 @@
                 const itemModal = document.getElementById('item-edit-modal');
 
                 const itemName = document.getElementById("item-edit-name").value;
-                const itemPrice =(document.getElementById("item-edit-price"));
+                const itemPrice = (document.getElementById("item-edit-price"));
                 const status = document.getElementById("item-edit-status").checked;
 
                 const rawValue = itemPrice.value.replace(/,/g, "");
