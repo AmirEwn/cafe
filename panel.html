@@ -1458,9 +1458,9 @@
     <header class="header">
         <div class="container">
             <nav class="navbar">
-                <a href="home.html" class="logo">کافه‌یاب</a>
+                <a href="homepage.html" class="logo">کافه‌یاب</a>
                 <ul class="nav-links">
-                    <li><a href="home.html">بازگشت به سایت</a></li>
+                    <li><a href="homepage.html">بازگشت به سایت</a></li>
                 </ul>
                 <div class="auth-buttons">
                     <span class="user-name">مدیریت کافه کتابخانه</span>
@@ -3059,13 +3059,10 @@
                 const address = document.getElementById("cafe-address").value.trim();
                 const description = document.getElementById("cafe-description").value.trim();
                 const category = [document.getElementById("cafe-category").value];
-                const checkboxes = document.querySelectorAll(".form-group input[type='checkbox']");
+                const features = [document.getElementById("cafe-fetures").value];
                 const timeInputs = document.querySelectorAll("input[type='time']");
 
-                // ویژگی‌ها
-                const features = Array.from(checkboxes)
-                    .map((c, i) => (c.checked ? i + 1 : null))
-                    .filter(Boolean);
+                
 
                 // ساعات کاری (هر روز جداگانه)
                 const work_hours = {
