@@ -14,6 +14,7 @@
             font-family: 'Vazirmatn', sans-serif;
             background-color: #f8f9fa;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         /* استایل کارت غذا */
@@ -236,12 +237,749 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
+        /* استایل‌های جدید برای مدال زیبا */
         #commentModal {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            padding: 16px;
+            box-sizing: border-box;
         }
 
         #commentModal.active {
             display: flex;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px) scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            padding: 24px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .modal-header .close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.25rem;
+        }
+
+        .modal-header .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 24px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .comment-form {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            padding: 16px;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: none;
+            transition: all 0.3s;
+            min-height: 120px;
+            box-sizing: border-box;
+        }
+
+        .comment-form textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .comment-form button {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 12px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .comment-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .comment-form button i {
+            margin-left: 8px;
+        }
+
+        .comments-section h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+        }
+
+        .comments-section h3 i {
+            margin-left: 8px;
+            color: #3b82f6;
+        }
+
+        .comments-list {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .comment-item {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f1f5f9;
+            transition: all 0.3s;
+        }
+
+        .comment-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .comment-user {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .comment-date {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .comment-text {
+            color: #374151;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .action-btn:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .action-btn.liked {
+            color: #3b82f6;
+        }
+
+        .action-btn i {
+            margin-left: 4px;
+        }
+
+        .replies-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .reply-form {
+            display: flex;
+            margin-top: 12px;
+            gap: 8px;
+        }
+
+        .reply-form input {
+            flex: 1;
+            border: 1px solid #d1d5db;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-family: inherit;
+            font-size: 0.875rem;
+            box-sizing: border-box;
+        }
+
+        .reply-form input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .reply-form button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .reply-form button:hover {
+            background: #2563eb;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            margin: 0;
+        }
+
+        /* استایل برای موبایل */
+        @media (max-width: 768px) {
+            body{
+                padding-bottom: 50px;
+            }
+            .modal-content {
+                width: 100%;
+                border-radius: 16px;
+                margin: 0 8px;
+            }
+            
+            .modal-header {
+                padding: 20px;
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .comment-form {
+                padding: 16px;
+            }
+            
+            .comment-actions {
+                gap: 12px;
+            }
+            
+            .action-btn {
+                font-size: 0.8rem;
+                padding: 4px 6px;
+            }
+            
+            /* بهبود نمایش در موبایل */
+            .container {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+            
+            #mobile-cart-modal .mobile-cart-modal {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+            
+            .sticky-categories {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+            
+            .main-tab-btn {
+                padding-left: 12px;
+                padding-right: 12px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* بهبود نمایش در موبایل برای کل صفحه */
+        @media (max-width: 480px) {
+            body {
+                padding-left: 4px;
+                padding-right: 4px;
+            }
+            
+            .container {
+                padding-left: 4px;
+                padding-right: 4px;
+            }
+            
+            #menu-items-container {
+                padding-left: 4px;
+                padding-right: 4px;
+            }
+            
+            .modal-content {
+                margin: 0 4px;
+            }
+            
+            .modal-header h2 {
+                font-size: 1.2rem;
+            }
+            
+            .comment-form textarea {
+                padding: 12px;
+            }
+        }
+
+        /* استایل‌های جدید برای ریسپانسیو */
+        @media (max-width: 1024px) {
+            .container {
+                max-width: 100%;
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+            
+            .flex-row {
+                flex-direction: column;
+            }
+            
+            .w-96 {
+                width: 100%;
+                position: static;
+                height: auto;
+                margin-bottom: 20px;
+            }
+            
+            .h-screen {
+                height: auto;
+            }
+            
+            .sticky {
+                position: static;
+            }
+            
+            .grid-cols-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .food-card-image {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid-cols-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .food-card-image {
+                height: 160px;
+            }
+            
+            .flex-col {
+                flex-direction: column;
+            }
+            
+            .flex-col.md\:flex-row {
+                flex-direction: column;
+            }
+            
+            .text-center.md\:text-right {
+                text-align: center;
+            }
+            
+            .justify-center.md\:justify-start {
+                justify-content: center;
+            }
+            
+            .w-40, .w-48 {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .text-3xl.md\:text-4xl {
+                font-size: 1.75rem;
+            }
+            
+            .p-6 {
+                padding: 16px;
+            }
+            
+            .gap-6 {
+                gap: 16px;
+            }
+            
+            .grid.grid-cols-2.md\:grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .bg-white.p-6.rounded-xl.shadow-md {
+                padding: 16px;
+            }
+            
+            .text-2xl {
+                font-size: 1.5rem;
+            }
+            
+            .review-card.p-5 {
+                padding: 16px;
+            }
+            
+            .w-12.h-12 {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .mr-3 {
+                margin-right: 12px;
+            }
+            
+            .bg-gray-50.p-5 {
+                padding: 16px;
+            }
+            
+            .space-y-6 {
+                gap: 16px;
+            }
+            
+            .space-y-6 > * + * {
+                margin-top: 16px;
+            }
+            
+            .sticky-categories {
+                padding: 12px 8px;
+            }
+            
+            .category-btn, .main-tab-btn {
+                font-size: 0.75rem;
+                padding: 8px 12px;
+            }
+            
+            .food-card .p-5 {
+                padding: 16px;
+            }
+            
+            .food-card .text-xl {
+                font-size: 1.125rem;
+            }
+            
+            .food-card .text-lg {
+                font-size: 1rem;
+            }
+            
+            .add-to-cart {
+                padding: 8px 12px;
+                font-size: 0.875rem;
+            }
+            
+            .cart-item.p-4 {
+                padding: 12px;
+            }
+            
+            .modal-body {
+                padding: 16px;
+            }
+            
+            .modal-header {
+                padding: 16px;
+            }
+            
+            .comment-form {
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid-cols-1 {
+                grid-template-columns: 1fr;
+            }
+            
+            .food-card-image {
+                height: 140px;
+            }
+            
+            .w-40, .w-48 {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .text-3xl.md\:text-4xl {
+                font-size: 1.5rem;
+            }
+            
+            .p-6 {
+                padding: 12px;
+            }
+            
+            .gap-6 {
+                gap: 12px;
+            }
+            
+            .sticky-categories {
+                padding: 8px 4px;
+            }
+            
+            .category-btn, .main-tab-btn {
+                font-size: 0.7rem;
+                padding: 6px 10px;
+            }
+            
+            .food-card .p-5 {
+                padding: 12px;
+            }
+            
+            .food-card .text-xl {
+                font-size: 1rem;
+            }
+            
+            .food-card .text-lg {
+                font-size: 0.875rem;
+            }
+            
+            .add-to-cart {
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
+            
+            .cart-item.p-4 {
+                padding: 10px;
+            }
+            
+            .modal-body {
+                padding: 12px;
+            }
+            
+            .modal-header {
+                padding: 12px;
+            }
+            
+            .modal-header h2 {
+                font-size: 1.125rem;
+            }
+            
+            .comment-form {
+                padding: 10px;
+            }
+            
+            .comment-form textarea {
+                padding: 10px;
+                font-size: 0.875rem;
+            }
+            
+            .comment-item {
+                padding: 12px;
+            }
+            
+            .user-avatar {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .user-name {
+                font-size: 0.875rem;
+            }
+            
+            .comment-date {
+                font-size: 0.75rem;
+            }
+            
+            .comment-text {
+                font-size: 0.875rem;
+            }
+            
+            .action-btn {
+                font-size: 0.75rem;
+                padding: 3px 6px;
+            }
+        }
+
+        /* جلوگیری از بیرون زدن محتوا */
+        .container {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        .sticky-categories {
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .sticky-categories::-webkit-scrollbar {
+            display: none;
+        }
+
+        #menu-items-container {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* بهبود نمایش کارت‌ها در حالت‌های مختلف */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .grid-cols-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .grid-cols-3 {
+                grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 0 10px;
+            max-width: 100%;
+                overflow-x: hidden;
+            }
+        }
+
+        /* بهبود نمایش هدر */
+        @media (max-width: 768px) {
+            header .container {
+                padding: 16px 12px;
+            }
+            
+            .flex-col.md\:flex-row {
+                gap: 16px;
+            }
+            
+            .flex-wrap {
+                justify-content: center;
+            }
+            
+            .flex-wrap span {
+                margin: 4px;
+            }
+        }
+
+        /* بهبود نمایش سبد خرید در دسکتاپ */
+        @media (min-width: 1025px) {
+            .w-96 {
+                width: 380px;
+                min-width: 380px;
+            }
+            
+            .flex-1 {
+                flex: 1;
+                min-width: 0;
+            }
+        }
+
+        /* بهبود نمایش تب‌ها */
+        .main-tab-btn {
+            white-space: nowrap;
+        }
+
+        nav.bg-white.px-6.py-3 {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        nav.bg-white.px-6.py-3::-webkit-scrollbar {
+            display: none;
         }
     </style>
 </head>
@@ -279,19 +1017,11 @@
         </div>
     </header>
 
-    <!-- بالای صفحه، بعد از هدر یا قبل از بخش اصلی -->
-    <!-- <div class="container mx-auto px-4 py-4 flex justify-end">
-        <select id="menu-dropdown"
-            class="px-4 py-2 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-            <option value="">انتخاب منو...</option>
-        </select>
-    </div> -->
-
     <!-- بخش اصلی -->
-    <div class="flex flex-row container mx-auto my-6" dir="ltr">
+    <div class="flex flex-col lg:flex-row container mx-auto my-6" dir="ltr">
         <!-- سبد خرید دسکتاپ -->
         <aside
-            class="w-96 hidden md:block h-screen bg-white shadow-xl border-l border-gray-100 p-6 overflow-y-auto sticky top-0">
+            class="w-full lg:w-96 hidden lg:block h-auto lg:h-screen bg-white shadow-xl border-l border-gray-100 p-6 overflow-y-auto sticky top-0">
             <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
                 <h2 class="text-xl font-bold flex items-center text-gray-800">
                     <i class="fas fa-shopping-basket ml-2 text-blue-600"></i> سبد خرید شما
@@ -333,9 +1063,9 @@
         </aside>
 
         <!-- محتوای اصلی -->
-        <div class="flex-1" dir="rtl">
+        <div class="flex-1 w-full" dir="rtl">
             <!-- تب‌های اصلی -->
-            <nav class="bg-white px-6 py-3 flex gap-3 overflow-x-auto sticky top-0 z-10 shadow-sm">
+            <nav class="bg-white px-4 md:px-6 py-3 flex gap-3 overflow-x-auto sticky top-0 z-10 shadow-sm">
                 <button
                     class="main-tab-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md hover:shadow-lg"
                     data-tab="menu">
@@ -354,12 +1084,12 @@
             </nav>
 
             <!-- محتوای تب‌ها -->
-            <div class="p-6">
+            <div class="p-4 md:p-6">
                 <!-- تب منو -->
                 <div id="menu-tab" class="tab-content active">
                     <!-- تب دسته‌بندی غذاها -->
                     <nav id="categories-nav"
-                        class="sticky-categories bg-white px-6 py-3 mb-6 flex gap-3 overflow-x-auto rounded-lg shadow-sm">
+                        class="sticky-categories bg-white px-4 md:px-6 py-3 mb-6 flex gap-3 overflow-x-auto rounded-lg shadow-sm">
                         <button
                             class="category-btn active whitespace-nowrap text-sm font-semibold py-2 px-4 rounded-full flex items-center transition duration-200 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md hover:shadow-lg"
                             data-category="all">
@@ -369,7 +1099,7 @@
                     </nav>
 
                     <!-- کارت‌های منو -->
-                    <div id="menu-items-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div id="menu-items-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         <!-- آیتم‌های منو به صورت داینامیک اضافه می‌شوند -->
                         <div class="text-center py-10 text-gray-500" id="loading-message">
                             <i class="fas fa-spinner fa-spin text-3xl mb-3"></i>
@@ -378,29 +1108,34 @@
                     </div>
                 </div>
 
-
-
-                <!-- مدال -->
-                <div id="commentModal"
-                    class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-                    <div class="bg-white rounded-xl shadow-lg w-[700px] p-6 relative max-h-[90vh] overflow-y-auto">
-                        <!-- بستن -->
-                        <button id="closeModal"
-                            class="absolute top-2 right-2 text-gray-500 hover:text-black text-2xl">&times;</button>
-
-                        <h2 class="text-2xl font-bold mb-4">ثبت نظر برای <span id="modalItemName"></span></h2>
-
-                        <!-- فرم نظر -->
-                        <textarea id="commentText" class="w-full border rounded-lg p-3 h-28 resize-none"
-                            placeholder="نظر خود را بنویسید..."></textarea>
-                        <button id="submitComment"
-                            class="mt-4 bg-green-600 hover:bg-green-700 text-white w-full py-2 rounded-lg font-medium">ثبت</button>
-
-                        <!-- بخش نمایش نظرات -->
-                        <div class="mt-6">
-                            <h3 class="text-xl font-bold mb-3">نظرات کاربران:</h3>
-                            <div id="commentsList" class="space-y-4">
-                                <!-- نظرات از API لود میشن -->
+                <!-- مدال کامنت‌ها - طراحی جدید -->
+                <div id="commentModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>نظرات و پیشنهادات</h2>
+                            <button class="close-btn" id="closeModal">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="comment-form">
+                                <h3 class="text-lg font-semibold mb-3">نظر خود را ثبت کنید</h3>
+                                <textarea id="commentText" placeholder="نظر، پیشنهاد یا تجربه خود از این غذا را بنویسید..."></textarea>
+                                <button id="submitComment">
+                                    <i class="fas fa-paper-plane"></i> ارسال نظر
+                                </button>
+                            </div>
+                            
+                            <div class="comments-section">
+                                <h3><i class="fas fa-comments"></i> نظرات کاربران</h3>
+                                <div id="commentsList" class="comments-list">
+                                    <!-- نظرات از API لود می‌شوند -->
+                                    <div class="empty-state">
+                                        <i class="fas fa-comment-slash"></i>
+                                        <p>هنوز نظری ثبت نشده است.</p>
+                                        <p class="text-sm mt-1">اولین نفری باشید که نظر می‌دهد!</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -408,7 +1143,7 @@
 
                 <!-- تب اطلاعات رستوران -->
                 <div id="info-tab" class="tab-content">
-                    <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                    <div class="bg-white rounded-xl shadow-md p-4 md:p-6 mb-6">
                         <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                             <i class="fas fa-info-circle text-blue-500 ml-2"></i>
                             درباره رستوران ایرانی
@@ -424,8 +1159,8 @@
                             جلب کنیم.
                         </p>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                            <div class="bg-gray-50 p-4 md:p-5 rounded-lg border border-gray-200">
                                 <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                                     <i class="fas fa-clock text-blue-500 ml-2"></i>
                                     ساعات کاری
@@ -446,7 +1181,7 @@
                                 </ul>
                             </div>
 
-                            <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                            <div class="bg-gray-50 p-4 md:p-5 rounded-lg border border-gray-200">
                                 <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                                     <i class="fas fa-map-marker-alt text-blue-500 ml-2"></i>
                                     اطلاعات تماس
@@ -469,24 +1204,24 @@
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="bg-white rounded-xl shadow-md p-4 md:p-6">
                         <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                             <i class="fas fa-images text-blue-500 ml-2"></i>
                             گالری رستوران
                         </h2>
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                             <div
-                                class="rounded-lg overflow-hidden h-40 transform hover:scale-105 transition duration-300">
+                                class="rounded-lg overflow-hidden h-32 md:h-40 transform hover:scale-105 transition duration-300">
                                 <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
                                     alt="فضای داخلی رستوران" class="w-full h-full object-cover">
                             </div>
                             <div
-                                class="rounded-lg overflow-hidden h-40 transform hover:scale-105 transition duration-300">
+                                class="rounded-lg overflow-hidden h-32 md:h-40 transform hover:scale-105 transition duration-300">
                                 <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
                                     alt="فضای داخلی رستوران" class="w-full h-full object-cover">
                             </div>
                             <div
-                                class="rounded-lg overflow-hidden h-40 transform hover:scale-105 transition duration-300">
+                                class="rounded-lg overflow-hidden h-32 md:h-40 transform hover:scale-105 transition duration-300">
                                 <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
                                     alt="فضای داخلی رستوران" class="w-full h-full object-cover">
                             </div>
@@ -496,7 +1231,7 @@
 
                 <!-- تب نظرات کاربران -->
                 <div id="reviews-tab" class="tab-content">
-                    <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                    <div class="bg-white rounded-xl shadow-md p-4 md:p-6 mb-6">
                         <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
                             <i class="fas fa-comment-alt text-blue-500 ml-2"></i>
                             نظرات مشتریان
@@ -504,9 +1239,9 @@
 
                         <div class="space-y-6">
                             <!-- نظر 1 -->
-                            <div class="review-card p-5">
+                            <div class="review-card p-4 md:p-5">
                                 <div class="flex items-start mb-4">
-                                    <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden bg-gray-200">
                                         <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="کاربر"
                                             class="w-full h-full object-cover">
                                     </div>
@@ -531,9 +1266,9 @@
                             </div>
 
                             <!-- نظر 2 -->
-                            <div class="review-card p-5">
+                            <div class="review-card p-4 md:p-5">
                                 <div class="flex items-start mb-4">
-                                    <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden bg-gray-200">
                                         <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="کاربر"
                                             class="w-full h-full object-cover">
                                     </div>
@@ -558,9 +1293,9 @@
                             </div>
 
                             <!-- نظر 3 -->
-                            <div class="review-card p-5">
+                            <div class="review-card p-4 md:p-5">
                                 <div class="flex items-start mb-4">
-                                    <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden bg-gray-200">
                                         <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="کاربر"
                                             class="w-full h-full object-cover">
                                     </div>
@@ -586,7 +1321,7 @@
                         </div>
 
                         <!-- فرم ارسال نظر -->
-                        <div class="bg-gray-50 p-5 rounded-lg border border-gray-200 mt-8">
+                        <div class="bg-gray-50 p-4 md:p-5 rounded-lg border border-gray-200 mt-8">
                             <h3 class="text-lg font-semibold text-gray-800 mb-4">نظر خود را ثبت کنید</h3>
                             <form>
                                 <div class="mb-4">
@@ -626,7 +1361,7 @@
     </div>
 
     <!-- سبد خرید موبایل -->
-    <div class="md:hidden fixed bottom-4 left-4 right-4 z-50">
+    <div class="lg:hidden fixed bottom-4 left-4 right-4 z-50">
         <div
             class="bg-white rounded-xl shadow-xl p-4 flex justify-between items-center border border-gray-200 transform hover:-translate-y-1 transition duration-300">
             <div class="flex items-center">
@@ -1031,39 +1766,6 @@
             }
         }
 
-
-        // async function loadMenusForDropdown() {
-        //     const token = sessionStorage.getItem('accessToken');
-        //     const dropdown = document.getElementById('menu-dropdown');
-        //     dropdown.innerHTML = '<option value="">انتخاب منو...</option>';
-
-        //     try {
-        //         const response = await fetch("http://135.125.238.202:7050/menu/", {
-        //             method: "GET",
-        //             headers: { 'Authorization': `Bearer ${token}` }
-        //         });
-        //         const menusList = await response.json();
-
-        //         menusList.forEach(menu => {
-        //             const option = document.createElement('option');
-        //             option.value = menu.id;
-        //             option.textContent = menu.name;
-        //             dropdown.appendChild(option);
-        //         });
-        //     } catch (error) {
-        //         dropdown.innerHTML = '<option value="">خطا در دریافت منوها</option>';
-        //     }
-        // }
-
-        // تغییر منو و بارگذاری منوی انتخاب‌شده
-        // document.getElementById('menu-dropdown').addEventListener('change', function () {
-        //     const selectedId = this.value;
-        //     if (selectedId) {
-        //         loadFullMenu(selectedId);
-        //     }
-        // });
-
-
         // تابع برای نمایش منو
         function renderMenu(menuData) {
             const menuContainer = document.getElementById('menu-items-container');
@@ -1159,29 +1861,29 @@
             // راه‌اندازی مجدد فیلترینگ دسته‌بندی‌ها
             setupCategoryFiltering();
 
-
+            // مدیریت مدال کامنت‌ها
             const modal = document.getElementById("commentModal");
             const closeModal = document.getElementById("closeModal");
-            const modalItemName = document.getElementById("modalItemName");
             const submitComment = document.getElementById("submitComment");
             const commentsList = document.getElementById("commentsList");
 
             const token = sessionStorage.getItem('accessToken');
             let baseURL = "http://135.125.238.202:7050";
 
-
             const openModal = document.querySelectorAll(".openCommentModal");
 
             // باز کردن مدال
-
             openModal.forEach(btn => {
                 btn.addEventListener("click", async () => {
                     modal.classList.add("active");
-                    modal.classList.add("flex");
+                    document.body.style.overflow = "hidden";
 
                     const foodId = btn.dataset.id;
                     modal.dataset.foodId = foodId;
-                    modalItemName.textContent = btn.dataset.title;
+                    
+                    // آپدیت هدر مدال با نام غذا
+                    const modalHeader = modal.querySelector(".modal-header h2");
+                    modalHeader.textContent = `نظرات و پیشنهادات - ${btn.dataset.title}`;
 
                     await loadComments(foodId);
                 });
@@ -1190,13 +1892,13 @@
             // بستن مدال
             closeModal.addEventListener("click", () => {
                 modal.classList.remove("active");
-                modal.classList.remove("flex");
+                document.body.style.overflow = "auto";
             });
 
             modal.addEventListener("click", (e) => {
                 if (e.target === modal) {
                     modal.classList.remove("active");
-                    modal.classList.remove("flex");
+                    document.body.style.overflow = "auto";
                 }
             });
 
@@ -1225,7 +1927,7 @@
 
             // 📌 گرفتن کامنت‌های اصلی
             async function loadComments(foodId) {
-                commentsList.innerHTML = "<p class='text-gray-400'>در حال بارگذاری...</p>";
+                commentsList.innerHTML = "<div class='empty-state'><i class='fas fa-spinner fa-spin'></i><p>در حال بارگذاری نظرات...</p></div>";
                 try {
                     const res = await fetch(`${baseURL}/comment/parents/${foodId}/`, {
                         headers: {
@@ -1235,14 +1937,14 @@
                     const data = await res.json();
 
                     if (!data.length) {
-                        commentsList.innerHTML = "<p class='text-gray-500'>هنوز نظری ثبت نشده است.</p>";
+                        commentsList.innerHTML = "<div class='empty-state'><i class='fas fa-comment-slash'></i><p>هنوز نظری ثبت نشده است.</p><p class='text-sm mt-1'>اولین نفری باشید که نظر می‌دهد!</p></div>";
                         return;
                     }
 
                     commentsList.innerHTML = "";
                     data.forEach(comment => renderComment(comment));
                 } catch (err) {
-                    commentsList.innerHTML = "<p class='text-red-500'>خطا در گرفتن نظرات ❌</p>";
+                    commentsList.innerHTML = "<div class='empty-state'><i class='fas fa-exclamation-triangle'></i><p>خطا در بارگذاری نظرات</p></div>";
                 }
             }
 
@@ -1262,9 +1964,6 @@
                 }
             };
 
-
-
-            // 📌 رندر یک کامنت
             // 🔹 تابع بارگذاری ریپلای‌ها (برای هر کامنت)
             async function loadReplies(commentId, container) {
                 try {
@@ -1300,14 +1999,27 @@
                         }
 
                         const replyEl = document.createElement("div");
-                        replyEl.className = "p-2 border rounded bg-white flex justify-between items-center";
+                        replyEl.className = "comment-item";
                         replyEl.innerHTML = `
-                <span>${r.text}</span>
-                <button class="like-btn text-blue-600 hover:text-blue-800 flex items-center ${replyLiked ? "liked" : ""}" data-id="${r.id}">
-                    <i class="fas fa-thumbs-up"></i>
-                    <span class="ml-1 like-count">${r.like_count || 0}</span>
-                </button>
-            `;
+                            <div class="comment-header">
+                                <div class="comment-user">
+                                    <div class="user-avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div>
+                                        <div class="user-name">کاربر</div>
+                                        <div class="comment-date">${new Date(r.created_at).toLocaleDateString('fa-IR')}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-text">${r.text}</div>
+                            <div class="comment-actions">
+                                <button class="action-btn like-btn ${replyLiked ? 'liked' : ''}" data-id="${r.id}">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    <span class="like-count">${r.like_count || 0}</span>
+                                </button>
+                            </div>
+                        `;
 
                         // 📌 لایک / آن‌لایک ریپلای
                         const replyLikeBtn = replyEl.querySelector(".like-btn");
@@ -1342,11 +2054,10 @@
                 }
             }
 
-
             // 🔹 تابع رندر کامنت اصلی و ریپلای‌ها
             async function renderComment(comment) {
                 const commentDiv = document.createElement("div");
-                commentDiv.className = "p-4 border rounded-lg bg-gray-50";
+                commentDiv.className = "comment-item";
 
                 // بررسی اینکه آیا کاربر فعلی لایک کرده یا نه
                 let liked = false;
@@ -1365,23 +2076,52 @@
                     console.error("❌ خطا در گرفتن لایک‌های کامنت:", err);
                 }
 
+                // گرفتن تعداد پاسخ‌ها
+                let replyCount = 0;
+                try {
+                    const replyRes = await fetch(`${baseURL}/comment/descendants/`, {
+                        method: "POST",
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ comment_id: comment.id })
+                    });
+                    if (replyRes.ok) {
+                        const replies = await replyRes.json();
+                        replyCount = replies.length;
+                    }
+                } catch (err) {
+                    console.error("❌ خطا در گرفتن تعداد پاسخ‌ها:", err);
+                }
+
                 commentDiv.innerHTML = `
-        <div class="flex justify-between items-center">
-            <span class="text-gray-800">${comment.text}</span>
-            <div class="flex items-center space-x-3">
-                <button 
-                    class="like-btn text-blue-600 hover:text-blue-800 flex items-center ${liked ? "liked" : ""}" 
-                    data-id="${comment.id}">
-                    <i class="fas fa-thumbs-up"></i>
-                    <span class="ml-1 like-count">${comment.like_count || 0}</span>
-                </button>
-                <button class="reply-btn text-green-600 hover:text-green-800" data-id="${comment.id}">
-                    پاسخ
-                </button>
-            </div>
-        </div>
-        <div class="replies mt-3 ml-6 space-y-2"></div>
-    `;
+                    <div class="comment-header">
+                        <div class="comment-user">
+                            <div class="user-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <div class="user-name">کاربر</div>
+                                <div class="comment-date">${new Date(comment.created_at).toLocaleDateString('fa-IR')}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-text">${comment.text}</div>
+                    <div class="comment-actions">
+                        <button class="action-btn like-btn ${liked ? "liked" : ""}" data-id="${comment.id}">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span class="like-count">${comment.like_count || 0}</span>
+                        </button>
+                        <button class="action-btn reply-btn" data-id="${comment.id}">
+                            <i class="fas fa-reply"></i>
+                            پاسخ (${replyCount})
+                        </button>
+                    </div>
+                    <div class="replies-section">
+                        <div class="replies"></div>
+                    </div>
+                `;
 
                 // 📌 لایک / آن‌لایک برای کامنت اصلی
                 commentDiv.querySelector(".like-btn").addEventListener("click", async (e) => {
@@ -1425,11 +2165,11 @@
 
                     // فرم ارسال ریپلای جدید
                     const replyForm = document.createElement("div");
-                    replyForm.className = "mt-2 flex";
+                    replyForm.className = "reply-form";
                     replyForm.innerHTML = `
-            <input type="text" class="reply-input border rounded p-2 flex-1" placeholder="پاسخ خود را بنویسید..." />
-            <button class="send-reply bg-green-500 text-white px-3 rounded ml-2">ارسال</button>
-        `;
+                        <input type="text" class="reply-input" placeholder="پاسخ خود را بنویسید..." />
+                        <button class="send-reply">ارسال</button>
+                    `;
                     repliesDiv.appendChild(replyForm);
 
                     replyForm.querySelector(".send-reply").addEventListener("click", async () => {
@@ -1450,6 +2190,11 @@
                         if (res.ok) {
                             replyForm.querySelector(".reply-input").value = "";
                             await loadReplies(cId, repliesDiv);
+                            
+                            // آپدیت تعداد پاسخ‌ها
+                            const replyBtn = commentDiv.querySelector(".reply-btn");
+                            const currentCount = parseInt(replyBtn.textContent.match(/\((\d+)\)/)[1]);
+                            replyBtn.innerHTML = `<i class="fas fa-reply"></i> پاسخ (${currentCount + 1})`;
                         } else {
                             alert("❌ خطا در ارسال پاسخ");
                         }
@@ -1458,17 +2203,11 @@
 
                 commentsList.appendChild(commentDiv);
             }
-
-
-
-
-
-
         }
 
         const params = new URLSearchParams(window.location.search);
         const menuId = params.get("id");
-        // console.log(`id menu = ${menuId}`);
+        
         // دریافت اطلاعات رستوران و منوها
         async function loadFullMenu() {
             const token = sessionStorage.getItem('accessToken');
@@ -1517,8 +2256,7 @@
             deliveryCostElem.textContent = `${deliveryCost.toLocaleString()} تومان`;
             mobileDeliveryCost.textContent = `${deliveryCost.toLocaleString()} تومان`;
 
-            // loadMenusForDropdown();
-            loadFullMenu(); // مقدار اولیه (مثلاً 10)
+            loadFullMenu();
         });
     </script>
 </body>
