@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
-        
+
         :root {
             --primary: #f59e0b;
             --primary-dark: #d97706;
@@ -19,7 +22,7 @@
             --dark-text: #1e293b;
             --light-text: #f8fafc;
         }
-        
+
         body {
             font-family: 'Vazirmatn', sans-serif;
             min-height: 100vh;
@@ -28,12 +31,12 @@
             color: var(--light-text);
             transition: all 0.5s ease;
         }
-        
+
         body.light-mode {
             background-color: var(--light-bg);
             color: var(--dark-text);
         }
-        
+
         .glass-card {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
@@ -42,88 +45,104 @@
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
+
         .light-mode .glass-card {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
         }
-        
+
         .menu-item {
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
             overflow: hidden;
         }
-        
+
         .menu-item:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
-        
+
         .light-mode .menu-item:hover {
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
-        
+
         .category-btn {
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
         }
-        
+
         .light-mode .category-btn {
-            background: rgba(255,255,255,0.7);
+            background: rgba(255, 255, 255, 0.7);
         }
-        
+
         .category-btn.active {
-            background: linear-gradient(45deg, rgba(245,158,11,0.8), rgba(239,68,68,0.6));
+            background: linear-gradient(45deg, rgba(245, 158, 11, 0.8), rgba(239, 68, 68, 0.6));
             color: white;
             box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
         }
-        
+
         .popular-badge {
             background: linear-gradient(45deg, var(--primary), #ef4444);
             animation: pulse 2s infinite;
         }
-        
+
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
-        
+
         .fade-in {
             animation: fadeIn 0.8s ease-out forwards;
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
+
         .price-tag {
             background: linear-gradient(45deg, var(--primary), var(--primary-dark));
             color: white;
         }
-        
+
         .add-to-cart {
             background: linear-gradient(45deg, var(--primary), var(--primary-dark));
             color: white;
             transition: all 0.3s ease;
         }
-        
+
         .add-to-cart:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
         }
-        
+
         /* استایل‌های سبد خرید */
         .cart-icon {
             position: fixed;
             top: 20px;
             left: 20px;
             z-index: 100;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             width: 60px;
             height: 60px;
@@ -133,18 +152,18 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        
+
         .cart-icon:hover {
             transform: scale(1.1);
         }
-        
+
         .cart-icon i {
             font-size: 24px;
             color: var(--primary);
         }
-        
+
         .cart-badge {
             position: absolute;
             top: -5px;
@@ -160,7 +179,7 @@
             font-size: 12px;
             font-weight: bold;
         }
-        
+
         .cart-panel {
             position: fixed;
             top: 0;
@@ -170,38 +189,38 @@
             background: var(--dark-bg);
             z-index: 1000;
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            box-shadow: -5px 0 30px rgba(0,0,0,0.2);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
         }
-        
+
         .light-mode .cart-panel {
             background: var(--light-bg);
-            box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
         }
-        
+
         .cart-panel.open {
             left: 0;
         }
-        
+
         .cart-header {
             padding: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .light-mode .cart-header {
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
-        
+
         .cart-header h3 {
             font-size: 20px;
             font-weight: 700;
             margin: 0;
         }
-        
+
         .close-cart {
             background: none;
             border: none;
@@ -209,30 +228,30 @@
             font-size: 20px;
             cursor: pointer;
         }
-        
+
         .cart-items {
             flex: 1;
             overflow-y: auto;
             padding: 20px;
         }
-        
+
         .cart-item {
             display: flex;
             margin-bottom: 20px;
             padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        
+
         .light-mode .cart-item {
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
-        
+
         .cart-item:last-child {
             margin-bottom: 0;
             padding-bottom: 0;
             border-bottom: none;
         }
-        
+
         .cart-item-img {
             width: 80px;
             height: 80px;
@@ -240,45 +259,45 @@
             overflow: hidden;
             margin-left: 15px;
         }
-        
+
         .cart-item-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
+
         .cart-item-details {
             flex: 1;
         }
-        
+
         .cart-item-name {
             font-weight: 600;
             margin-bottom: 5px;
         }
-        
+
         .cart-item-price {
             color: var(--primary);
             font-weight: 700;
         }
-        
+
         .cart-item-actions {
             display: flex;
             align-items: center;
             margin-top: 10px;
         }
-        
+
         .quantity-control {
             display: flex;
             align-items: center;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 30px;
             padding: 2px;
         }
-        
+
         .light-mode .quantity-control {
-            background: rgba(0,0,0,0.05);
+            background: rgba(0, 0, 0, 0.05);
         }
-        
+
         .quantity-btn {
             width: 30px;
             height: 30px;
@@ -292,7 +311,7 @@
             cursor: pointer;
             font-size: 14px;
         }
-        
+
         .quantity-input {
             width: 40px;
             text-align: center;
@@ -301,23 +320,23 @@
             color: inherit;
             font-weight: 600;
         }
-        
+
         .remove-item {
             margin-right: 15px;
             color: #ef4444;
             cursor: pointer;
             font-size: 18px;
         }
-        
+
         .cart-footer {
             padding: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .light-mode .cart-footer {
-            border-top: 1px solid rgba(0,0,0,0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
-        
+
         .cart-total {
             display: flex;
             justify-content: space-between;
@@ -325,7 +344,7 @@
             font-weight: 700;
             font-size: 18px;
         }
-        
+
         .checkout-btn {
             width: 100%;
             padding: 15px;
@@ -338,60 +357,60 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .checkout-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
         }
-        
+
         .empty-cart {
             text-align: center;
             padding: 40px 0;
             color: #9ca3af;
         }
-        
+
         .empty-cart i {
             font-size: 50px;
             margin-bottom: 20px;
             opacity: 0.5;
         }
-        
+
         @media (max-width: 768px) {
             .cart-panel {
                 width: 90%;
                 left: -100%;
             }
-            
+
             .cart-panel.open {
                 left: 0;
             }
         }
-        
+
         /* بهبود خوانایی متن */
         .light-mode .text-muted {
             color: #4b5563 !important;
         }
-        
+
         .dark-mode .text-muted {
             color: #d1d5db !important;
         }
-        
+
         /* اسکرول بار سفارشی */
         ::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         ::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.1);
+            background: rgba(0, 0, 0, 0.1);
         }
-        
+
         ::-webkit-scrollbar-thumb {
             background: var(--primary);
             border-radius: 10px;
         }
-        
+
         .light-mode ::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.05);
+            background: rgba(0, 0, 0, 0.05);
         }
 
         /* لودر */
@@ -404,10 +423,15 @@
             animation: spin 1s linear infinite;
             margin: 20px auto;
         }
-        
+
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* استایل‌های جدید برای مدال کامنت */
@@ -436,6 +460,7 @@
             from {
                 opacity: 0;
             }
+
             to {
                 opacity: 1;
             }
@@ -463,6 +488,7 @@
                 transform: translateY(-50px) scale(0.9);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0) scale(1);
                 opacity: 1;
@@ -805,23 +831,23 @@
                 border-radius: 16px;
                 margin: 0 8px;
             }
-            
+
             .modal-header {
                 padding: 20px;
             }
-            
+
             .modal-body {
                 padding: 20px;
             }
-            
+
             .comment-form {
                 padding: 16px;
             }
-            
+
             .comment-actions {
                 gap: 12px;
             }
-            
+
             .action-btn {
                 font-size: 0.8rem;
                 padding: 4px 6px;
@@ -832,50 +858,176 @@
             .modal-content {
                 margin: 0 4px;
             }
-            
+
             .modal-header h2 {
                 font-size: 1.2rem;
             }
-            
+
             .comment-form textarea {
                 padding: 12px;
             }
-            
+
             .comment-item {
                 padding: 12px;
             }
-            
+
             .user-avatar {
                 width: 32px;
                 height: 32px;
             }
-            
+
             .user-name {
                 font-size: 0.875rem;
             }
-            
+
             .comment-date {
                 font-size: 0.75rem;
             }
-            
+
             .comment-text {
                 font-size: 0.875rem;
             }
-            
+
             .action-btn {
                 font-size: 0.75rem;
                 padding: 3px 6px;
             }
         }
+
+        /* استایل‌های جدید برای کنترل تعداد در کارت */
+        .item-quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .item-quantity-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .item-quantity-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .item-quantity-display {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        .item-quantity-container {
+            display: none;
+        }
+
+        .item-quantity-container.active {
+            display: flex;
+        }
+
+        /* دکمه تغییر تم در پایین صفحه */
+        .theme-toggle-bottom {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 90;
+        }
+
+        @media (max-width: 768px) {
+            .theme-toggle-bottom {
+                bottom: 80px;
+                right: 20px;
+            }
+        }
+
+        /* استایل‌های جدید برای نقشه */
+        #map {
+            height: 300px;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 16px;
+        }
+
+        /* استایل‌های جدید برای گالری */
+        .gallery-placeholder {
+            height: 200px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(16, 185, 129, 0.1));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: var(--primary);
+            margin-top: 16px;
+        }
+
+        .gallery-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        /* استایل‌های جدید برای ساعت کاری */
+        .work-hours-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .work-hours-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .work-day {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .light-mode .work-day {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .work-day:last-child {
+            border-bottom: none;
+        }
     </style>
 </head>
+
 <body>
     <!-- آیکون سبد خرید -->
     <div class="cart-icon" id="cart-icon">
         <i class="fas fa-shopping-cart"></i>
         <span class="cart-badge" id="cart-badge">0</span>
     </div>
-    
+
+    <!-- دکمه تغییر تم در پایین صفحه -->
+    <div class="theme-toggle-bottom">
+        <button id="theme-toggle"
+            class="p-3 rounded-full bg-black/20 backdrop-blur-md text-amber-400 shadow-lg hover:shadow-amber-400/30 transition-all">
+            <i class="fas fa-moon dark-mode-icon"></i>
+            <i class="fas fa-sun light-mode-icon hidden"></i>
+        </button>
+    </div>
+
     <!-- پنل سبد خرید -->
     <div class="cart-panel" id="cart-panel">
         <div class="cart-header">
@@ -884,14 +1036,14 @@
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        
+
         <div class="cart-items" id="cart-items">
             <div class="empty-cart">
                 <i class="fas fa-shopping-basket"></i>
                 <p>سبد خرید شما خالی است</p>
             </div>
         </div>
-        
+
         <div class="cart-footer">
             <div class="cart-total">
                 <span>جمع کل:</span>
@@ -915,12 +1067,13 @@
             <div class="modal-body">
                 <div class="comment-form">
                     <h3 class="text-lg font-semibold mb-3">نظر خود را ثبت کنید</h3>
-                    <textarea id="commentText" placeholder="نظر، پیشنهاد یا تجربه خود از این غذا را بنویسید..."></textarea>
+                    <textarea id="commentText"
+                        placeholder="نظر، پیشنهاد یا تجربه خود از این غذا را بنویسید..."></textarea>
                     <button id="submitComment">
                         <i class="fas fa-paper-plane"></i> ارسال نظر
                     </button>
                 </div>
-                
+
                 <div class="comments-section">
                     <h3><i class="fas fa-comments"></i> نظرات کاربران</h3>
                     <div id="commentsList" class="comments-list">
@@ -939,23 +1092,20 @@
     <div class="container mx-auto px-4 py-12 max-w-7xl relative">
         <!-- هدر -->
         <header class="text-center mb-16">
-            <div class="absolute left-0 top-0">
-                <button id="theme-toggle" class="p-3 rounded-full bg-black/20 backdrop-blur-md text-amber-400 shadow-lg hover:shadow-amber-400/30 transition-all">
-                    <i class="fas fa-moon dark-mode-icon"></i>
-                    <i class="fas fa-sun light-mode-icon hidden"></i>
-                </button>
-            </div>
-            
             <div class="inline-block mb-8">
-                <div class="w-20 h-20 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg">
+                <div
+                    class="w-20 h-20 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg">
                     <i class="fas fa-utensils text-white text-3xl"></i>
                 </div>
             </div>
-            
+
             <h1 id="restaurant-name" class="text-5xl font-extrabold mb-4 text-amber-400">منوی دیجیتال</h1>
-            <h2 class="text-2xl font-medium text-gray-300 light-mode:text-gray-600 mb-6" id="restaurant-description">کافه رستوران <span class="font-bold text-amber-400">لوکس</span></h2>
-            
-            <div class="w-32 h-1.5 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto mt-6 rounded-full"></div>
+            <h2 class="text-2xl font-medium text-gray-300 light-mode:text-gray-600 mb-6" id="restaurant-description">
+                کافه رستوران <span class="font-bold text-amber-400">لوکس</span></h2>
+
+            <div
+                class="w-32 h-1.5 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto mt-6 rounded-full">
+            </div>
         </header>
 
         <!-- لودر -->
@@ -974,11 +1124,11 @@
                 <!-- دسته‌بندی‌های داینامیک اینجا اضافه می‌شوند -->
             </div>
         </div>
-        
+
         <!-- جستجو -->
         <div id="search-section" class="hidden mb-12 mx-auto max-w-2xl relative">
             <div class="relative glass-card rounded-xl overflow-hidden">
-                <input type="text" id="search-input" placeholder="جستجو در منو..." 
+                <input type="text" id="search-input" placeholder="جستجو در منو..."
                     class="w-full py-4 px-6 pr-14 bg-transparent focus:outline-none placeholder-gray-400 light-mode:placeholder-gray-500">
                 <i class="fas fa-search absolute left-6 top-4 text-xl text-amber-500"></i>
                 <button class="absolute left-6 top-4 text-xl text-amber-500 opacity-0 transition-all" id="clear-search">
@@ -986,7 +1136,7 @@
                 </button>
             </div>
         </div>
-        
+
         <!-- لیست منو -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="menu-container">
             <!-- آیتم‌ها با JavaScript اضافه می‌شوند -->
@@ -999,41 +1149,111 @@
             <p class="text-gray-400 light-mode:text-gray-600 text-xl">لطفاً عبارت جستجوی دیگری امتحان کنید</p>
         </div>
     </div>
-    
+
     <!-- فوتر -->
     <footer class="glass-card mt-20 py-10 border-t border-white/10 light-mode:border-gray-200">
-        <div class="container mx-auto px-4 text-center">
-            <div class="flex justify-center space-x-8 space-x-reverse mb-8">
-                <a href="#" class="w-12 h-12 rounded-full bg-black/20 light-mode:bg-white/70 backdrop-blur-md flex items-center justify-center text-xl text-amber-500 hover:text-white hover:bg-amber-600 transition-all">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- اطلاعات تماس -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-amber-400">اطلاعات تماس</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-amber-500 mt-1 ml-2"></i>
+                            <div>
+                                <p class="font-medium" id="footer-address">تهران، خیابان انقلاب، بین دانشگاه و فلسطین</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone-alt text-amber-500 ml-2"></i>
+                            <p class="font-medium">۰۲۱-۱۲۳۴۵۶۷۸</p>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-info-circle text-amber-500 mt-1 ml-2"></i>
+                            <div>
+                                <p class="font-medium" id="footer-description">فضایی دلنشین و مخصوص کار</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ساعت کاری -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-amber-400">ساعت کاری</h3>
+                    <div class="work-hours-grid">
+                        <div>
+                            <div class="work-day">
+                                <span>شنبه</span>
+                                <span id="saturday-hours">09:00-18:00</span>
+                            </div>
+                            <div class="work-day">
+                                <span>یکشنبه</span>
+                                <span id="sunday-hours">09:00-22:00</span>
+                            </div>
+                            <div class="work-day">
+                                <span>دوشنبه</span>
+                                <span id="monday-hours">09:00-18:00</span>
+                            </div>
+                            <div class="work-day">
+                                <span>سه‌شنبه</span>
+                                <span id="tuesday-hours">09:00-18:00</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="work-day">
+                                <span>چهارشنبه</span>
+                                <span id="wednesday-hours">09:00-18:00</span>
+                            </div>
+                            <div class="work-day">
+                                <span>پنجشنبه</span>
+                                <span id="thursday-hours">10:00-22:00</span>
+                            </div>
+                            <div class="work-day">
+                                <span>جمعه</span>
+                                <span id="friday-hours">09:00-18:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- نقشه -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-amber-400">موقعیت مکانی</h3>
+                    <div id="map"></div>
+                </div>
+
+                <!-- گالری -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-amber-400">گالری تصاویر</h3>
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-images"></i>
+                        <p>به زودی گالری تصاویر اضافه خواهد شد</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- شبکه‌های اجتماعی -->
+            <div class="flex justify-center space-x-8 space-x-reverse mb-8 pt-8 border-t border-white/10 light-mode:border-gray-200">
+                <a href="#"
+                    class="w-12 h-12 rounded-full bg-black/20 light-mode:bg-white/70 backdrop-blur-md flex items-center justify-center text-xl text-amber-500 hover:text-white hover:bg-amber-600 transition-all">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="#" class="w-12 h-12 rounded-full bg-black/20 light-mode:bg-white/70 backdrop-blur-md flex items-center justify-center text-xl text-amber-500 hover:text-white hover:bg-amber-600 transition-all">
+                <a href="#"
+                    class="w-12 h-12 rounded-full bg-black/20 light-mode:bg-white/70 backdrop-blur-md flex items-center justify-center text-xl text-amber-500 hover:text-white hover:bg-amber-600 transition-all">
                     <i class="fab fa-telegram"></i>
                 </a>
-                <a href="#" class="w-12 h-12 rounded-full bg-black/20 light-mode:bg-white/70 backdrop-blur-md flex items-center justify-center text-xl text-amber-500 hover:text-white hover:bg-amber-600 transition-all">
+                <a href="#"
+                    class="w-12 h-12 rounded-full bg-black/20 light-mode:bg-white/70 backdrop-blur-md flex items-center justify-center text-xl text-amber-500 hover:text-white hover:bg-amber-600 transition-all">
                     <i class="fab fa-whatsapp"></i>
                 </a>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
-                <div class="glass-card p-4 rounded-lg">
-                    <i class="fas fa-map-marker-alt text-2xl text-amber-500 mb-2"></i>
-                    <p class="font-medium">تهران، خیابان نمونه، پلاک ۱۲۳</p>
-                </div>
-                <div class="glass-card p-4 rounded-lg">
-                    <i class="fas fa-phone-alt text-2xl text-amber-500 mb-2"></i>
-                    <p class="font-medium">۰۲۱-۱۲۳۴۵۶۷۸</p>
-                </div>
-                <div class="glass-card p-4 rounded-lg">
-                    <i class="fas fa-clock text-2xl text-amber-500 mb-2"></i>
-                    <p class="font-medium">هر روز ۸ صبح تا ۱۲ شب</p>
-                </div>
-            </div>
-            
-            <p class="text-sm text-gray-400 light-mode:text-gray-600">© ۲۰۲۳ کافه رستوران لوکس. تمام حقوق محفوظ است.</p>
+
+            <p class="text-sm text-center text-gray-400 light-mode:text-gray-600">© ۲۰۲۳ کافه رستوران لوکس. تمام حقوق محفوظ است.</p>
         </div>
     </footer>
 
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
@@ -1044,10 +1264,13 @@
         // داده‌های منو - از API پر می‌شود
         let menuItems = [];
         let categories = [];
-        
+
         // داده‌های سبد خرید
         let cart = [];
-        
+
+        // اطلاعات رستوران
+        let restaurantInfo = {};
+
         // DOM Elements
         const loadingSection = document.getElementById('loading-section');
         const categoriesSection = document.getElementById('categories-section');
@@ -1058,14 +1281,82 @@
         const restaurantName = document.getElementById('restaurant-name');
         const restaurantDescription = document.getElementById('restaurant-description');
 
+        // تابع برای بارگذاری اطلاعات رستوران
+        async function loadRestaurantInfo() {
+            const token = sessionStorage.getItem('accessToken');
+
+            try {
+                const response = await fetch(`http://135.125.238.202:7050/user/profile/`, {
+                    method: "GET",
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                restaurantInfo = await response.json();
+                updateFooterInfo();
+
+            } catch (error) {
+                console.error('Error loading restaurant info:', error);
+            }
+        }
+
+        // تابع برای به‌روزرسانی اطلاعات فوتر
+        function updateFooterInfo() {
+            // آدرس
+            if (restaurantInfo.address) {
+                document.getElementById('footer-address').textContent = restaurantInfo.address;
+            }
+
+            // توضیحات
+            if (restaurantInfo.description) {
+                document.getElementById('footer-description').textContent = restaurantInfo.description;
+            }
+
+            // ساعت کاری
+            if (restaurantInfo.work_hours) {
+                const workHours = restaurantInfo.work_hours;
+                if (workHours.شنبه) document.getElementById('saturday-hours').textContent = workHours.شنبه;
+                if (workHours.یکشنبه) document.getElementById('sunday-hours').textContent = workHours.یکشنبه;
+                if (workHours.دوشنبه) document.getElementById('monday-hours').textContent = workHours.دوشنبه;
+                if (workHours.سه‌شنبه) document.getElementById('tuesday-hours').textContent = workHours.سه‌شنبه;
+                if (workHours.چهارشنبه) document.getElementById('wednesday-hours').textContent = workHours.چهارشنبه;
+                if (workHours.پنجشنبه) document.getElementById('thursday-hours').textContent = workHours.پنجشنبه;
+                if (workHours.جمعه) document.getElementById('friday-hours').textContent = workHours.جمعه;
+            }
+
+            // نقشه
+            if (restaurantInfo.lat && restaurantInfo.long) {
+                initializeMap(parseFloat(restaurantInfo.lat), parseFloat(restaurantInfo.long));
+            }
+        }
+
+        // تابع برای راه‌اندازی نقشه
+        function initializeMap(lat, lng) {
+            const map = L.map('map').setView([lat, lng], 15);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            L.marker([lat, lng]).addTo(map)
+                .bindPopup(restaurantInfo.address || 'کافه رستوران لوکس')
+                .openPopup();
+        }
+
         // تابع برای بارگذاری منو از API
         async function loadFullMenu() {
             const token = sessionStorage.getItem('accessToken');
-            
+
             try {
                 const response = await fetch(`http://135.125.238.202:7050/menu/show/${menuId}/`, {
                     method: "GET",
-                    headers: { 
+                    headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     }
@@ -1076,21 +1367,21 @@
                 }
 
                 const apiData = await response.json();
-                
+
                 // آپدیت اطلاعات رستوران
                 updateRestaurantInfo(apiData);
-                
+
                 // تبدیل داده‌های API
                 transformAPIData(apiData);
-                
+
                 // ایجاد تب‌های داینامیک
                 createDynamicCategoryTabs();
-                
+
                 // مخفی کردن لودر و نمایش محتوا
                 loadingSection.classList.add('hidden');
                 categoriesSection.classList.remove('hidden');
                 searchSection.classList.remove('hidden');
-                
+
                 // نمایش منو
                 displayMenu(menuItems);
 
@@ -1106,7 +1397,7 @@
             if (apiData.owner_info?.first_name) {
                 restaurantDescription.textContent = `مدیریت: ${apiData.owner_info.first_name}`;
             }
-            
+
             // آپدیت title صفحه
             document.title = `${apiData.name} | منوی دیجیتال`;
         }
@@ -1115,7 +1406,7 @@
         function transformAPIData(apiData) {
             categories = [];
             menuItems = [];
-            
+
             // پردازش دسته‌بندی‌ها
             apiData.menu_categories.forEach(category => {
                 categories.push({
@@ -1123,7 +1414,7 @@
                     name: category.name,
                     type: `category-${category.id}`
                 });
-                
+
                 // پردازش آیتم‌های هر دسته‌بندی
                 category.menu_items.forEach(item => {
                     menuItems.push({
@@ -1135,7 +1426,6 @@
                         description: item.description || 'توضیحاتی برای این آیتم موجود نیست',
                         popular: Math.random() > 0.7, // مقدار تصادفی برای نمایش
                         image: item.image_path ? `http://135.125.238.202:7050${item.image_path}` : getDefaultImage(category.name),
-                        ingredients: getRandomIngredients(),
                         isAvailable: item.is_available,
                         options: item.options
                     });
@@ -1149,13 +1439,13 @@
             const allTab = categoriesContainer.querySelector('[data-category="all"]');
             categoriesContainer.innerHTML = '';
             categoriesContainer.appendChild(allTab);
-            
+
             // ایجاد تب‌های جدید بر اساس دسته‌بندی‌های واقعی
             categories.forEach(category => {
                 const tab = document.createElement('button');
                 tab.className = 'category-btn px-8 py-3 rounded-xl flex items-center';
                 tab.dataset.category = category.type;
-                
+
                 // آیکون بر اساس نوع دسته‌بندی
                 let icon = 'fas fa-utensils';
                 if (category.name.includes('نوشیدنی') || category.name.includes('دسته بندی 2')) {
@@ -1165,12 +1455,12 @@
                 } else if (category.name.includes('صبحانه')) {
                     icon = 'fas fa-sun';
                 }
-                
+
                 tab.innerHTML = `
                     <i class="${icon} ml-2"></i>
                     ${category.name}
                 `;
-                
+
                 categoriesContainer.appendChild(tab);
             });
         }
@@ -1183,51 +1473,34 @@
                 'غذای اصلی': 'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
                 'صبحانه': 'https://images.unsplash.com/photo-1558584724-0e4d32ca55a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
             };
-            
+
             for (const [key, image] of Object.entries(defaultImages)) {
                 if (categoryName.includes(key)) {
                     return image;
                 }
             }
-            
-            return 'https://images.unsplash.com/photo-1558030006-450675393462?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
-        }
 
-        // تابع برای تولید مواد تشکیل‌دهنده تصادفی
-        function getRandomIngredients() {
-            const allIngredients = [
-                "اسپرسو", "شیر تازه", "پودر کاکائو", "دانه قهوه عربیکا", "شیر بخار داده شده",
-                "شیر وانیلی", "یخ", "نعنا تازه", "لیمو", "شکر قهوه‌ای", "سودا", "انبه",
-                "پاپایا", "آناناس", "موز", "تخم مرغ", "سوسیس", "قارچ", "لوبیا", "نان تست",
-                "گوجه", "فلفل دلمه‌ای", "پنکیک", "عسل", "توت فرنگی", "بلوبری", "خامه",
-                "گوشت آنتری کات", "سیب زمینی", "سبزیجات", "پاستا", "خامه", "پنیر پارمزان",
-                "کاهو رومی", "نان کروتون", "سس سزار", "پنیر خامه‌ای", "بیسکویت", "ماسکارپونه",
-                "بیسکویت لیدی فینگر", "قهوه", "شکلات بلژیکی", "بستنی وانیلی"
-            ];
-            
-            const count = Math.floor(Math.random() * 3) + 2; // 2-4 ماده
-            const shuffled = allIngredients.sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, count);
+            return 'https://images.unsplash.com/photo-1558030006-450675393462?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
         }
 
         // تابع نمایش منو
         function displayMenu(items) {
             menuContainer.innerHTML = '';
-            
+
             if (items.length === 0) {
                 noItemsMessage.classList.remove('hidden');
                 return;
             }
-            
+
             noItemsMessage.classList.add('hidden');
-            
+
             items.forEach((item, index) => {
                 const menuItem = document.createElement('div');
                 menuItem.className = `menu-item glass-card rounded-xl overflow-hidden fade-in ${!item.isAvailable ? 'opacity-60' : ''}`;
                 menuItem.style.animationDelay = `${index * 0.1}s`;
                 menuItem.dataset.id = item.id;
                 menuItem.dataset.category = item.category;
-                
+
                 let popularBadge = '';
                 if (item.popular) {
                     popularBadge = `
@@ -1236,7 +1509,7 @@
                         </div>
                     `;
                 }
-                
+
                 let unavailableOverlay = '';
                 if (!item.isAvailable) {
                     unavailableOverlay = `
@@ -1245,23 +1518,12 @@
                         </div>
                     `;
                 }
-                
-                let ingredients = '';
-                if (item.ingredients) {
-                    ingredients = `
-                        <div class="mt-4 pt-4 border-t border-white/10 light-mode:border-gray-200">
-                            <h4 class="text-sm font-semibold text-amber-500 mb-2">مواد تشکیل‌دهنده:</h4>
-                            <div class="flex flex-wrap gap-2">
-                                ${item.ingredients.map(ing => `
-                                    <span class="text-xs bg-black/20 light-mode:bg-white/70 px-2 py-1 rounded-full backdrop-blur-sm">
-                                        ${ing}
-                                    </span>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
-                }
-                
+
+                // بررسی اینکه آیا این آیتم در سبد خرید است
+                const cartItem = cart.find(cartItem => cartItem.id === item.id);
+                const quantity = cartItem ? cartItem.quantity : 0;
+                const showQuantityControls = quantity > 0;
+
                 menuItem.innerHTML = `
                     <div class="relative h-64 overflow-hidden">
                         <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover ${!item.isAvailable ? 'grayscale' : ''}">
@@ -1274,10 +1536,22 @@
                     <div class="p-5">
                         <div class="flex justify-between items-start mb-3">
                             <p class="text-gray-300 light-mode:text-gray-600 text-sm leading-relaxed">${item.description}</p>
-                            <span class="price-tag text-lg font-bold px-4 py-1 rounded-r-full -mr-5 -mt-5">${item.price.toLocaleString()} تومان</span>
+                            <span class="price-tag text-lg font-bold px-4 py-1 rounded-full -mr-5 -mt-5">${item.price.toLocaleString()} تومان</span>
                         </div>
-                        ${ingredients}
-                        <button class="add-to-cart w-full mt-6 py-3 text-white rounded-lg flex items-center justify-center space-x-2 space-x-reverse font-medium ${!item.isAvailable ? 'bg-gray-400 cursor-not-allowed' : ''}" 
+                        
+                        <div class="item-quantity-container ${showQuantityControls ? 'active' : ''}">
+                            <div class="item-quantity-control">
+                                <button class="item-quantity-btn decrease-btn" data-id="${item.id}">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="item-quantity-display">${quantity}</span>
+                                <button class="item-quantity-btn increase-btn" data-id="${item.id}">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button class="add-to-cart w-full mt-3 py-3 text-white rounded-lg flex items-center justify-center space-x-2 space-x-reverse font-medium ${!item.isAvailable ? 'bg-gray-400 cursor-not-allowed' : ''} ${showQuantityControls ? 'hidden' : ''}" 
                                 ${!item.isAvailable ? 'disabled' : ''}>
                             <i class="fas fa-plus"></i>
                             <span>${!item.isAvailable ? 'ناموجود' : 'افزودن به سبد'}</span>
@@ -1288,16 +1562,31 @@
                         </button>
                     </div>
                 `;
-                
+
                 menuContainer.appendChild(menuItem);
             });
 
             // اضافه کردن event listener برای دکمه‌های کامنت
             document.querySelectorAll('.comment-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function () {
                     const foodId = this.dataset.id;
                     const foodTitle = this.dataset.title;
                     openCommentModal(foodId, foodTitle);
+                });
+            });
+
+            // اضافه کردن event listener برای دکمه‌های کنترل تعداد
+            document.querySelectorAll('.increase-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const itemId = parseInt(this.dataset.id);
+                    updateItemQuantity(itemId, 1);
+                });
+            });
+
+            document.querySelectorAll('.decrease-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const itemId = parseInt(this.dataset.id);
+                    updateItemQuantity(itemId, -1);
                 });
             });
         }
@@ -1307,14 +1596,14 @@
             const cartItemsContainer = document.getElementById('cart-items');
             const cartBadge = document.getElementById('cart-badge');
             const cartTotal = document.getElementById('cart-total');
-            
+
             // به‌روزرسانی تعداد آیتم‌ها
             cartBadge.textContent = cart.reduce((total, item) => total + item.quantity, 0);
-            
+
             // محاسبه جمع کل
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             cartTotal.textContent = total.toLocaleString() + ' تومان';
-            
+
             // اگر سبد خرید خالی است
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = `
@@ -1325,7 +1614,7 @@
                 `;
                 return;
             }
-            
+
             // نمایش آیتم‌های سبد خرید
             cartItemsContainer.innerHTML = cart.map(item => `
                 <div class="cart-item" data-id="${item.id}">
@@ -1349,16 +1638,16 @@
                 </div>
             `).join('');
         }
-        
+
         // افزودن به سبد خرید
         function addToCart(itemId) {
             const item = menuItems.find(item => item.id === itemId);
-            
+
             if (!item || !item.isAvailable) return;
-            
+
             // بررسی وجود آیتم در سبد خرید
             const existingItem = cart.find(cartItem => cartItem.id === itemId);
-            
+
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
@@ -1367,9 +1656,10 @@
                     quantity: 1
                 });
             }
-            
+
             renderCart();
-            
+            updateItemDisplay(itemId);
+
             // افکت موفقیت‌آمیز
             Toastify({
                 text: `${item.name} به سبد خرید اضافه شد`,
@@ -1381,28 +1671,104 @@
                 stopOnFocus: true,
             }).showToast();
         }
-        
+
         // حذف از سبد خرید
         function removeFromCart(itemId) {
             cart = cart.filter(item => item.id !== itemId);
             renderCart();
+            updateItemDisplay(itemId);
         }
-        
+
         // به‌روزرسانی تعداد آیتم
         function updateQuantity(itemId, change) {
             const item = cart.find(item => item.id === itemId);
-            
+
             if (!item) return;
-            
+
             item.quantity += change;
-            
+
             if (item.quantity < 1) {
                 removeFromCart(itemId);
             } else {
                 renderCart();
+                updateItemDisplay(itemId);
             }
         }
-        
+
+        // به‌روزرسانی نمایش تعداد در کارت آیتم
+        function updateItemDisplay(itemId) {
+            const menuItem = document.querySelector(`.menu-item[data-id="${itemId}"]`);
+            if (!menuItem) return;
+
+            const cartItem = cart.find(item => item.id === itemId);
+            const quantity = cartItem ? cartItem.quantity : 0;
+            const showQuantityControls = quantity > 0;
+
+            const quantityContainer = menuItem.querySelector('.item-quantity-container');
+            const addToCartBtn = menuItem.querySelector('.add-to-cart');
+            const quantityDisplay = menuItem.querySelector('.item-quantity-display');
+
+            if (quantityDisplay) {
+                quantityDisplay.textContent = quantity;
+            }
+
+            if (quantityContainer) {
+                if (showQuantityControls) {
+                    quantityContainer.classList.add('active');
+                } else {
+                    quantityContainer.classList.remove('active');
+                }
+            }
+
+            if (addToCartBtn) {
+                if (showQuantityControls) {
+                    addToCartBtn.classList.add('hidden');
+                } else {
+                    addToCartBtn.classList.remove('hidden');
+                }
+            }
+        }
+
+        // به‌روزرسانی تعداد آیتم از طریق دکمه‌های داخل کارت
+        function updateItemQuantity(itemId, change) {
+            const item = menuItems.find(item => item.id === itemId);
+
+            if (!item || !item.isAvailable) return;
+
+            // بررسی وجود آیتم در سبد خرید
+            const existingItem = cart.find(cartItem => cartItem.id === itemId);
+
+            if (existingItem) {
+                existingItem.quantity += change;
+
+                if (existingItem.quantity < 1) {
+                    removeFromCart(itemId);
+                } else {
+                    renderCart();
+                    updateItemDisplay(itemId);
+                }
+            } else if (change > 0) {
+                // اگر آیتم در سبد نیست و دکمه افزایش زده شده
+                cart.push({
+                    ...item,
+                    quantity: 1
+                });
+                renderCart();
+                updateItemDisplay(itemId);
+
+                // افکت موفقیت‌آمیز
+                Toastify({
+                    text: `${item.name} به سبد خرید اضافه شد`,
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "left",
+                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                    stopOnFocus: true,
+                }).showToast();
+            }
+        }
+
         // تسویه حساب
         function checkout() {
             if (cart.length === 0) {
@@ -1417,9 +1783,9 @@
                 }).showToast();
                 return;
             }
-            
+
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
+
             Swal.fire({
                 title: 'تسویه حساب',
                 html: `مبلغ قابل پرداخت: <b>${total.toLocaleString()} تومان</b><br><br>لطفاً روش پرداخت را انتخاب کنید`,
@@ -1452,6 +1818,8 @@
                     );
                     cart = [];
                     renderCart();
+                    // به‌روزرسانی نمایش همه آیتم‌ها
+                    menuItems.forEach(item => updateItemDisplay(item.id));
                 }
             });
         }
@@ -1466,7 +1834,7 @@
                     btn.classList.remove('active');
                 }
             });
-            
+
             if (category === 'all') {
                 displayMenu(menuItems);
             } else {
@@ -1485,11 +1853,10 @@
                 clearBtn.style.opacity = '0';
                 clearBtn.style.pointerEvents = 'none';
             }
-            
-            const filteredItems = menuItems.filter(item => 
-                item.name.includes(query) || 
-                item.description.includes(query) ||
-                (item.ingredients && item.ingredients.some(ing => ing.includes(query)))
+
+            const filteredItems = menuItems.filter(item =>
+                item.name.includes(query) ||
+                item.description.includes(query)
             );
             displayMenu(filteredItems);
         }
@@ -1498,10 +1865,10 @@
         function toggleDarkMode() {
             document.body.classList.toggle('light-mode');
             localStorage.setItem('lightMode', document.body.classList.contains('light-mode'));
-            
+
             const darkIcon = document.querySelector('.dark-mode-icon');
             const lightIcon = document.querySelector('.light-mode-icon');
-            
+
             if (document.body.classList.contains('light-mode')) {
                 darkIcon.classList.add('hidden');
                 lightIcon.classList.remove('hidden');
@@ -1539,7 +1906,7 @@
             document.body.style.overflow = "hidden";
 
             modal.dataset.foodId = foodId;
-            
+
             // آپدیت هدر مدال با نام غذا
             const modalHeader = modal.querySelector(".modal-header h2");
             modalHeader.textContent = `نظرات و پیشنهادات - ${foodTitle}`;
@@ -1850,7 +2217,7 @@
                     if (res.ok) {
                         replyForm.querySelector(".reply-input").value = "";
                         await loadReplies(cId, repliesDiv);
-                        
+
                         // آپدیت تعداد پاسخ‌ها
                         const replyBtn = commentDiv.querySelector(".reply-btn");
                         const currentCount = parseInt(replyBtn.textContent.match(/\((\d+)\)/)[1]);
@@ -1866,12 +2233,21 @@
 
         // رویدادهای صفحه
         document.addEventListener('DOMContentLoaded', () => {
+            const token = sessionStorage.getItem('accessToken');
+            if (!token) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            // بارگذاری اطلاعات رستوران
+            loadRestaurantInfo();
+
             if (menuId) {
                 loadFullMenu();
             } else {
                 showError('شناسه منو یافت نشد. لطفاً از طریق لینک صحیح وارد شوید.');
             }
-            
+
             // رویدادهای دکمه‌های دسته‌بندی (delegated)
             document.getElementById('categories-container').addEventListener('click', (e) => {
                 if (e.target.classList.contains('category-btn') || e.target.closest('.category-btn')) {
@@ -1879,61 +2255,50 @@
                     filterByCategory(btn.dataset.category);
                 }
             });
-            
+
             // رویداد جستجو
             const searchInput = document.getElementById('search-input');
             searchInput.addEventListener('input', (e) => {
                 searchMenu(e.target.value);
             });
-            
+
             // پاک کردن جستجو
             document.getElementById('clear-search').addEventListener('click', () => {
                 searchInput.value = '';
                 searchMenu('');
                 searchInput.focus();
             });
-            
+
             // رویداد تغییر تم
             document.getElementById('theme-toggle').addEventListener('click', toggleDarkMode);
-            
+
             // بررسی تم ذخیره شده
             if (localStorage.getItem('lightMode') === 'true') {
                 document.body.classList.add('light-mode');
                 document.querySelector('.dark-mode-icon').classList.add('hidden');
                 document.querySelector('.light-mode-icon').classList.remove('hidden');
             }
-            
+
             // رویدادهای سبد خرید
             document.getElementById('cart-icon').addEventListener('click', () => {
                 document.getElementById('cart-panel').classList.add('open');
             });
-            
+
             document.getElementById('close-cart').addEventListener('click', () => {
                 document.getElementById('cart-panel').classList.remove('open');
             });
-            
+
             document.getElementById('checkout-btn').addEventListener('click', checkout);
-            
+
             // شبیه سازی کلیک روی دکمه افزودن به سبد
             document.addEventListener('click', (e) => {
                 if (e.target.closest('.add-to-cart')) {
                     const menuItem = e.target.closest('.menu-item');
                     const itemId = parseInt(menuItem.dataset.id);
                     const btn = e.target.closest('.add-to-cart');
-                    
+
                     if (btn.disabled) return;
-                    
-                    // افکت افزودن به سبد
-                    btn.innerHTML = '<i class="fas fa-check"></i> <span>افزوده شد</span>';
-                    btn.classList.remove('from-amber-500', 'to-amber-600');
-                    btn.classList.add('from-green-500', 'to-green-600');
-                    
-                    setTimeout(() => {
-                        btn.innerHTML = '<i class="fas fa-plus"></i> <span>افزودن به سبد</span>';
-                        btn.classList.remove('from-green-500', 'to-green-600');
-                        btn.classList.add('from-amber-500', 'to-amber-600');
-                    }, 2000);
-                    
+
                     // افزودن به سبد خرید
                     addToCart(itemId);
                 }
@@ -1941,4 +2306,5 @@
         });
     </script>
 </body>
+
 </html>

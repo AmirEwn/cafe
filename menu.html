@@ -7,6 +7,11 @@
     <title>رستوران ایرانی | منوی دیجیتال</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- اضافه کردن Leaflet CSS و JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
@@ -263,6 +268,7 @@
             from {
                 opacity: 0;
             }
+
             to {
                 opacity: 1;
             }
@@ -286,6 +292,7 @@
                 transform: translateY(-50px) scale(0.9);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0) scale(1);
                 opacity: 1;
@@ -551,58 +558,71 @@
             margin: 0;
         }
 
+        /* استایل نقشه */
+        #restaurant-map {
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
         /* استایل برای موبایل */
         @media (max-width: 768px) {
-            body{
+            body {
                 padding-bottom: 50px;
             }
+
             .modal-content {
                 width: 100%;
                 border-radius: 16px;
                 margin: 0 8px;
             }
-            
+
             .modal-header {
                 padding: 20px;
             }
-            
+
             .modal-body {
                 padding: 20px;
             }
-            
+
             .comment-form {
                 padding: 16px;
             }
-            
+
             .comment-actions {
                 gap: 12px;
             }
-            
+
             .action-btn {
                 font-size: 0.8rem;
                 padding: 4px 6px;
             }
-            
+
             /* بهبود نمایش در موبایل */
             .container {
                 padding-left: 8px;
                 padding-right: 8px;
             }
-            
+
             #mobile-cart-modal .mobile-cart-modal {
                 padding-left: 8px;
                 padding-right: 8px;
             }
-            
+
             .sticky-categories {
                 padding-left: 8px;
                 padding-right: 8px;
             }
-            
+
             .main-tab-btn {
                 padding-left: 12px;
                 padding-right: 12px;
                 font-size: 0.8rem;
+            }
+
+            #restaurant-map {
+                height: 250px;
             }
         }
 
@@ -612,27 +632,31 @@
                 padding-left: 4px;
                 padding-right: 4px;
             }
-            
+
             .container {
                 padding-left: 4px;
                 padding-right: 4px;
             }
-            
+
             #menu-items-container {
                 padding-left: 4px;
                 padding-right: 4px;
             }
-            
+
             .modal-content {
                 margin: 0 4px;
             }
-            
+
             .modal-header h2 {
                 font-size: 1.2rem;
             }
-            
+
             .comment-form textarea {
                 padding: 12px;
+            }
+
+            #restaurant-map {
+                height: 200px;
             }
         }
 
@@ -643,30 +667,30 @@
                 padding-left: 12px;
                 padding-right: 12px;
             }
-            
+
             .flex-row {
                 flex-direction: column;
             }
-            
+
             .w-96 {
                 width: 100%;
                 position: static;
                 height: auto;
                 margin-bottom: 20px;
             }
-            
+
             .h-screen {
                 height: auto;
             }
-            
+
             .sticky {
                 position: static;
             }
-            
+
             .grid-cols-3 {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
+
             .food-card-image {
                 height: 180px;
             }
@@ -676,119 +700,121 @@
             .grid-cols-2 {
                 grid-template-columns: 1fr;
             }
-            
+
             .food-card-image {
                 height: 160px;
             }
-            
+
             .flex-col {
                 flex-direction: column;
             }
-            
+
             .flex-col.md\:flex-row {
                 flex-direction: column;
             }
-            
+
             .text-center.md\:text-right {
                 text-align: center;
             }
-            
+
             .justify-center.md\:justify-start {
                 justify-content: center;
             }
-            
-            .w-40, .w-48 {
+
+            .w-40,
+            .w-48 {
                 width: 120px;
                 height: 120px;
             }
-            
+
             .text-3xl.md\:text-4xl {
                 font-size: 1.75rem;
             }
-            
+
             .p-6 {
                 padding: 16px;
             }
-            
+
             .gap-6 {
                 gap: 16px;
             }
-            
+
             .grid.grid-cols-2.md\:grid-cols-3 {
                 grid-template-columns: 1fr;
             }
-            
+
             .bg-white.p-6.rounded-xl.shadow-md {
                 padding: 16px;
             }
-            
+
             .text-2xl {
                 font-size: 1.5rem;
             }
-            
+
             .review-card.p-5 {
                 padding: 16px;
             }
-            
+
             .w-12.h-12 {
                 width: 40px;
                 height: 40px;
             }
-            
+
             .mr-3 {
                 margin-right: 12px;
             }
-            
+
             .bg-gray-50.p-5 {
                 padding: 16px;
             }
-            
+
             .space-y-6 {
                 gap: 16px;
             }
-            
-            .space-y-6 > * + * {
+
+            .space-y-6>*+* {
                 margin-top: 16px;
             }
-            
+
             .sticky-categories {
                 padding: 12px 8px;
             }
-            
-            .category-btn, .main-tab-btn {
+
+            .category-btn,
+            .main-tab-btn {
                 font-size: 0.75rem;
                 padding: 8px 12px;
             }
-            
+
             .food-card .p-5 {
                 padding: 16px;
             }
-            
+
             .food-card .text-xl {
                 font-size: 1.125rem;
             }
-            
+
             .food-card .text-lg {
                 font-size: 1rem;
             }
-            
+
             .add-to-cart {
                 padding: 8px 12px;
                 font-size: 0.875rem;
             }
-            
+
             .cart-item.p-4 {
                 padding: 12px;
             }
-            
+
             .modal-body {
                 padding: 16px;
             }
-            
+
             .modal-header {
                 padding: 16px;
             }
-            
+
             .comment-form {
                 padding: 12px;
             }
@@ -798,100 +824,102 @@
             .grid-cols-1 {
                 grid-template-columns: 1fr;
             }
-            
+
             .food-card-image {
                 height: 140px;
             }
-            
-            .w-40, .w-48 {
+
+            .w-40,
+            .w-48 {
                 width: 100px;
                 height: 100px;
             }
-            
+
             .text-3xl.md\:text-4xl {
                 font-size: 1.5rem;
             }
-            
+
             .p-6 {
                 padding: 12px;
             }
-            
+
             .gap-6 {
                 gap: 12px;
             }
-            
+
             .sticky-categories {
                 padding: 8px 4px;
             }
-            
-            .category-btn, .main-tab-btn {
+
+            .category-btn,
+            .main-tab-btn {
                 font-size: 0.7rem;
                 padding: 6px 10px;
             }
-            
+
             .food-card .p-5 {
                 padding: 12px;
             }
-            
+
             .food-card .text-xl {
                 font-size: 1rem;
             }
-            
+
             .food-card .text-lg {
                 font-size: 0.875rem;
             }
-            
+
             .add-to-cart {
                 padding: 6px 10px;
                 font-size: 0.75rem;
             }
-            
+
             .cart-item.p-4 {
                 padding: 10px;
             }
-            
+
             .modal-body {
                 padding: 12px;
             }
-            
+
             .modal-header {
                 padding: 12px;
             }
-            
+
             .modal-header h2 {
                 font-size: 1.125rem;
             }
-            
+
             .comment-form {
                 padding: 10px;
             }
-            
+
             .comment-form textarea {
                 padding: 10px;
                 font-size: 0.875rem;
             }
-            
+
             .comment-item {
                 padding: 12px;
             }
-            
+
             .user-avatar {
                 width: 32px;
                 height: 32px;
             }
-            
+
             .user-name {
                 font-size: 0.875rem;
             }
-            
+
             .comment-date {
                 font-size: 0.75rem;
             }
-            
+
             .comment-text {
                 font-size: 0.875rem;
             }
-            
+
             .action-btn {
                 font-size: 0.75rem;
                 padding: 3px 6px;
@@ -929,9 +957,9 @@
         @media (min-width: 1025px) {
             .grid-cols-3 {
                 grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 0 10px;
-            max-width: 100%;
+                gap: 20px;
+                padding: 0 10px;
+                max-width: 100%;
                 overflow-x: hidden;
             }
         }
@@ -941,15 +969,15 @@
             header .container {
                 padding: 16px 12px;
             }
-            
+
             .flex-col.md\:flex-row {
                 gap: 16px;
             }
-            
+
             .flex-wrap {
                 justify-content: center;
             }
-            
+
             .flex-wrap span {
                 margin: 4px;
             }
@@ -961,7 +989,7 @@
                 width: 380px;
                 min-width: 380px;
             }
-            
+
             .flex-1 {
                 flex: 1;
                 min-width: 0;
@@ -1099,7 +1127,8 @@
                     </nav>
 
                     <!-- کارت‌های منو -->
-                    <div id="menu-items-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    <div id="menu-items-container"
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         <!-- آیتم‌های منو به صورت داینامیک اضافه می‌شوند -->
                         <div class="text-center py-10 text-gray-500" id="loading-message">
                             <i class="fas fa-spinner fa-spin text-3xl mb-3"></i>
@@ -1120,12 +1149,13 @@
                         <div class="modal-body">
                             <div class="comment-form">
                                 <h3 class="text-lg font-semibold mb-3">نظر خود را ثبت کنید</h3>
-                                <textarea id="commentText" placeholder="نظر، پیشنهاد یا تجربه خود از این غذا را بنویسید..."></textarea>
+                                <textarea id="commentText"
+                                    placeholder="نظر، پیشنهاد یا تجربه خود از این غذا را بنویسید..."></textarea>
                                 <button id="submitComment">
                                     <i class="fas fa-paper-plane"></i> ارسال نظر
                                 </button>
                             </div>
-                            
+
                             <div class="comments-section">
                                 <h3><i class="fas fa-comments"></i> نظرات کاربران</h3>
                                 <div id="commentsList" class="comments-list">
@@ -1146,38 +1176,20 @@
                     <div class="bg-white rounded-xl shadow-md p-4 md:p-6 mb-6">
                         <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                             <i class="fas fa-info-circle text-blue-500 ml-2"></i>
-                            درباره رستوران ایرانی
+                            درباره رستوران
                         </h2>
-                        <p class="text-gray-600 mb-4 leading-relaxed">
-                            رستوران ایرانی با بیش از ۲۰ سال سابقه در زمینه ارائه غذاهای اصیل و خوشمزه ایرانی، همواره
-                            تلاش کرده است تا با استفاده از بهترین مواد اولیه و به کارگیری شیوه‌های سنتی پخت، تجربه‌ای
-                            متفاوت از طعم‌های اصیل ایرانی را برای مشتریان خود به ارمغان بیاورد.
-                        </p>
-                        <p class="text-gray-600 mb-6 leading-relaxed">
-                            ما در رستوران ایرانی معتقدیم که غذا فقط برای سیر کردن شکم نیست، بلکه یک هنر و فرهنگ است. به
-                            همین دلیل در تهیه تمامی غذاهایمان نهایت دقت و حوصله را به کار می‌گیریم تا رضایت کامل شما را
-                            جلب کنیم.
+                        <p class="text-gray-600 mb-4 leading-relaxed" id="restaurant-description">
+                            در حال بارگذاری...
                         </p>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6">
                             <div class="bg-gray-50 p-4 md:p-5 rounded-lg border border-gray-200">
                                 <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                                     <i class="fas fa-clock text-blue-500 ml-2"></i>
                                     ساعات کاری
                                 </h3>
-                                <ul class="space-y-2">
-                                    <li class="flex justify-between items-center border-b border-gray-100 pb-2">
-                                        <span class="text-gray-600">شنبه تا چهارشنبه:</span>
-                                        <span class="font-medium">۱۱:۰۰ - ۲۳:۰۰</span>
-                                    </li>
-                                    <li class="flex justify-between items-center border-b border-gray-100 pb-2">
-                                        <span class="text-gray-600">پنجشنبه:</span>
-                                        <span class="font-medium">۱۱:۰۰ - ۲۴:۰۰</span>
-                                    </li>
-                                    <li class="flex justify-between items-center">
-                                        <span class="text-gray-600">جمعه:</span>
-                                        <span class="font-medium">۱۲:۰۰ - ۲۴:۰۰</span>
-                                    </li>
+                                <ul class="space-y-2" id="work-hours-list">
+                                    <!-- ساعات کاری به صورت داینامیک اضافه می‌شوند -->
                                 </ul>
                             </div>
 
@@ -1186,20 +1198,20 @@
                                     <i class="fas fa-map-marker-alt text-blue-500 ml-2"></i>
                                     اطلاعات تماس
                                 </h3>
-                                <ul class="space-y-3">
-                                    <li class="flex items-start">
-                                        <i class="fas fa-map-marker-alt text-gray-400 mt-1 ml-2"></i>
-                                        <span class="text-gray-600">تهران، خیابان ولیعصر، کوچه فلان، پلاک ۱۲۳</span>
-                                    </li>
-                                    <li class="flex items-center">
-                                        <i class="fas fa-phone-alt text-gray-400 ml-2"></i>
-                                        <span class="text-gray-600">۰۲۱-۱۲۳۴۵۶۷۸</span>
-                                    </li>
-                                    <li class="flex items-center">
-                                        <i class="fas fa-mobile-alt text-gray-400 ml-2"></i>
-                                        <span class="text-gray-600">۰۹۱۲۳۴۵۶۷۸۹</span>
-                                    </li>
+                                <ul class="space-y-3" id="contact-info">
+                                    <!-- اطلاعات تماس به صورت داینامیک اضافه می‌شوند -->
                                 </ul>
+                            </div>
+                        </div>
+
+                        <!-- نقشه رستوران -->
+                        <div class="mt-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-map-marked-alt text-blue-500 ml-2"></i>
+                                موقعیت رستوران
+                            </h3>
+                            <div id="restaurant-map">
+                                <!-- نقشه در اینجا نمایش داده می‌شود -->
                             </div>
                         </div>
                     </div>
@@ -1460,6 +1472,10 @@
         // تب‌های اصلی
         const mainTabBtns = document.querySelectorAll(".main-tab-btn");
         const tabContents = document.querySelectorAll(".tab-content");
+
+        // اطلاعات رستوران
+        let restaurantData = null;
+        let map = null;
 
         // محاسبه جمع کل سبد خرید
         function calculateCartTotal() {
@@ -1880,7 +1896,7 @@
 
                     const foodId = btn.dataset.id;
                     modal.dataset.foodId = foodId;
-                    
+
                     // آپدیت هدر مدال با نام غذا
                     const modalHeader = modal.querySelector(".modal-header h2");
                     modalHeader.textContent = `نظرات و پیشنهادات - ${btn.dataset.title}`;
@@ -2190,7 +2206,7 @@
                         if (res.ok) {
                             replyForm.querySelector(".reply-input").value = "";
                             await loadReplies(cId, repliesDiv);
-                            
+
                             // آپدیت تعداد پاسخ‌ها
                             const replyBtn = commentDiv.querySelector(".reply-btn");
                             const currentCount = parseInt(replyBtn.textContent.match(/\((\d+)\)/)[1]);
@@ -2205,9 +2221,157 @@
             }
         }
 
+        // تابع برای بارگذاری و نمایش اطلاعات رستوران
+        async function loadRestaurantInfo() {
+            const token = sessionStorage.getItem('accessToken');
+
+            try {
+                const response = await fetch('http://135.125.238.202:7050/user/profile/', {
+                    method: "GET",
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                restaurantData = await response.json();
+
+                // نمایش اطلاعات رستوران
+                displayRestaurantInfo();
+
+            } catch (error) {
+                console.error('خطا در بارگذاری اطلاعات رستوران:', error);
+                document.getElementById('restaurant-description').textContent = 'خطا در بارگذاری اطلاعات رستوران.';
+            }
+        }
+
+        // تابع برای نمایش اطلاعات رستوران
+        function displayRestaurantInfo() {
+            if (!restaurantData) return;
+
+            // نمایش توضیحات رستوران
+            const descriptionElem = document.getElementById('restaurant-description');
+            descriptionElem.textContent = restaurantData.description || 'توضیحاتی برای این رستوران موجود نیست.';
+
+            // نمایش ساعات کاری
+            const workHoursElem = document.getElementById('work-hours-list');
+            if (restaurantData.work_hours) {
+                const days = {
+                    'شنبه': 'شنبه',
+                    'یکشنبه': 'یکشنبه',
+                    'دوشنبه': 'دوشنبه',
+                    'سه‌شنبه': 'سه‌شنبه',
+                    'چهارشنبه': 'چهارشنبه',
+                    'پنجشنبه': 'پنجشنبه',
+                    'جمعه': 'جمعه'
+                };
+
+                workHoursElem.innerHTML = '';
+                Object.keys(days).forEach(day => {
+                    if (restaurantData.work_hours[day]) {
+                        const listItem = document.createElement('li');
+                        listItem.className = 'flex justify-between items-center border-b border-gray-100 pb-2';
+                        listItem.innerHTML = `
+                            <span class="text-gray-600">${days[day]}:</span>
+                            <span class="font-medium">${restaurantData.work_hours[day]}</span>
+                        `;
+                        workHoursElem.appendChild(listItem);
+                    }
+                });
+            } else {
+                workHoursElem.innerHTML = '<li class="text-gray-500">ساعات کاری مشخص نشده است.</li>';
+            }
+
+            // نمایش اطلاعات تماس
+            const contactInfoElem = document.getElementById('contact-info');
+            contactInfoElem.innerHTML = '';
+
+            if (restaurantData.address) {
+                const addressItem = document.createElement('li');
+                addressItem.className = 'flex items-start';
+                addressItem.innerHTML = `
+                    <i class="fas fa-map-marker-alt text-gray-400 mt-1 ml-2"></i>
+                    <span class="text-gray-600">${restaurantData.address}</span>
+                `;
+                contactInfoElem.appendChild(addressItem);
+            }
+
+            // اضافه کردن اطلاعات تماس فرضی (چون در API موجود نیست)
+            const phoneItem = document.createElement('li');
+            phoneItem.className = 'flex items-center';
+            phoneItem.innerHTML = `
+                <i class="fas fa-phone-alt text-gray-400 ml-2"></i>
+                <span class="text-gray-600">۰۲۱-۱۲۳۴۵۶۷۸</span>
+            `;
+            contactInfoElem.appendChild(phoneItem);
+
+            const mobileItem = document.createElement('li');
+            mobileItem.className = 'flex items-center';
+            mobileItem.innerHTML = `
+                <i class="fas fa-mobile-alt text-gray-400 ml-2"></i>
+                <span class="text-gray-600">۰۹۱۲۳۴۵۶۷۸۹</span>
+            `;
+            contactInfoElem.appendChild(mobileItem);
+
+            // نمایش نقشه
+            initMap();
+        }
+
+        // تابع برای راه‌اندازی نقشه با Leaflet
+        function initMap() {
+            if (!restaurantData || !restaurantData.lat || !restaurantData.long) {
+                document.getElementById('restaurant-map').innerHTML = '<div class="flex items-center justify-center h-full text-gray-500">موقعیت رستوران مشخص نشده است.</div>';
+                return;
+            }
+
+            const lat = parseFloat(restaurantData.lat);
+            const lng = parseFloat(restaurantData.long);
+
+            // ایجاد نقشه
+            map = L.map('restaurant-map').setView([lat, lng], 15);
+
+            // اضافه کردن لایه نقشه
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // ایجاد آیکون سفارشی
+            const restaurantIcon = L.divIcon({
+                className: 'restaurant-marker',
+                html: `
+                    <div style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#3B82F6" viewBox="0 0 24 24" width="40" height="40">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM12 11.5c-1.38 
+                        0-2.5-1.12-2.5-2.5s1.12-2.5 
+                        2.5-2.5 2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+                    </svg>
+                    </div>
+  `,
+                iconSize: [40, 40],
+                iconAnchor: [20, 40]
+            });
+
+
+            // اضافه کردن نشانگر
+            const marker = L.marker([lat, lng], { icon: restaurantIcon }).addTo(map);
+
+            // اضافه کردن پاپ‌آپ
+            // marker.bindPopup(`
+            //     <div class="p-2">
+            //         <h3 class="font-bold text-lg">رستوران ایرانی</h3>
+            //         <p class="text-sm mt-1">${restaurantData.address || 'آدرس مشخص نشده'}</p>
+            //         <div class="mt-2 flex items-center text-blue-600">
+            //             <i class="fas fa-phone-alt ml-1 text-xs"></i>
+            //             <span class="text-xs">۰۲۱-۱۲۳۴۵۶۷۸</span>
+            //         </div>
+            //     </div>
+            // `).openPopup();
+        }
+
         const params = new URLSearchParams(window.location.search);
         const menuId = params.get("id");
-        
+
         // دریافت اطلاعات رستوران و منوها
         async function loadFullMenu() {
             const token = sessionStorage.getItem('accessToken');
@@ -2257,6 +2421,7 @@
             mobileDeliveryCost.textContent = `${deliveryCost.toLocaleString()} تومان`;
 
             loadFullMenu();
+            loadRestaurantInfo();
         });
     </script>
 </body>

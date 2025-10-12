@@ -2999,8 +2999,8 @@
                 const map = L.map('map').setView([35.6892, 51.3890], 13);
 
                 // لایه نقشه از OpenStreetMap
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap contributors'
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(map);
 
                 // مارکر اولیه
@@ -3062,7 +3062,7 @@
                 const features = [document.getElementById("cafe-fetures").value];
                 const timeInputs = document.querySelectorAll("input[type='time']");
 
-                
+
 
                 // ساعات کاری (هر روز جداگانه)
                 const work_hours = {
@@ -3078,7 +3078,7 @@
                 const lat = parseFloat(document.getElementById("lat").value);
                 const long = parseFloat(document.getElementById("long").value);
 
-             
+
 
 
                 // بدنه درخواست

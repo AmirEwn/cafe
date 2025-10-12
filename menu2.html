@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منوی دیجیتال لوکس | کافه رستوران پریمیوم</title>
+    <title>منوی دیجیتال | کافه رستوران پریمیوم</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- اضافه کردن Leaflet CSS و JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;300;400;500;700;900&display=swap');
-        
+
         :root {
-            --primary: #D4AF37; /* طلایی لوکس */
+            --primary: #D4AF37;
+            /* طلایی لوکس */
             --primary-light: #F5E6C8;
             --primary-dark: #B8860B;
             --secondary: #1E3A8A;
@@ -21,19 +26,63 @@
             --warning: #F59E0B;
             --info: #3B82F6;
         }
-        
+
         body {
             font-family: 'Vazirmatn', sans-serif;
-            background-color: #F9F5F0; /* کرم بسیار ملایم */
+            background-color: #F9F5F0;
+            /* کرم بسیار ملایم */
             color: #333;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .dark-mode {
             background-color: #0F172A;
             color: #E2E8F0;
         }
-        
+
+        /* استایل‌های نقشه */
+        #map {
+            height: 300px;
+            width: 100%;
+            border-radius: 12px;
+            z-index: 1;
+        }
+
+        .leaflet-popup-content-wrapper {
+            border-radius: 12px;
+        }
+
+        /* استایل‌های گالری */
+        .gallery-section {
+            margin-top: 2rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            margin-top: 1rem;
+        }
+
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            height: 120px;
+            background-color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+        }
+
+        .gallery-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
         /* هدر گرادیانت طلایی */
         .header-gradient {
             background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
@@ -42,10 +91,10 @@
             -webkit-backdrop-filter: blur(8px);
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
         }
-        
+
         /* کارت منو */
         .menu-card {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-radius: 16px;
@@ -54,105 +103,120 @@
             transition: all 0.3s ease;
             overflow: hidden;
         }
-        
+
         .dark-mode .menu-card {
             background: rgba(30, 41, 59, 0.85);
             border: 1px solid rgba(212, 175, 55, 0.2);
         }
-        
+
         .menu-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 12px 40px rgba(212, 175, 55, 0.15);
             border-color: var(--primary);
         }
-        
+
         /* قیمت */
         .price-tag {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
             border: 1px solid rgba(212, 175, 55, 0.2);
             backdrop-filter: blur(5px);
         }
-        
+
         .dark-mode .price-tag {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.1) 100%);
         }
-        
+
         /* دکمه‌ها */
         .btn-primary {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
             transition: all 0.3s ease;
         }
-        
+
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
         }
-        
+
         .btn-outline {
             border: 2px solid var(--primary);
             color: var(--primary);
             transition: all 0.3s ease;
         }
-        
+
         .btn-outline:hover {
             background: var(--primary);
             color: white;
         }
-        
+
         /* تب‌ها */
         .category-tab {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(5px);
             transition: all 0.3s ease;
         }
-        
+
         .dark-mode .category-tab {
             background: rgba(30, 41, 59, 0.8);
         }
-        
+
         .category-tab.active {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
         }
-        
+
         /* اسکرول بار زیبا */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
-        
+
         ::-webkit-scrollbar-track {
             background: rgba(212, 175, 55, 0.1);
             border-radius: 10px;
         }
-        
+
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(var(--primary), var(--primary-dark));
             border-radius: 10px;
         }
-        
+
         /* انیمیشن‌ها */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
+
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
-        
+
         .animate-fadeIn {
             animation: fadeIn 0.6s ease-out forwards;
         }
-        
+
         .animate-pulse {
             animation: pulse 2s infinite;
         }
-        
+
         /* سبد خرید */
         .cart-panel {
             background: rgba(255, 255, 255, 0.95);
@@ -161,38 +225,38 @@
             box-shadow: -8px 0 32px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
         }
-        
+
         .dark-mode .cart-panel {
             background: rgba(15, 23, 42, 0.98);
         }
-        
+
         .cart-panel.open {
             transform: translateX(0);
         }
-        
+
         /* پیشنهاد ویژه */
         .special-offer {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
             border: 1px solid rgba(212, 175, 55, 0.3);
             backdrop-filter: blur(8px);
         }
-        
+
         .dark-mode .special-offer {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.08) 100%);
             border: 1px solid rgba(212, 175, 55, 0.4);
         }
-        
+
         /* ستاره‌های امتیاز */
         .rating-stars {
             position: relative;
             display: inline-block;
         }
-        
+
         .rating-stars::before {
             content: '★★★★★';
             color: #E5E7EB;
         }
-        
+
         .rating-stars-inner {
             position: absolute;
             top: 0;
@@ -200,28 +264,33 @@
             white-space: nowrap;
             overflow: hidden;
         }
-        
+
         .rating-stars-inner::before {
             content: '★★★★★';
             color: var(--primary);
         }
-        
+
         /* اسکلت لودر */
         .skeleton {
             background: linear-gradient(90deg, #F3F4F6 25%, #E5E7EB 50%, #F3F4F6 75%);
             background-size: 200% 100%;
             animation: shimmer 1.5s infinite;
         }
-        
+
         .dark-mode .skeleton {
             background: linear-gradient(90deg, #1E293B 25%, #334155 50%, #1E293B 75%);
         }
-        
+
         @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
         }
-        
+
         /* افکت شیشه‌ای */
         .glass-effect {
             background: rgba(255, 255, 255, 0.7);
@@ -229,7 +298,7 @@
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        
+
         .dark-mode .glass-effect {
             background: rgba(15, 23, 42, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -261,6 +330,7 @@
             from {
                 opacity: 0;
             }
+
             to {
                 opacity: 1;
             }
@@ -284,6 +354,7 @@
                 transform: translateY(-50px) scale(0.9);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0) scale(1);
                 opacity: 1;
@@ -601,8 +672,152 @@
         .dark-mode .empty-state {
             color: #94a3b8;
         }
+
+        /* استایل‌های جدید برای کنترل‌های کمیت */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .quantity-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid #d1d5db;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .quantity-btn:hover {
+            background: #f3f4f6;
+            border-color: var(--primary);
+        }
+
+        .quantity-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quantity-display {
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .dark-mode .quantity-btn {
+            background: #334155;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+
+        .dark-mode .quantity-btn:hover {
+            background: #475569;
+        }
+
+        /* استایل‌های ریسپانسیو برای موبایل */
+        @media (max-width: 768px) {
+            .menu-card {
+                margin-bottom: 16px;
+            }
+
+            .menu-card img {
+                height: 200px;
+            }
+
+            .category-tab {
+                font-size: 0.875rem;
+                padding: 8px 16px;
+            }
+
+            .header-gradient .container {
+                padding: 12px 16px;
+            }
+
+            .cart-panel {
+                width: 100%;
+            }
+
+            .modal-content {
+                margin: 16px;
+                max-height: calc(100vh - 32px);
+            }
+
+            .modal-body {
+                padding: 16px;
+            }
+
+            .comment-form {
+                padding: 16px;
+            }
+
+            .comment-item {
+                padding: 12px;
+            }
+
+            .quantity-controls {
+                justify-content: center;
+            }
+
+            .price-tag {
+                font-size: 0.875rem;
+                padding: 4px 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .menu-card {
+                border-radius: 12px;
+            }
+
+            .menu-card img {
+                height: 180px;
+            }
+
+            .category-tab {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
+
+            .header-gradient h1 {
+                font-size: 1.25rem;
+            }
+
+            .header-gradient p {
+                font-size: 0.75rem;
+            }
+
+            .special-offer {
+                padding: 16px;
+            }
+
+            .special-offer h2 {
+                font-size: 1.25rem;
+            }
+
+            .special-offer h3 {
+                font-size: 1rem;
+            }
+        }
+         .work-day {
+            
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .light-mode .work-day {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        
     </style>
 </head>
+
 <body class="min-h-screen flex flex-col">
     <!-- هدر -->
     <header class="header-gradient text-white sticky top-0 z-50">
@@ -610,39 +825,47 @@
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="flex items-center justify-between w-full md:w-auto">
                     <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center shadow-lg mr-3">
-                            <i class="fas fa-crown text-white"></i>
+                        <div
+                            class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center shadow-lg mr-3">
+                            <i class="fas fa-coffee text-white"></i>
                         </div>
                         <div>
-                            <h1 id="restaurantName" class="text-2xl md:text-3xl font-bold text-amber-300">کافه رستوران پریمیوم</h1>
+                            <h1 id="restaurantName" class="text-2xl md:text-3xl font-bold text-amber-300">کافه رستوران
+                                پریمیوم</h1>
                             <p id="restaurantDescription" class="text-sm text-amber-200">تجربه‌ای اشرافی از طعم‌ها</p>
                         </div>
                     </div>
-                    <button id="theme-toggle-mobile" class="md:hidden glass-effect rounded-full p-2 w-10 h-10 flex items-center justify-center">
+                    <button id="theme-toggle-mobile"
+                        class="md:hidden glass-effect rounded-full p-2 w-10 h-10 flex items-center justify-center">
                         <i class="fas fa-moon text-amber-300"></i>
                     </button>
                 </div>
                 <div class="flex items-center space-x-4 space-x-reverse mt-4 md:mt-0">
                     <div class="relative hidden md:block glass-effect rounded-full">
-                        <input type="text" id="search-input" placeholder="جستجو در منو..." class="bg-transparent rounded-full px-5 py-2 text-white placeholder-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-300 w-64">
+                        <input type="text" id="search-input" placeholder="جستجو در منو..."
+                            class="bg-transparent rounded-full px-5 py-2 text-white placeholder-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-300 w-64">
                         <i class="fas fa-search absolute left-4 top-3 text-amber-200"></i>
                     </div>
                     <div class="glass-effect rounded-full px-4 py-2 flex items-center hidden md:flex">
                         <i class="fas fa-phone-volume text-amber-300 ml-2"></i>
                         <span class="text-sm">۰۲۱-۱۲۳۴۵۶۷۸</span>
                     </div>
-                    <div id="cart-btn" class="btn-primary rounded-full w-12 h-12 flex items-center justify-center relative cursor-pointer">
+                    <div id="cart-btn"
+                        class="btn-primary rounded-full w-12 h-12 flex items-center justify-center relative cursor-pointer">
                         <i class="fas fa-shopping-cart text-white text-lg"></i>
-                        <span id="cart-count" class="absolute -top-2 -left-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center shadow hidden">0</span>
+                        <span id="cart-count"
+                            class="absolute -top-2 -left-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center shadow hidden">0</span>
                     </div>
-                    <button id="theme-toggle" class="hidden md:flex glass-effect rounded-full p-2 w-10 h-10 items-center justify-center hover:bg-amber-500/20 transition">
+                    <button id="theme-toggle"
+                        class="hidden md:flex glass-effect rounded-full p-2 w-10 h-10 items-center justify-center hover:bg-amber-500/20 transition">
                         <i class="fas fa-moon text-amber-300"></i>
                     </button>
                 </div>
             </div>
             <!-- جستجوی موبایل -->
             <div class="mt-4 md:hidden relative glass-effect rounded-full">
-                <input type="text" id="search-input-mobile" placeholder="جستجو در منو..." class="bg-transparent rounded-full px-5 py-2 text-white placeholder-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-300 w-full">
+                <input type="text" id="search-input-mobile" placeholder="جستجو در منو..."
+                    class="bg-transparent rounded-full px-5 py-2 text-white placeholder-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-300 w-full">
                 <i class="fas fa-search absolute left-4 top-3 text-amber-200"></i>
             </div>
         </div>
@@ -653,7 +876,8 @@
         <div class="container mx-auto px-4">
             <div class="overflow-x-auto scrollbar-hide py-3">
                 <div id="category-tabs" class="flex space-x-3 space-x-reverse">
-                    <button class="category-tab whitespace-nowrap px-5 py-2 rounded-full active flex items-center" data-category="all">
+                    <button class="category-tab whitespace-nowrap px-5 py-2 rounded-full active flex items-center"
+                        data-category="all">
                         <i class="fas fa-star ml-2"></i>
                         همه منو
                     </button>
@@ -666,18 +890,22 @@
     <!-- محتوای اصلی -->
     <main class="flex-grow container mx-auto px-4 py-8">
         <!-- بخش ویژه -->
-        <div id="special-offer" class="mb-12 special-offer rounded-2xl p-6 relative overflow-hidden animate-fadeIn hidden">
+        <div id="special-offer"
+            class="mb-12 special-offer rounded-2xl p-6 relative overflow-hidden animate-fadeIn hidden">
             <div class="absolute inset-0 bg-amber-500/5 z-0"></div>
             <div class="relative z-10 flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-6 md:mb-0 md:pr-6">
-                    <span class="bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block animate-pulse">پیشنهاد ویژه</span>
+                    <span
+                        class="bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block animate-pulse">پیشنهاد
+                        ویژه</span>
                     <h2 class="text-2xl font-bold text-amber-700 dark:text-amber-300 mb-2">پیشنهاد ویژه امروز</h2>
-                    <h3 id="special-offer-name" class="text-xl font-semibold text-slate-800 dark:text-white mb-3">استیک آنتری کات با سس قارچ ویژه</h3>
-                    <p id="special-offer-desc" class="text-slate-600 dark:text-slate-300 mb-4">استیک آنتری کات ۳۰۰ گرمی با سس قارچ خانگی، همراه با سیب زمینی دودی و سبزیجات فصل</p>
+                    <h3 id="special-offer-name" class="text-xl font-semibold text-slate-800 dark:text-white mb-3">استیک
+                        آنتری کات با سس قارچ ویژه</h3>
+                    <p id="special-offer-desc" class="text-slate-600 dark:text-slate-300 mb-4">استیک آنتری کات ۳۰۰ گرمی
+                        با سس قارچ خانگی، همراه با سیب زمینی دودی و سبزیجات فصل</p>
                     <div class="flex items-center">
-                        <span id="special-offer-price" class="text-2xl font-bold text-amber-600 dark:text-amber-400">۱۵۹,۰۰۰ تومان</span>
-                        <span id="special-offer-old-price" class="text-sm line-through text-slate-500 mr-3">۱۸۹,۰۰۰ تومان</span>
-                        <span class="bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded-full">۱۶٪ تخفیف</span>
+                        <span id="special-offer-price"
+                            class="text-2xl font-bold text-amber-600 dark:text-amber-400">۱۵۹,۰۰۰ تومان</span>
                     </div>
                     <button class="mt-4 btn-primary text-white font-bold py-2 px-6 rounded-full flex items-center">
                         سفارش دهید
@@ -686,8 +914,12 @@
                 </div>
                 <div class="md:w-1/2">
                     <div class="relative rounded-xl overflow-hidden shadow-xl border-2 border-amber-400/30">
-                        <img id="special-offer-image" src="https://images.unsplash.com/photo-1558030006-450675393462?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1331&q=80" alt="Special Offer" class="w-full h-64 md:h-80 object-cover">
-                        <div class="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">پیشنهاد محدود</div>
+                        <img id="special-offer-image"
+                            src="https://images.unsplash.com/photo-1558030006-450675393462?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1331&q=80"
+                            alt="Special Offer" class="w-full h-64 md:h-80 object-cover">
+                        <div
+                            class="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">
+                            پیشنهاد محدود</div>
                     </div>
                 </div>
             </div>
@@ -753,19 +985,22 @@
                 <i class="fas fa-search fa-2x text-amber-500"></i>
             </div>
             <h3 class="text-xl font-bold text-slate-700 dark:text-slate-200">آیتمی یافت نشد</h3>
-            <p class="text-slate-500 dark:text-slate-400 mt-2">لطفاً عبارت جستجوی خود را تغییر دهید یا دسته‌بندی دیگری را انتخاب کنید.</p>
+            <p class="text-slate-500 dark:text-slate-400 mt-2">لطفاً عبارت جستجوی خود را تغییر دهید یا دسته‌بندی دیگری
+                را انتخاب کنید.</p>
         </div>
     </main>
 
     <!-- پنل سبد خرید -->
-    <div id="cart-panel" class="cart-panel fixed top-0 right-0 h-full w-full md:w-96 shadow-2xl z-50 overflow-y-auto transform translate-x-full">
+    <div id="cart-panel"
+        class="cart-panel fixed top-0 right-0 h-full w-full md:w-96 shadow-2xl z-50 overflow-y-auto transform translate-x-full">
         <div class="p-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold text-slate-800 dark:text-white">
                     <i class="fas fa-shopping-cart ml-2 text-amber-500"></i>
                     سبد خرید شما
                 </h2>
-                <button id="close-cart" class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-white">
+                <button id="close-cart"
+                    class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-white">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
@@ -781,15 +1016,13 @@
                     <span class="text-slate-600 dark:text-slate-300">جمع کل:</span>
                     <span id="cart-total" class="font-bold text-slate-800 dark:text-white">۰ تومان</span>
                 </div>
-                <div class="flex justify-between mb-4">
-                    <span class="text-slate-600 dark:text-slate-300">تخفیف:</span>
-                    <span id="cart-discount" class="font-bold text-green-500">۰ تومان</span>
-                </div>
-                <div class="flex justify-between text-lg font-bold mb-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+                <div
+                    class="flex justify-between text-lg font-bold mb-6 pt-4 border-t border-slate-200 dark:border-slate-700">
                     <span class="text-slate-800 dark:text-white">مبلغ قابل پرداخت:</span>
                     <span id="cart-payable" class="text-amber-600">۰ تومان</span>
                 </div>
-                <button id="checkout-btn" class="w-full btn-primary text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center">
+                <button id="checkout-btn"
+                    class="w-full btn-primary text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center">
                     <i class="fas fa-credit-card ml-2"></i>
                     پرداخت نهایی
                 </button>
@@ -810,12 +1043,13 @@
             <div class="modal-body">
                 <div class="comment-form">
                     <h3 class="text-lg font-semibold mb-3">نظر خود را ثبت کنید</h3>
-                    <textarea id="commentText" placeholder="نظر، پیشنهاد یا تجربه خود از این غذا را بنویسید..."></textarea>
+                    <textarea id="commentText"
+                        placeholder="نظر، پیشنهاد یا تجربه خود از این غذا را بنویسید..."></textarea>
                     <button id="submitComment">
                         <i class="fas fa-paper-plane"></i> ارسال نظر
                     </button>
                 </div>
-                
+
                 <div class="comments-section">
                     <h3><i class="fas fa-comments"></i> نظرات کاربران</h3>
                     <div id="commentsList" class="comments-list">
@@ -834,58 +1068,141 @@
     <!-- فوتر -->
     <footer class="bg-slate-900 text-white py-12">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="md:col-span-2">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- اطلاعات رستوران -->
+                <div class="lg:col-span-2">
                     <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center shadow-lg mr-3">
-                            <i class="fas fa-crown text-white"></i>
+                        <div
+                            class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center shadow-lg mr-3">
+                            <i class="fas fa-coffee text-white"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-amber-300">کافه رستوران پریمیوم</h3>
+                        <h3 id="footerRestaurantName" class="text-xl font-bold text-amber-300">کافه رستوران پریمیوم</h3>
                     </div>
-                    <p class="text-slate-300 mb-6">ارائه کننده بهترین تجربه غذایی با استفاده از مرغوب‌ترین مواد اولیه و سرویس ممتاز</p>
+                    <p id="footerDescription" class="text-slate-300 mb-6">فضایی دلنشین و مخصوص کار</p>
                     <div class="flex space-x-4 space-x-reverse">
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-amber-500 text-amber-300 hover:text-white flex items-center justify-center transition">
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-slate-800 hover:bg-amber-500 text-amber-300 hover:text-white flex items-center justify-center transition">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-amber-500 text-amber-300 hover:text-white flex items-center justify-center transition">
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-slate-800 hover:bg-amber-500 text-amber-300 hover:text-white flex items-center justify-center transition">
                             <i class="fab fa-telegram"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-amber-500 text-amber-300 hover:text-white flex items-center justify-center transition">
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-slate-800 hover:bg-amber-500 text-amber-300 hover:text-white flex items-center justify-center transition">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>
                 </div>
+
+                <!-- ساعت کاری -->
+                <!-- ساعت کاری -->
                 <div>
                     <h3 class="text-lg font-bold mb-4 text-amber-300">ساعات کاری</h3>
-                    <ul class="space-y-3">
-                        <li class="flex justify-between text-slate-300 pb-2 border-b border-slate-800">
-                            <span>شنبه تا چهارشنبه</span>
-                            <span class="font-medium">۸:۰۰ - ۲۳:۰۰</span>
-                        </li>
-                        <li class="flex justify-between text-slate-300 pb-2 border-b border-slate-800">
-                            <span>پنجشنبه و جمعه</span>
-                            <span class="font-medium">۱۰:۰۰ - ۲۴:۰۰</span>
-                        </li>
-                    </ul>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- ستون اول: شنبه تا سه‌شنبه -->
+                        <div>
+                            <div class="space-y-2">
+                                <div class="work-day flex justify-between text-slate-300">
+                                    <span class="text-sm">شنبه</span>
+                                    <span class="text-sm font-medium" id="saturday-hours"></span>
+                                </div>
+                                <div class="work-day flex justify-between text-slate-300">
+                                    <span class="text-sm">یکشنبه</span>
+                                    <span class="text-sm font-medium" id="sunday-hours"></span>
+                                </div>
+                                <div class="work-day flex justify-between text-slate-300">
+                                    <span class="text-sm">دوشنبه</span>
+                                    <span class="text-sm font-medium" id="monday-hours"></span>
+                                </div>
+                                <div class="work-day flex justify-between text-slate-300">
+                                    <span class="text-sm">سه‌شنبه</span>
+                                    <span class="text-sm font-medium" id="tuesday-hours"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ستون دوم: چهارشنبه تا جمعه -->
+                        <div>
+                            <div class="space-y-2">
+                                <div class="work-day flex justify-between text-slate-300">
+                                    <span class="text-sm">چهارشنبه</span>
+                                    <span class="text-sm font-medium" id="wednesday-hours"></span>
+                                </div>
+                                <div class="work-day flex justify-between text-slate-300">
+                                    <span class="text-sm">پنجشنبه</span>
+                                    <span class="text-sm font-medium" id="thursday-hours"></span>
+                                </div>
+                                <div class="work-day flex justify-between text-slate-300">
+                                    <span class="text-sm">جمعه</span>
+                                    <span class="text-sm font-medium" id="friday-hours"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- اطلاعات تماس و آدرس -->
                 <div>
                     <h3 class="text-lg font-bold mb-4 text-amber-300">تماس با ما</h3>
                     <ul class="space-y-3">
                         <li class="flex items-center text-slate-300">
                             <i class="fas fa-map-marker-alt ml-2 text-amber-300"></i>
-                            تهران، خیابان ولیعصر، پلاک ۱۲۳۴
+                            <span id="footerAddress">تهران، خیابان انقلاب، بین دانشگاه و فلسطین</span>
                         </li>
                         <li class="flex items-center text-slate-300">
                             <i class="fas fa-phone ml-2 text-amber-300"></i>
-                            ۰۲۱-۱۲۳۴۵۶۷۸
+                            <span id="footerPhone">۰۲۱-۱۲۳۴۵۶۷۸</span>
                         </li>
                         <li class="flex items-center text-slate-300">
                             <i class="fas fa-envelope ml-2 text-amber-300"></i>
-                            info@premium-cafe.com
+                            <span id="footerEmail">info@premium-cafe.com</span>
                         </li>
                     </ul>
                 </div>
             </div>
+
+            <!-- نقشه و گالری -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8 pt-8 border-t border-slate-800">
+                <!-- نقشه -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-amber-300">موقعیت مکانی</h3>
+                    <div id="map"></div>
+                </div>
+
+                <!-- گالری -->
+                <div class="gallery-section">
+                    <h3 class="text-lg font-bold mb-4 text-amber-300">گالری تصاویر</h3>
+                    <div class="gallery-grid">
+                        <div class="gallery-item">
+                            <div class="gallery-placeholder">
+                                <i class="fas fa-image text-2xl mb-2"></i>
+                                <span class="text-sm">به زودی</span>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-placeholder">
+                                <i class="fas fa-image text-2xl mb-2"></i>
+                                <span class="text-sm">به زودی</span>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-placeholder">
+                                <i class="fas fa-image text-2xl mb-2"></i>
+                                <span class="text-sm">به زودی</span>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-placeholder">
+                                <i class="fas fa-image text-2xl mb-2"></i>
+                                <span class="text-sm">به زودی</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm mt-2">گالری تصاویر به زودی اضافه خواهد شد</p>
+                </div>
+            </div>
+
             <div class="border-t border-slate-800 mt-8 pt-6 text-center text-slate-400">
                 <p>© ۲۰۲۳ کافه رستوران پریمیوم. تمام حقوق محفوظ است.</p>
             </div>
@@ -893,7 +1210,8 @@
     </footer>
 
     <!-- دکمه بازگشت به بالا -->
-    <button id="back-to-top" class="fixed bottom-6 left-6 btn-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition opacity-0 invisible">
+    <button id="back-to-top"
+        class="fixed bottom-6 left-6 btn-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition opacity-0 invisible">
         <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -909,6 +1227,7 @@
         let cart = [];
         let currentCategory = 'all';
         let currentSearch = '';
+        let restaurantProfile = null;
 
         // DOM Elements
         const menuContainer = document.getElementById('menu-container');
@@ -918,7 +1237,6 @@
         const cartItemsContainer = document.getElementById('cart-items');
         const cartSummary = document.getElementById('cart-summary');
         const cartTotal = document.getElementById('cart-total');
-        const cartDiscount = document.getElementById('cart-discount');
         const cartPayable = document.getElementById('cart-payable');
         const cartCount = document.getElementById('cart-count');
         const cartBtn = document.getElementById('cart-btn');
@@ -935,6 +1253,14 @@
         const restaurantDescription = document.getElementById('restaurantDescription');
         const specialOfferSection = document.getElementById('special-offer');
 
+        // عناصر فوتر
+        const footerRestaurantName = document.getElementById('footerRestaurantName');
+        const footerDescription = document.getElementById('footerDescription');
+        const footerAddress = document.getElementById('footerAddress');
+        const footerPhone = document.getElementById('footerPhone');
+        const footerEmail = document.getElementById('footerEmail');
+        const workHoursList = document.getElementById('workHoursList');
+
         // عناصر مدال کامنت
         const commentModal = document.getElementById("commentModal");
         const closeModal = document.getElementById("closeModal");
@@ -947,14 +1273,21 @@
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', () => {
+            const token = sessionStorage.getItem('accessToken');
+            if (!token) {
+                window.location.href = "login.html";
+                return;
+            }
+
             if (menuId) {
                 loadFullMenu();
+                loadRestaurantProfile();
             } else {
                 showError('شناسه منو یافت نشد');
             }
             setupEventListeners();
             updateCartCount();
-            
+
             // Check for saved theme preference
             if (localStorage.getItem('theme') === 'dark' || (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('theme'))) {
                 document.body.classList.add('dark-mode');
@@ -962,10 +1295,131 @@
             }
         });
 
+        // تابع برای بارگذاری پروفایل رستوران
+        async function loadRestaurantProfile() {
+            try {
+                const response = await fetch(`${baseURL}/user/profile/`, {
+                    method: "GET",
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                restaurantProfile = await response.json();
+                updateFooterWithProfileData();
+                initializeMap();
+            } catch (error) {
+                console.error('Error loading restaurant profile:', error);
+                // در صورت خطا، از مقادیر پیش‌فرض استفاده می‌کنیم
+                updateFooterWithDefaultData();
+            }
+        }
+
+        // تابع برای آپدیت فوتر با داده‌های پروفایل
+        function updateFooterWithProfileData() {
+            if (!restaurantProfile) return;
+
+            // آپدیت توضیحات
+            if (restaurantProfile.description) {
+                footerDescription.textContent = restaurantProfile.description;
+                restaurantDescription.textContent = restaurantProfile.description;
+            }
+
+            // آپدیت آدرس
+            if (restaurantProfile.address) {
+                footerAddress.textContent = restaurantProfile.address;
+            }
+
+            // آپدیت ساعت کاری
+            if (restaurantProfile.work_hours) {
+                updateWorkHours(restaurantProfile.work_hours);
+            }
+        }
+
+        // تابع برای آپدیت ساعت کاری
+        function updateWorkHours(workHours) {
+            // ستون اول: شنبه تا سه‌شنبه
+            if (workHours['شنبه']) {
+                document.getElementById('saturday-hours').textContent = workHours['شنبه'];
+            }
+            if (workHours['یکشنبه']) {
+                document.getElementById('sunday-hours').textContent = workHours['یکشنبه'];
+            }
+            if (workHours['دوشنبه']) {
+                document.getElementById('monday-hours').textContent = workHours['دوشنبه'];
+            }
+            if (workHours['سه‌شنبه']) {
+                document.getElementById('tuesday-hours').textContent = workHours['سه‌شنبه'];
+            }
+
+            // ستون دوم: چهارشنبه تا جمعه
+            if (workHours['چهارشنبه']) {
+                document.getElementById('wednesday-hours').textContent = workHours['چهارشنبه'];
+            }
+            if (workHours['پنجشنبه']) {
+                document.getElementById('thursday-hours').textContent = workHours['پنجشنبه'];
+            }
+            if (workHours['جمعه']) {
+                document.getElementById('friday-hours').textContent = workHours['جمعه'];
+            }
+        }
+
+        // تابع برای آپدیت فوتر با مقادیر پیش‌فرض
+        function updateFooterWithDefaultData() {
+            // استفاده از مقادیر پیش‌فرض در صورت عدم وجود داده از API
+            footerRestaurantName.textContent = "کافه رستوران پریمیوم";
+            footerDescription.textContent = "فضایی دلنشین و مخصوص کار";
+            footerAddress.textContent = "تهران، خیابان انقلاب، بین دانشگاه و فلسطین";
+
+            // ساعت کاری پیش‌فرض
+            const defaultWorkHours = {
+                'شنبه': '09:00-18:00',
+                'یکشنبه': '09:00-22:00',
+                'دوشنبه': '09:00-18:00',
+                'سه‌شنبه': '09:00-18:00',
+                'چهارشنبه': '09:00-18:00',
+                'پنجشنبه': '10:00-22:00',
+                'جمعه': '09:00-18:00'
+            };
+
+            updateWorkHours(defaultWorkHours);
+        }
+        // تابع برای راه‌اندازی نقشه
+        function initializeMap() {
+            // اگر مختصات از API موجود باشد، از آن استفاده می‌کنیم
+            let lat = 35.690025;
+            let lng = 51.386879;
+
+            if (restaurantProfile && restaurantProfile.lat && restaurantProfile.long) {
+                lat = parseFloat(restaurantProfile.lat);
+                lng = parseFloat(restaurantProfile.long);
+            }
+
+            // ایجاد نقشه
+            const map = L.map('map').setView([lat, lng], 15);
+
+            // اضافه کردن لایه نقشه
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // اضافه کردن نشانگر
+            const marker = L.marker([lat, lng]).addTo(map);
+
+            // اضافه کردن پاپ‌آپ
+            if (restaurantProfile && restaurantProfile.address) {
+                marker.bindPopup(`<b>کافه رستوران پریمیوم</b><br>${restaurantProfile.address}`).openPopup();
+            } else {
+                marker.bindPopup('<b>کافه رستوران پریمیوم</b><br>تهران، خیابان انقلاب، بین دانشگاه و فلسطین').openPopup();
+            }
+        }
+
         // تابع برای بارگذاری منو از API
         async function loadFullMenu() {
             const token = sessionStorage.getItem('accessToken');
-            
+
             try {
                 const response = await fetch(`http://135.125.238.202:7050/menu/show/${menuId}/`, {
                     method: "GET",
@@ -977,19 +1431,19 @@
                 }
 
                 const apiData = await response.json();
-                
+
                 // آپدیت اطلاعات رستوران
                 updateRestaurantInfo(apiData);
-                
+
                 // ایجاد تب‌های داینامیک
                 createDynamicCategoryTabs(apiData);
-                
+
                 // تبدیل داده‌های API
                 menuData = transformAPIData(apiData);
-                
+
                 // بررسی و نمایش پیشنهاد ویژه
                 checkForSpecialOffer(apiData);
-                
+
                 // رندر منو
                 loadMenu();
 
@@ -1005,7 +1459,7 @@
             if (apiData.owner_info?.first_name) {
                 restaurantDescription.textContent = `مدیریت: ${apiData.owner_info.first_name}`;
             }
-            
+
             // آپدیت title صفحه
             document.title = `${apiData.name} | منوی دیجیتال`;
         }
@@ -1016,13 +1470,13 @@
             const allTab = categoryTabsContainer.querySelector('[data-category="all"]');
             categoryTabsContainer.innerHTML = '';
             categoryTabsContainer.appendChild(allTab);
-            
+
             // ایجاد تب‌های جدید بر اساس دسته‌بندی‌های واقعی
             apiData.menu_categories.forEach(category => {
                 const tab = document.createElement('button');
                 tab.className = 'category-tab whitespace-nowrap px-5 py-2 rounded-full flex items-center';
                 tab.dataset.category = `category-${category.id}`;
-                
+
                 // آیکون بر اساس نوع دسته‌بندی
                 let icon = 'fas fa-utensils';
                 if (category.name.includes('نوشیدنی') || category.name.includes('دسته بندی 2')) {
@@ -1030,12 +1484,12 @@
                 } else if (category.name.includes('دسر') || category.name.includes('دسته بندی 3')) {
                     icon = 'fas fa-ice-cream';
                 }
-                
+
                 tab.innerHTML = `
                     <i class="${icon} ml-2"></i>
                     ${category.name}
                 `;
-                
+
                 categoryTabsContainer.appendChild(tab);
             });
         }
@@ -1043,7 +1497,7 @@
         // تابع برای تبدیل داده‌های API به فرمت مورد نیاز
         function transformAPIData(apiData) {
             const transformedData = [];
-            
+
             apiData.menu_categories.forEach(category => {
                 category.menu_items.forEach(item => {
                     transformedData.push({
@@ -1055,15 +1509,12 @@
                         categoryName: category.name,
                         image: item.image_path ? `http://135.125.238.202:7050${item.image_path}` : getDefaultImage(category.name),
                         rating: getRandomRating(), // امتیاز تصادفی برای نمایش
-                        isVeg: Math.random() > 0.3, // مقدار تصادفی
-                        isSpicy: Math.random() > 0.7, // مقدار تصادفی
                         isAvailable: item.is_available,
-                        options: item.options,
-                        tags: getItemTags(item)
+                        options: item.options
                     });
                 });
             });
-            
+
             return transformedData;
         }
 
@@ -1074,13 +1525,13 @@
                 'دسر': 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80',
                 'غذای اصلی': 'https://images.unsplash.com/photo-1558030006-450675393462?ixlib=rb-4.0.3&auto=format&fit=crop&w=1331&q=80'
             };
-            
+
             for (const [key, image] of Object.entries(defaultImages)) {
                 if (categoryName.includes(key)) {
                     return image;
                 }
             }
-            
+
             return 'https://images.unsplash.com/photo-1558030006-450675393462?ixlib=rb-4.0.3&auto=format&fit=crop&w=1331&q=80';
         }
 
@@ -1089,20 +1540,11 @@
             return (Math.random() * (5 - 3.5) + 3.5).toFixed(1);
         }
 
-        // تابع برای تولید تگ‌های آیتم
-        function getItemTags(item) {
-            const tags = [];
-            if (Math.random() > 0.7) tags.push('پرطرفدار');
-            if (Math.random() > 0.8) tags.push('جدید');
-            if (Math.random() > 0.9) tags.push('پیشنهاد ویژه');
-            return tags;
-        }
-
         // تابع برای بررسی و نمایش پیشنهاد ویژه
         function checkForSpecialOffer(apiData) {
             // پیدا کردن آیتمی که می‌تواند به عنوان پیشنهاد ویژه نمایش داده شود
             let specialItem = null;
-            
+
             for (const category of apiData.menu_categories) {
                 for (const item of category.menu_items) {
                     if (item.is_available && parseFloat(item.price) > 100000) {
@@ -1112,18 +1554,17 @@
                 }
                 if (specialItem) break;
             }
-            
+
             if (specialItem) {
                 // آپدیت بخش پیشنهاد ویژه
                 document.getElementById('special-offer-name').textContent = specialItem.name;
                 document.getElementById('special-offer-desc').textContent = specialItem.description || 'پیشنهاد ویژه با کیفیت عالی';
-                document.getElementById('special-offer-price').textContent = `${(parseFloat(specialItem.price) * 0.8).toLocaleString()} تومان`;
-                document.getElementById('special-offer-old-price').textContent = `${parseFloat(specialItem.price).toLocaleString()} تومان`;
-                
+                document.getElementById('special-offer-price').textContent = `${parseFloat(specialItem.price).toLocaleString()} تومان`;
+
                 if (specialItem.image_path) {
                     document.getElementById('special-offer-image').src = `http://135.125.238.202:7050${specialItem.image_path}`;
                 }
-                
+
                 specialOfferSection.classList.remove('hidden');
             }
         }
@@ -1132,12 +1573,12 @@
         function loadMenu() {
             // مخفی کردن پیام لودینگ
             loadingMessage.classList.add('hidden');
-            
+
             // Show skeleton loader
             menuContainer.innerHTML = '';
             skeletonLoader.classList.remove('hidden');
             menuContainer.classList.add('hidden');
-            
+
             // Simulate loading delay
             setTimeout(() => {
                 skeletonLoader.classList.add('hidden');
@@ -1150,9 +1591,8 @@
         function renderMenuItems() {
             const filteredItems = menuData.filter(item => {
                 const matchesCategory = currentCategory === 'all' || item.category === currentCategory;
-                const matchesSearch = item.name.includes(currentSearch) || 
-                                      item.description.includes(currentSearch) || 
-                                      (item.tags && item.tags.some(tag => tag.includes(currentSearch)));
+                const matchesSearch = item.name.includes(currentSearch) ||
+                    item.description.includes(currentSearch);
                 return matchesCategory && matchesSearch && item.isAvailable;
             });
 
@@ -1162,11 +1602,14 @@
             } else {
                 noItemsMessage.classList.add('hidden');
                 menuContainer.classList.remove('hidden');
-                menuContainer.innerHTML = filteredItems.map(item => `
-                    <div class="menu-card animate-fadeIn ${!item.isAvailable ? 'opacity-60' : ''}">
+                menuContainer.innerHTML = filteredItems.map(item => {
+                    const cartItem = cart.find(cartItem => cartItem.id === item.id);
+                    const quantity = cartItem ? cartItem.quantity : 0;
+
+                    return `
+                    <div class="menu-card  ${!item.isAvailable ? 'opacity-60' : ''}">
                         <div class="relative">
                             <img src="${item.image}" alt="${item.name}" class="w-full h-48 object-cover ${!item.isAvailable ? 'grayscale' : ''}">
-                            ${renderItemBadges(item)}
                             ${!item.isAvailable ? `
                                 <div class="absolute inset-0 bg-slate-900 bg-opacity-60 flex items-center justify-center">
                                     <span class="bg-slate-800 text-white px-3 py-1 rounded-full text-sm">ناموجود</span>
@@ -1191,19 +1634,31 @@
                             <p class="text-slate-600 dark:text-slate-300 text-sm mb-4">${item.description}</p>
                             <div class="flex justify-between items-center">
                                 ${renderRatingStars(item.rating)}
-                                <button 
-                                    class="add-to-cart ${!item.isAvailable ? 'bg-slate-400 cursor-not-allowed' : 'bg-amber-500 hover:bg-amber-600'} text-white text-sm font-bold py-2 px-4 rounded-full transition flex items-center" 
-                                    data-id="${item.id}"
-                                    ${!item.isAvailable ? 'disabled' : ''}
-                                >
-                                    <i class="fas fa-plus ml-1 text-xs"></i>
-                                    ${!item.isAvailable ? 'ناموجود' : 'افزودن'}
-                                </button>
+                                ${quantity > 0 ? `
+                                    <div class="quantity-controls">
+                                        <button class="quantity-btn decrease" data-id="${item.id}">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <span class="quantity-display">${quantity}</span>
+                                        <button class="quantity-btn increase" data-id="${item.id}">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                ` : `
+                                    <button 
+                                        class="add-to-cart ${!item.isAvailable ? 'bg-slate-400 cursor-not-allowed' : 'bg-amber-500 hover:bg-amber-600'} text-white text-sm font-bold py-2 px-4 rounded-full transition flex items-center" 
+                                        data-id="${item.id}"
+                                        ${!item.isAvailable ? 'disabled' : ''}
+                                    >
+                                        <i class="fas fa-plus ml-1 text-xs"></i>
+                                        ${!item.isAvailable ? 'ناموجود' : 'افزودن'}
+                                    </button>
+                                `}
                             </div>
                         </div>
                     </div>
-                `).join('');
-                
+                `}).join('');
+
                 // اضافه کردن event listener برای دکمه‌های کامنت
                 document.querySelectorAll('.openCommentModal').forEach(btn => {
                     btn.addEventListener('click', async () => {
@@ -1212,7 +1667,7 @@
 
                         const foodId = btn.dataset.id;
                         commentModal.dataset.foodId = foodId;
-                        
+
                         // آپدیت هدر مدال با نام غذا
                         const modalHeader = commentModal.querySelector(".modal-header h2");
                         modalHeader.textContent = `نظرات و پیشنهادات - ${btn.dataset.title}`;
@@ -1220,44 +1675,19 @@
                         await loadComments(foodId);
                     });
                 });
-            }
-        }
 
-        // Render item badges (tags, veg, spicy)
-        function renderItemBadges(item) {
-            let badges = '';
-            
-            if (item.isVeg) {
-                badges += '<div class="absolute top-3 right-3 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center shadow">';
-                badges += '<i class="fas fa-leaf text-white text-xs"></i>';
-                badges += '</div>';
-            }
-            
-            if (item.isSpicy) {
-                badges += `
-                    <div class="spicy-icon absolute top-3 ${item.isVeg ? 'right-10' : 'right-3'} text-xs bg-white/90 dark:bg-slate-800/90 rounded-full px-2 py-1 flex items-center shadow">
-                        <i class="fas fa-pepper-hot ml-1 text-red-500"></i>
-                        تند
-                    </div>
-                `;
-            }
-            
-            if (item.tags && item.tags.length > 0) {
-                item.tags.forEach((tag, index) => {
-                    let bgColor = 'bg-blue-500';
-                    if (tag === 'جدید') bgColor = 'bg-purple-500';
-                    if (tag === 'پیشنهاد ویژه') bgColor = 'bg-amber-500';
-                    if (tag === 'پرفروش') bgColor = 'bg-green-500';
-                    
-                    badges += `
-                        <div class="absolute top-3 left-3 ${index > 0 ? 'mt-6' : ''} ${bgColor} text-white text-xs font-bold px-2 py-1 rounded-full shadow">
-                            ${tag}
-                        </div>
-                    `;
+                // اضافه کردن event listener برای دکمه‌های کنترل کمیت
+                document.querySelectorAll('.quantity-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const itemId = parseInt(btn.dataset.id);
+                        if (btn.classList.contains('increase')) {
+                            increaseQuantity(itemId);
+                        } else {
+                            decreaseQuantity(itemId);
+                        }
+                    });
                 });
             }
-            
-            return badges;
         }
 
         // Render rating stars
@@ -1311,19 +1741,17 @@
                 if (e.target.classList.contains('add-to-cart') || e.target.closest('.add-to-cart')) {
                     const button = e.target.classList.contains('add-to-cart') ? e.target : e.target.closest('.add-to-cart');
                     if (button.disabled) return;
-                    
+
                     const itemId = parseInt(button.dataset.id);
                     addToCart(itemId);
-                    
+
                     // Add animation effect
                     button.innerHTML = '<i class="fas fa-check ml-1 text-xs"></i> افزوده شد';
                     button.classList.remove('bg-amber-500', 'hover:bg-amber-600');
                     button.classList.add('bg-green-500', 'hover:bg-green-600');
-                    
+
                     setTimeout(() => {
-                        button.innerHTML = '<i class="fas fa-plus ml-1 text-xs"></i> افزودن';
-                        button.classList.remove('bg-green-500', 'hover:bg-green-600');
-                        button.classList.add('bg-amber-500', 'hover:bg-amber-600');
+                        renderMenuItems();
                     }, 1500);
                 }
             });
@@ -1399,13 +1827,13 @@
         function addToCart(itemId) {
             const item = menuData.find(i => i.id === itemId);
             const existingItem = cart.find(i => i.id === itemId);
-            
+
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
                 cart.push({ ...item, quantity: 1 });
             }
-            
+
             updateCart();
             showCartNotification(item.name);
         }
@@ -1413,12 +1841,13 @@
         function updateCart() {
             updateCartCount();
             renderCartItems();
+            renderMenuItems(); // Update menu items to show quantity controls
         }
 
         function updateCartCount() {
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             cartCount.textContent = totalItems;
-            
+
             if (totalItems > 0) {
                 cartCount.classList.remove('hidden');
             } else {
@@ -1496,11 +1925,9 @@
 
         function updateCartSummary() {
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const discount = subtotal > 300000 ? subtotal * 0.1 : 0; // 10% discount for orders over 300,000
-            const payable = subtotal - discount;
-            
+            const payable = subtotal;
+
             cartTotal.textContent = `${subtotal.toLocaleString()} تومان`;
-            cartDiscount.textContent = `${discount.toLocaleString()} تومان`;
             cartPayable.textContent = `${payable.toLocaleString()} تومان`;
         }
 
@@ -1519,7 +1946,7 @@
 
         function checkout() {
             if (cart.length === 0) return;
-            
+
             // Show success message
             const message = document.createElement('div');
             message.className = 'fixed bottom-24 left-6 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg flex items-center animate-fadeIn z-50';
@@ -1528,12 +1955,12 @@
                 سفارش شما با مبلغ ${cartPayable.textContent} ثبت شد!
             `;
             document.body.appendChild(message);
-            
+
             setTimeout(() => {
                 message.classList.add('opacity-0', 'translate-y-4', 'transition-all', 'duration-300');
                 setTimeout(() => message.remove(), 300);
             }, 3000);
-            
+
             cart = [];
             updateCart();
             closeCartPanel();
@@ -1547,7 +1974,7 @@
                 ${itemName} به سبد خرید اضافه شد
             `;
             document.body.appendChild(notification);
-            
+
             setTimeout(() => {
                 notification.classList.add('opacity-0', 'translate-y-4', 'transition-all', 'duration-300');
                 setTimeout(() => notification.remove(), 300);
@@ -1843,7 +2270,7 @@
                     if (res.ok) {
                         replyForm.querySelector(".reply-input").value = "";
                         await loadReplies(cId, repliesDiv);
-                        
+
                         // آپدیت تعداد پاسخ‌ها
                         const replyBtn = commentDiv.querySelector(".reply-btn");
                         const currentCount = parseInt(replyBtn.textContent.match(/\((\d+)\)/)[1]);
@@ -1858,4 +2285,5 @@
         }
     </script>
 </body>
+
 </html>
